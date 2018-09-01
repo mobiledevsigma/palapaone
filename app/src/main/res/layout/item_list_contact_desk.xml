@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/mybutton"
-                android:text="Show Map"
+                android:text="Show Direction"
                 android:textColor="#FFF" />
         </LinearLayout>
 
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/mybutton"
-                android:text="Show Layout"
+                android:text="Show Map"
                 android:textColor="#FFF" />
         </LinearLayout>
     </LinearLayout>

@@ -46,7 +46,7 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HelpActivity.this, HelpWebActivity.class);
-                intent.putExtra("link_url", "http://www.palapaone.id/faq");
+                intent.putExtra("link_url", "http://palapaone.id/faq");
                 startActivity(intent);
             }
         });
@@ -55,7 +55,7 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HelpActivity.this, HelpWebActivity.class);
-                intent.putExtra("link_url", "http://www.palapaone.id/committee");
+                intent.putExtra("link_url", "http://palapaone.id/committee");
                 startActivity(intent);
             }
         });
@@ -72,7 +72,7 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HelpActivity.this, HelpWebActivity.class);
-                intent.putExtra("link_url", "http://www.palapaone.id/privay_policy");
+                intent.putExtra("link_url", "http://palapaone.id/Privacy_policy");
                 startActivity(intent);
             }
         });
