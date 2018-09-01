@@ -12,6 +12,7 @@ import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.controller.event.IcwFragment;
+import co.id.telkomsigma.palapaone.model.AgendaModel;
 
 
 /**
@@ -20,11 +21,12 @@ import co.id.telkomsigma.palapaone.controller.event.IcwFragment;
 
 public class Adapter_hari extends RecyclerView.Adapter<Adapter_hari.MyViewHolder> {
 
-    private List<String> listTime;
+    private AgendaModel model;
+    private List<AgendaModel> modelList;
     private Context context;
 
-    public Adapter_hari(Context context, List<String> listTime) {
-        this.listTime = listTime;
+    public Adapter_hari(Context context, List<AgendaModel> modelList) {
+        this.modelList = modelList;
         this.context = context;
     }
 
@@ -39,12 +41,14 @@ public class Adapter_hari extends RecyclerView.Adapter<Adapter_hari.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.titleTextView.setText("a");
+        model = modelList.get(position);
+
+        holder.titleTextView.setText(model.getDay_x());
     }
 
     @Override
     public int getItemCount() {
-        return listTime.size();
+        return modelList.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {

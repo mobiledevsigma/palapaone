@@ -22,6 +22,8 @@ public interface ConstantUtils {
         String VERSION = SERVER + "api_version/checkVersion";
         String LOGIN = SERVER + "api/login/auth";
         String PROFILE_EDIT = SERVER + "api/profile/update";
+        String AGENDA = SERVER + "api/event/getagenda/";
+        String FEEDBACK = SERVER + "api/feedback/content/";
         String LOGOUT = SERVER + "api_login/logout/";
     }
 
@@ -168,5 +170,23 @@ public interface ConstantUtils {
         String TAG_PROD = "expo_image_product";
         String TAG_MAP = "expo_image_map";
         String TAG_LOC = "expo_location";
+    }
+
+    interface AGENDA {
+        String TAG_TITLE = "agenda";
+        String TAG_ID = "agenda_id";
+        String TAG_NAME = "agenda_name";
+        String TAG_DATE = "agenda_date";
+        String TAG_EVENT = "event_id";
+        String TAG_DAY = "day_x";
+    }
+
+    interface FEEDBACK {
+        String TAG_TITLE = "feedback";
+        String TAG_ID = "feedback_id";
+        String TAG_TYPE = "feedback_type";
+        String TAG_QUESTION = "feedback_question";
+        String TAG_EVENTID = "event_id";
+        String TAG_DATE = "created_date";
     }
 }

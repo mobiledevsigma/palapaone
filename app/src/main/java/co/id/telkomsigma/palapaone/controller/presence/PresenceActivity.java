@@ -24,6 +24,7 @@ public class PresenceActivity extends AppCompatActivity {
     private TextView txt_scan;
     private TextView txt_scanName;
     private TextView txt_scanRole;
+    private TextView txt_scanNation;
     private ImageView img_qr;
     private SessionManager session;
     private Typeface font, fontbold;
@@ -39,14 +40,18 @@ public class PresenceActivity extends AppCompatActivity {
         txt_scan = findViewById(R.id.txt_scan);
         txt_scanName = findViewById(R.id.txt_scan_name);
         txt_scanRole = findViewById(R.id.txt_scan_role);
+        txt_scanNation = findViewById(R.id.txt_scan_nation);
         img_qr = findViewById(R.id.img_qr);
         //
         txt_scan.setTypeface(fontbold);
         txt_scanName.setTypeface(fontbold);
         txt_scanRole.setTypeface(fontbold);
+        txt_scanNation.setTypeface(fontbold);
 
         generateQRCode(session.getId(), img_qr);
-
+        txt_scanName.setText(session.getName());
+        txt_scanRole.setText(session.getEvent());
+        txt_scanNation.setText(session.getNationalName());
     }
 
     private void generateQRCode(String qrInputText, ImageView myImage) {

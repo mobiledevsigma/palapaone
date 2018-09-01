@@ -9,10 +9,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
+import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class EventActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -27,8 +37,8 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tabs);
+        viewPager = findViewById(R.id.viewpager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new IcwFragment(), "ICW-35th GA");
@@ -38,16 +48,6 @@ public class EventActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        adapter.addFragment(new IcwFragment(), "ICW");
-        adapter.addFragment(new TemnasFragment(), "TEMNAS");
-
-        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -83,5 +83,33 @@ public class EventActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    private void getAgenda(String id) {
+        AndroidNetworking.get(ConstantUtils.URL.AGENDA + "{sub_event_id}")
+                .addPathParameter("sub_event_id", id)
+                .setTag("Agenda")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray(ConstantUtils.AGENDA.TAG_TITLE);
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject object = jsonArray.getJSONObject(a);
+                                String id = object.getString(ConstantUtils.CAT_EXPO.TAG_ID);
+                                String name = object.getString(ConstantUtils.CAT_EXPO.TAG_NAME);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
     }
 }

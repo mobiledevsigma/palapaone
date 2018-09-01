@@ -15,10 +15,22 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.adapter.Adapter_acara;
 import co.id.telkomsigma.palapaone.adapter.Adapter_hari;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
+import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 
 /**
@@ -26,11 +38,7 @@ import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
  */
 public class IcwFragment extends Fragment {
 
-    String[] judul={
-            "Booth 1",
-            "Booth 2",
-            "Booth 3",
-    };
+    private List<String> listAgenda;
 
     String[] jam={
             "08.00-09.00",
@@ -55,9 +63,6 @@ public class IcwFragment extends Fragment {
     ListView listmenu;
     Typeface font,fontbold;
 
-
-
-
     public IcwFragment() {
         // Required empty public constructor
     }
@@ -78,35 +83,27 @@ public class IcwFragment extends Fragment {
         TextView daftarkios= (TextView) view.findViewById(R.id.tanggal);
         daftarkios.setTypeface(font);
 
-//        Adapter_hari adapter = new Adapter_hari(getActivity(),judul);
-////        timeAdapter = new TimeAdapter(this, listTime);
-////        RecyclerView listView_time.setHasFixedSize(true);
+//        Adapter_hari adapter = new Adapter_hari(getActivity(), judul);
 //        RecyclerView list = view.findViewById(R.id.listView_time);
+//        list.setHasFixedSize(true);
 //        list.setAdapter(adapter);
 //        list.setLayoutManager(MyLayoutManager);
-
-
-        Adapter_hari adapter = new Adapter_hari(this, judul);
-        RecyclerView list = view.findViewById(R.id.listView_time);
-//        list.setHasFixedSize(true);
-        list.setAdapter(adapter);
-        list.setLayoutManager(MyLayoutManager);
-
-        listmenu=(ListView)view.findViewById(R.id.list_acara);
-
-        Adapter_acara adapter2=new Adapter_acara(this,jam,acara,pembicara,ruang);
-        listmenu.setAdapter(adapter2);
-
-        listmenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Intent i = new Intent(getContext(), DetailEventMapActivity.class);
-
-                startActivity(i);
-            }
-        });
+//
+//        listmenu=(ListView)view.findViewById(R.id.list_acara);
+//
+//        Adapter_acara adapter2=new Adapter_acara(this,jam,acara,pembicara,ruang);
+//        listmenu.setAdapter(adapter2);
+//
+//        listmenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//                Intent i = new Intent(getContext(), DetailEventMapActivity.class);
+//
+//                startActivity(i);
+//            }
+//        });
 
         Button goto_home= (Button) view.findViewById(R.id.button2);
         goto_home.setOnClickListener(new View.OnClickListener() {
@@ -118,5 +115,4 @@ public class IcwFragment extends Fragment {
         });
         return view;
     }
-
 }
