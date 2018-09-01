@@ -20,15 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="bottom"
+            android:gravity="center"
             android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
                 android:id="@+id/iv_expo_detail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 app:srcCompat="@drawable/banner2" />
         </LinearLayout>
