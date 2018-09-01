@@ -55,7 +55,7 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HelpActivity.this, HelpWebActivity.class);
-                intent.putExtra("link_url", "https://www.tutorialspoint.com/android/android_webview_layout.htm");
+                intent.putExtra("link_url", "http://www.palapaone.id/committee");
                 startActivity(intent);
             }
         });
@@ -72,7 +72,7 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HelpActivity.this, HelpWebActivity.class);
-                intent.putExtra("link_url", "https://www.tutorialspoint.com/android/android_webview_layout.htm");
+                intent.putExtra("link_url", "http://www.palapaone.id/privay_policy");
                 startActivity(intent);
             }
         });

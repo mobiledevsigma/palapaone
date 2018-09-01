@@ -34,101 +34,119 @@
                         android:id="@+id/iv_partner_detail"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp"
                         android:src="@drawable/kowani" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/txt_desc"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:text="Deskripsi"
-                        android:textSize="16sp" />
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="Deskripsi"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_desc_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:text="Partner no 1\nthis partner\n......\n.............\n.............\n.............\n.............\n.............\n.............\n......."
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/txt_desc_detail"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="5dp"
-                        android:text="Partner no 1\nthis partner\n......\n.............\n.............\n.............\n.............\n.............\n.............\n......."
-                        android:textSize="16sp" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp">
+                        <TextView
+                            android:id="@+id/contactinfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="Contact Info"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/contactinfo"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:text="Contact Info"
-                        android:textSize="16sp" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginRight="10dp">
+                        <TextView
+                            android:id="@+id/txt_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_margin="5dp"
+                            android:text="Address\n6101 Bollinger Conyon Road\nSan Ramon 94538\nUnited States"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/txt_address"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="5dp"
-                        android:text="Address\n6101 Bollinger Conyon Road\nSan Ramon 94538\nUnited States"
-                        android:textSize="16sp" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp">
+                        <TextView
+                            android:id="@+id/txt_partner_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="Main \n\n 08127384329433"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/txt_partner_phone"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="5dp"
-                        android:text="Main \n\n 08127384329433"
-                        android:textSize="16sp" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_partner_web"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:autoLink="all"
+                            android:text="Website \n\n http://www.partner.coms"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorPrimary"/>
+                    </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:id="@+id/txt_partner_web"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="5dp"
-                        android:text="Website \n\n http://www.partner.coms"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
             </LinearLayout>
-
-
-
         </ScrollView>
-
     </LinearLayout>
 
 </LinearLayout>

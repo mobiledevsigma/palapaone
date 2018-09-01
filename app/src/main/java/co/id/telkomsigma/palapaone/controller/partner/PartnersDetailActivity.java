@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,8 +57,9 @@ public class PartnersDetailActivity extends AppCompatActivity {
 
         downloadImage(getApplicationContext(), logo, imageView);
         txt_desc_detail.setText(desc_detail);
+        txt_desc_detail.setMovementMethod(new ScrollingMovementMethod());
         txt_address.setText(address);
-        txt_address.setText(phone);
+        txt_phone.setText(phone);
         txt_web.setText(web);
     }
 
