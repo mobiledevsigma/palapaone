@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F2F2"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="7dp"
+        android:background="@drawable/field_background"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1.2"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/txt_expo_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:fontFamily="monospace"
+                android:text="Choose Expo"
+                android:textColor="#A71313"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:id="@+id/lay_expo_cat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_spin_expo"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/txt_expo_name"
+                    android:layout_alignStart="@+id/txt_expo_name"
+                    android:layout_below="@+id/txt_expo_name"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/tabel"
+                    android:padding="5dp"
+                    android:text="Choose Expo" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="27dp"
+                    android:layout_alignBottom="@+id/txt_spin_expo"
+                    android:layout_marginTop="9dp"
+                    android:layout_toEndOf="@+id/txt_spin_expo"
+                    android:layout_toRightOf="@+id/txt_spin_expo"
+                    android:src="@drawable/icon_menu" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1.4"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_expo_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:text="Choosen Expo : Food" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="0.4"
+            android:background="@drawable/field_background"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/lv_expo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:divider="#FFF"
+                android:dividerHeight="2.0sp">
+
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
