@@ -11,9 +11,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="60dp"
         android:layout_marginBottom="3dp"
-        android:layout_weight="1.37"
         android:background="@color/colorPrimary"
         android:theme="?attr/actionBarTheme">
 
@@ -75,10 +74,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="191dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="3dp"
-        android:layout_weight="0.93"
         android:background="@drawable/field_background"
         android:orientation="vertical">
 
@@ -99,7 +97,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"
         android:background="#FFF"
         android:orientation="vertical"
         android:weightSum="2">
@@ -108,7 +105,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
-            android:layout_weight="0.35"
             android:orientation="vertical"
             android:padding="5dp"
             android:weightSum="3">
@@ -493,7 +489,7 @@
                             android:id="@+id/imageView28"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="8dp"
+                            android:layout_margin="8dp"
                             app:srcCompat="@drawable/contact2" />
                     </LinearLayout>
 
@@ -508,31 +504,33 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
-                            android:gravity="top|center"
+                            android:gravity="center"
                             android:text="Help"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1.65"
-            android:gravity="top|center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button_login"
+            <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/mybutton"
-                android:text="LOGIN"
-                android:textColor="#FFF" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="top|center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/mybutton"
+                    android:text="LOGIN"
+                    android:textColor="#FFF" />
+            </LinearLayout>
         </LinearLayout>
+
+
     </LinearLayout>
 </LinearLayout>

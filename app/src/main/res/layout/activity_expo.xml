@@ -79,7 +79,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:gravity="left|center"
-                android:text="Choosen Expo : Food" />
+                android:text="Choosen Expo : -" />
         </LinearLayout>
 
         <LinearLayout
