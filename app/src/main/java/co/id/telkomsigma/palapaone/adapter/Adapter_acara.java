@@ -8,11 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import co.id.telkomsigma.palapaone.R;
-import co.id.telkomsigma.palapaone.controller.event.IcwFragment;
+import co.id.telkomsigma.palapaone.controller.event.EventFragment;
 
 public class Adapter_acara extends ArrayAdapter<String> {
 
-    private final IcwFragment context;
+    private final EventFragment context;
     private final String[] acara;
     private final String[] pembicara;
     private final String[] ruangan;
@@ -20,7 +20,7 @@ public class Adapter_acara extends ArrayAdapter<String> {
     Typeface font,fontbold;
 
 
-    public Adapter_acara(IcwFragment context, String[] jam, String[] acara, String[] pembicara, String[]ruangan) {
+    public Adapter_acara(EventFragment context, String[] jam, String[] acara, String[] pembicara, String[]ruangan) {
         super(context.getActivity(), R.layout.item_listacara, jam);
         // TODO Auto-generated constructor stub
 
@@ -43,13 +43,13 @@ public class Adapter_acara extends ArrayAdapter<String> {
         txtTitle.setText(pembicara[position]);
         txtTitle.setTypeface(fontbold);
 
-        TextView txtTitle_tiga = (TextView) rowView.findViewById(R.id.jam);
+        TextView txtTitle_tiga = (TextView) rowView.findViewById(R.id.txt_jam);
         txtTitle_tiga.setText(jam[position]);
         txtTitle_tiga.setTypeface(fontbold);
-        TextView txtTitle_empat= (TextView) rowView.findViewById(R.id.nm_acara);
+        TextView txtTitle_empat= (TextView) rowView.findViewById(R.id.txt_acara);
         txtTitle_empat.setText(acara[position]);
         txtTitle_empat.setTypeface(fontbold);
-        TextView txtTitle_lima= (TextView) rowView.findViewById(R.id.ruangan);
+        TextView txtTitle_lima= (TextView) rowView.findViewById(R.id.txt_room);
         txtTitle_lima.setText(ruangan[position]);
         txtTitle_lima.setTypeface(fontbold);
 

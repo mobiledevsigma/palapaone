@@ -22,8 +22,10 @@ public interface ConstantUtils {
         String VERSION = SERVER + "api_version/checkVersion";
         String LOGIN = SERVER + "api/login/auth";
         String PROFILE_EDIT = SERVER + "api/profile/update";
-        String AGENDA = SERVER + "api/event/getagenda/";
         String FEEDBACK = SERVER + "api/feedback/content/";
+        String AGENDA = SERVER + "api/event/getagenda/";
+        String EVENT = SERVER + "api/event/getevent/";
+        String RUNDOWN = SERVER + "api/schedule/rundown/";
         String LOGOUT = SERVER + "api_login/logout/";
     }
 
@@ -188,5 +190,29 @@ public interface ConstantUtils {
         String TAG_QUESTION = "feedback_question";
         String TAG_EVENTID = "event_id";
         String TAG_DATE = "created_date";
+    }
+
+    interface EVENT {
+        String TAG_TITLE = "event";
+        String TAG_ID = "event_id";
+        String TAG_NAME = "event_name";
+        String TAG_LOCA = "event_location";
+        String TAG_START = "start_date";
+        String TAG_END = "end_date";
+        String TAG_PARENT = "event_parent_id";
+        String TAG_LATIT = "event_latitude";
+        String TAG_LONGI = "event_longitude";
+        String TAG_THEME = "event_theme";
+    }
+
+    interface RUNDOWN {
+        String TAG_TITLE = "rundown";
+        String TAG_ID = "rundown_id";
+        String TAG_NAME = "rundown_name";
+        String TAG_START = "rundown_time_start";
+        String TAG_END = "rundown_time_end";
+        String TAG_DESC = "rundown_desc";
+        String TAG_PLACE = "rundown_place";
+        String TAG_LAYOUT = "rundown_layout";
     }
 }
