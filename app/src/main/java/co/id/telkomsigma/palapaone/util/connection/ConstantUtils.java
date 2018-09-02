@@ -7,7 +7,7 @@ package co.id.telkomsigma.palapaone.util.connection;
 public interface ConstantUtils {
 
     interface URL {
-        String SERVER = "http://palapaone.id/";
+        String SERVER = "http://palapaone.id/icw/";
         String DICTIONARY = SERVER + "api/home/lang/";
         String BANNER = SERVER + "api/event/banner/";
         String SPEAKER = SERVER + "api/speaker/getcontent/";

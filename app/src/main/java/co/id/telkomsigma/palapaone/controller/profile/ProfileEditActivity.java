@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +48,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         Typeface fontbold = Typeface.createFromAsset(ProfileEditActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         Typeface font = Typeface.createFromAsset(ProfileEditActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         TextView ax = (TextView) findViewById(R.id.q);
         ax.setTypeface(fontbold);
         TextView a1 = (TextView) findViewById(R.id.w);
@@ -65,8 +70,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         goto_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, 11);
+//                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(cameraIntent, 11);
+                Toast.makeText(getApplicationContext(), "This feature is currently unavailable", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,7 +106,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         selesai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(getApplicationContext())
+                new AlertDialog.Builder(ProfileEditActivity.this)
                         .setMessage("Are you sure you want to update your profile?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -114,7 +120,6 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -123,7 +128,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         return true;
     }
 
-    private void saveEdit(String name, String email, String phone, String about, String quote, String job, String office, String nation, String user) {
+    private void saveEdit(final String name, final String email, String phone, final String about, final String quote, final String job, String office, String nation, String user) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(ConstantUtils.LOGIN.TAG_NAME, name);
@@ -144,14 +149,28 @@ public class ProfileEditActivity extends AppCompatActivity {
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
+                .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         // do anything with response
+                        try{
+                            if(response.getString("status").equals("1")){
+                                //session.setUserSession(session.getId(),session.getUsername(),name,);
+                                session.updateUser(name,email,about,quote,job);
+                                Toast.makeText(ProfileEditActivity.this,"Data Saved",Toast.LENGTH_SHORT).show();
+                                finish();
+
+                            }else{
+                                Toast.makeText(ProfileEditActivity.this,"Data not saved",Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (Exception e){
+                            Toast.makeText(ProfileEditActivity.this,"Data not saved, please check your connection",Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
                     public void onError(ANError error) {
+                        Toast.makeText(ProfileEditActivity.this,"Data not saved, please check your connection",Toast.LENGTH_SHORT).show();
                         // handle error
                     }
                 });

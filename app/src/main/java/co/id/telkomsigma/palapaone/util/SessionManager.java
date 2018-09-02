@@ -53,6 +53,18 @@ public class SessionManager {
         editor.commit();
     }
 
+
+    public void updateUser(String name, String email, String about,String quote, String job) {
+
+        editor.putString(ConstantUtils.LOGIN.TAG_NAME, name);
+        editor.putString(ConstantUtils.LOGIN.TAG_EMAIL, email);
+        editor.putString(ConstantUtils.LOGIN.TAG_ABOUT, about);
+        editor.putString(ConstantUtils.LOGIN.TAG_QUOTE, quote);
+        editor.putString(ConstantUtils.LOGIN.TAG_JOB, job);
+        // commit changes
+        editor.commit();
+    }
+
     public String getId() {
         return pref.getString(ConstantUtils.LOGIN.TAG_USERID, "");
     }

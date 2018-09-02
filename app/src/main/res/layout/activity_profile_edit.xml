@@ -48,7 +48,7 @@
                         android:id="@+id/profileedit"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/speaker22" />
+                        android:src="@drawable/avatars" />
 
                     <TextView
                         android:id="@+id/w"

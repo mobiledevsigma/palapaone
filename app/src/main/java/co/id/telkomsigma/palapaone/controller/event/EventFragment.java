@@ -11,9 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -28,10 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
+import co.id.telkomsigma.palapaone.adapter.Adapter_acara;
 import co.id.telkomsigma.palapaone.adapter.Adapter_hari;
 import co.id.telkomsigma.palapaone.adapter.AgendaAdapter;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
 import co.id.telkomsigma.palapaone.model.AgendaModel;
+import co.id.telkomsigma.palapaone.model.RundownModel;
+import co.id.telkomsigma.palapaone.util.OnItemClickListener;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 
@@ -40,17 +45,17 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
  */
 public class EventFragment extends Fragment {
 
-    ListView listmenu;
     Typeface font, fontbold;
     private List<String> dayList;
-    private Bundle bundle;
-    private String data;
     private AgendaModel model;
     private List<AgendaModel> modelList;
-    private AgendaAdapter adapter;
     private RecyclerView lv_time;
+    private ListView lv_rundown;
     private Adapter_hari adapterHari;
     private String idAgenda;
+    private RundownModel rundownModel;
+    private List<RundownModel> rundownModelList;
+    private Adapter_acara adapterAcara;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +70,7 @@ public class EventFragment extends Fragment {
         font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AvenirLTStd-Book.otf");
 
         lv_time = view.findViewById(R.id.lv_time);
+        lv_rundown = view.findViewById(R.id.lv_rundown);
 
         TextView daftarkios = (TextView) view.findViewById(R.id.tanggal);
         daftarkios.setTypeface(font);
@@ -113,10 +119,63 @@ public class EventFragment extends Fragment {
                             }
                             LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getContext());
                             MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                            adapterHari = new Adapter_hari(getActivity(), dayList, idAgenda);
+                            adapterHari = new Adapter_hari(getActivity(), dayList, new OnItemClickListener() {
+                                @Override
+                                public void onItemClick(String id) {
+                                    idAgenda = id;
+                                    getRundown(idAgenda);
+                                }
+                            });
                             lv_time.setHasFixedSize(true);
                             lv_time.setAdapter(adapterHari);
                             lv_time.setLayoutManager(MyLayoutManager);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+    }
+
+    public void getRundown(String id) {
+        AndroidNetworking.get(ConstantUtils.URL.RUNDOWN + "{agenda_id}")
+                .addPathParameter("agenda_id", id)
+                .setTag("Rundwon")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            rundownModelList = new ArrayList<RundownModel>();
+                            dayList = new ArrayList<String>();
+                            JSONArray jsonArray = response.getJSONArray(ConstantUtils.RUNDOWN.TAG_TITLE);
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject object = jsonArray.getJSONObject(a);
+                                String id = object.getString(ConstantUtils.RUNDOWN.TAG_ID);
+                                String name = object.getString(ConstantUtils.RUNDOWN.TAG_NAME);
+                                String desc = object.getString(ConstantUtils.RUNDOWN.TAG_DESC);
+                                String start = object.getString(ConstantUtils.RUNDOWN.TAG_START);
+                                String end = object.getString(ConstantUtils.RUNDOWN.TAG_END);
+                                String place = object.getString(ConstantUtils.RUNDOWN.TAG_PLACE);
+                                String layout = object.getString(ConstantUtils.RUNDOWN.TAG_LAYOUT);
+                                rundownModel = new RundownModel(id, name, start, end, place, layout);
+                                rundownModelList.add(rundownModel);
+                            }
+
+                            adapterAcara = new Adapter_acara(getActivity().getApplicationContext(), rundownModelList);
+                            lv_rundown.setAdapter(adapterAcara);
+                            lv_rundown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();
