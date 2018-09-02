@@ -47,6 +47,8 @@ public class MenuActivity extends AppCompatActivity {
 
     //private ImageListener imageListener;
     private CarouselView carouselView;
+    String[] lisImage ;
+
     int[] sampleImages = {R.drawable.bannerku};
     ImageListener imageListener = new ImageListener() {
         @Override
@@ -70,7 +72,6 @@ public class MenuActivity extends AppCompatActivity {
     private LinearLayout lay_presence, lay_event, lay_speaker, lay_modul, lay_media, lay_expo, lay_gallery, lay_partner, lay_help;
     private DictionaryManager dictionary;
     private HashMap<String, String> listDict;
-    private ArrayList<String> lisImage = new ArrayList<String>();
     private LinearLayout lay_profile, lay_inbox;
     private SessionManager session;
     private Typeface font, fontbold;
@@ -123,15 +124,15 @@ public class MenuActivity extends AppCompatActivity {
 
         getBanner(session.getEventID());
 
-        carouselView.setPageCount(sampleImages.length);//banyak image
-        carouselView.setImageListener(imageListener);
-        carouselView.setImageClickListener(new ImageClickListener() {
-            @Override
-            public void onClick(int position) {
-                Intent i = new Intent(MenuActivity.this, DetailBannerActivity.class);
-                startActivity(i);
-            }
-        });
+//        carouselView.setPageCount(sampleImages.length);//banyak image
+//        carouselView.setImageListener(imageListener);
+//        carouselView.setImageClickListener(new ImageClickListener() {
+//            @Override
+//            public void onClick(int position) {
+//                Intent i = new Intent(MenuActivity.this, DetailBannerActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
         txt_msg.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MSG));
         txt_presence.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_1));
@@ -244,6 +245,9 @@ public class MenuActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray jsonArray = response.getJSONArray(ConstantUtils.BANNER.TAG_TITLE);
+
+                            System.out.println("coba"+jsonArray);
+                            lisImage = new String[jsonArray.length()];
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject object = jsonArray.getJSONObject(a);
                                 String id = object.getString(ConstantUtils.BANNER.TAG_ID);
@@ -251,8 +255,24 @@ public class MenuActivity extends AppCompatActivity {
                                 String event = object.getString(ConstantUtils.BANNER.TAG_EVENT);
                                 String url = object.getString(ConstantUtils.BANNER.TAG_URL);
                                 //imagesURL[a] = img;
-                                lisImage.add(img);
+                                lisImage[a] = img;
+                                System.out.println(lisImage[a]);
                             }
+
+
+                            ImageListener imageListener = new ImageListener() {
+                                @Override
+                                public void setImageForPosition(int position, ImageView imageView) {
+
+                                    Picasso.with(getApplicationContext())
+                                            .load(lisImage[position])
+                                            .error(R.drawable.avatars)
+                                            .into(imageView);
+                                }
+                            };
+
+                            carouselView.setImageListener(imageListener);
+                            carouselView.setPageCount(lisImage.length);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -264,4 +284,6 @@ public class MenuActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
 }

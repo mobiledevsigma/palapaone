@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,10 +39,26 @@ public class ExpoDetailActivity extends AppCompatActivity {
         txt_desc.setTypeface(fontbold);
         button.setTypeface(fontbold);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Expo");
+
         Intent intent = getIntent();
         downloadImage(getApplicationContext(), intent.getStringExtra(ConstantUtils.EXPO.TAG_PROD), imageView);
         txt_name.setText(intent.getStringExtra(ConstantUtils.EXPO.TAG_NAME));
         txt_desc.setText(intent.getStringExtra(ConstantUtils.EXPO.TAG_DESC));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void downloadImage(Context context, String url, ImageView image) {

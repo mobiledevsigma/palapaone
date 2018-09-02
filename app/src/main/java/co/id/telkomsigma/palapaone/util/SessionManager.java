@@ -97,10 +97,10 @@ public class SessionManager {
         return pref.getString(ConstantUtils.LOGIN.TAG_EVENTID, "");
     }
     public String getEvent() {
-        return pref.getString(ConstantUtils.LOGIN.TAG_EVENT, "");
+        return pref.getString(ConstantUtils.LOGIN.TAG_EVENT, "2");
     }
     public String getParentID() {
-        return pref.getString(ConstantUtils.LOGIN.TAG_PARENT, "");
+        return pref.getString(ConstantUtils.LOGIN.TAG_PARENT, "1");
     }
     public String getNationalID() {
         return pref.getString(ConstantUtils.LOGIN.TAG_NATIONAL_ID, "");

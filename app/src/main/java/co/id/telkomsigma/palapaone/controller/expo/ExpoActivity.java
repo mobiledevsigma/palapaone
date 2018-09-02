@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -51,6 +52,10 @@ public class ExpoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expo);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Expo");
+
         fontbold = Typeface.createFromAsset(ExpoActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(ExpoActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
@@ -61,7 +66,11 @@ public class ExpoActivity extends AppCompatActivity {
         lv_expo = findViewById(R.id.lv_expo);
         session = new SessionManager(getApplicationContext());
 
+
         getExpoCat(session.getParentID());
+
+
+
         spinnerCategory = new SpinnerDialog(ExpoActivity.this, listCatName, "Choose Expo");
         lay_expo_cat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +84,23 @@ public class ExpoActivity extends AppCompatActivity {
             public void onClick(String lantai, int i) {
                 txt_choose.setTypeface(fontbold);
                 txt_choose.setText(lantai);
+                txt_expo2.setText("Choosen Expo : "+lantai);
                 String idCategory = listCatID.get(i);
                 getDataExpo(idCategory, session.getParentID());
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void getExpoCat(String id) {
