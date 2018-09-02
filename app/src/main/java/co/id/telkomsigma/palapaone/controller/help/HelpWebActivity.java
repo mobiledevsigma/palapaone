@@ -20,6 +20,10 @@ public class HelpWebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help_webview);
         webView = findViewById(R.id.web_help);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Help");
+
         Intent intent = getIntent();
         String link_url = intent.getStringExtra("link_url");
 
