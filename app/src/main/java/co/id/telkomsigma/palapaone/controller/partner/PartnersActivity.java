@@ -56,8 +56,11 @@ public class PartnersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Partners");
 
-
+        if (session.getParentID().isEmpty()) {
+            getData("1");
+        } else {
             getData(session.getParentID());
+        }
 
     }
 

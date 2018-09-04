@@ -43,15 +43,12 @@ public class HelpActivity extends AppCompatActivity {
         txt_policy.setTypeface(fontbold);
         txt_contact.setTypeface(fontbold);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Help");
-
         lay_faq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HelpActivity.this, HelpWebActivity.class);
-                intent.putExtra("link_url", "http://palapaone.id/faq");
+                intent.putExtra("link_url", "http://palapaone.id/icw/faq");
+                intent.putExtra("title", "FAQ");
                 startActivity(intent);
             }
         });
@@ -60,7 +57,8 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HelpActivity.this, HelpWebActivity.class);
-                intent.putExtra("link_url", "http://palapaone.id/committee");
+                intent.putExtra("link_url", "http://palapaone.id/icw/committee");
+                intent.putExtra("title", "Committee");
                 startActivity(intent);
             }
         });
@@ -77,7 +75,8 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HelpActivity.this, HelpWebActivity.class);
-                intent.putExtra("link_url", "http://palapaone.id/Privacy_policy");
+                intent.putExtra("link_url", "http://palapaone.id/icw/Privacy_policy");
+                intent.putExtra("title", "Privacy Policy");
                 startActivity(intent);
             }
         });
@@ -89,6 +88,10 @@ public class HelpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Help");
     }
 
     @Override

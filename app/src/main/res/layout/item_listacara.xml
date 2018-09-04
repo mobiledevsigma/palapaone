@@ -90,6 +90,7 @@
         android:weightSum="2">
 
         <LinearLayout
+            android:id="@+id/lay_reminder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -100,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
-                android:src="@drawable/bell" />
+                android:src="@drawable/bell2" />
         </LinearLayout>
 
         <LinearLayout

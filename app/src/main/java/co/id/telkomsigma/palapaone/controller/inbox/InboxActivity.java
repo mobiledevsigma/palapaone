@@ -76,8 +76,9 @@ public class InboxActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Inbox");
     }
     @Override
     public boolean onSupportNavigateUp(){

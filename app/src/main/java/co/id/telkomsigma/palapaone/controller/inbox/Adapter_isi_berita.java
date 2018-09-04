@@ -40,7 +40,7 @@ public class Adapter_isi_berita extends ArrayAdapter<String> {
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView=inflater.inflate(R.layout.item_list_inbox, null,true);
 
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.judul);
+        TextView txtTitle = rowView.findViewById(R.id.judul);
         txtTitle.setText(judul[position]);
         txtTitle.setTypeface(fontbold);
 

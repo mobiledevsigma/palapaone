@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/bilingual" />
+            app:srcCompat="@drawable/bg_bilingual" />
     </LinearLayout>
 
     <LinearLayout

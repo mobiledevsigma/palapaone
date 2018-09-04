@@ -1,14 +1,17 @@
 package co.id.telkomsigma.palapaone.controller.media;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,8 +19,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.squareup.picasso.Picasso;
-import com.synnapps.carouselview.ImageListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +53,8 @@ public class MediaCenterActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         txt_media = findViewById(R.id.txt_media);
         listView = findViewById(R.id.lv_media);
+
+
         //
         txt_media.setTypeface(fontbold);
 
@@ -59,7 +62,11 @@ public class MediaCenterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Media Center");
 
+        if (session.getParentID().isEmpty()) {
+            getData("1");
+        } else {
             getData(session.getParentID());
+        }
 
     }
 

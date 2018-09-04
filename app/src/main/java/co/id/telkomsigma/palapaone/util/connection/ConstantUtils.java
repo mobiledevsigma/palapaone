@@ -10,6 +10,7 @@ public interface ConstantUtils {
         String SERVER = "http://palapaone.id/icw/";
         String DICTIONARY = SERVER + "api/home/lang/";
         String BANNER = SERVER + "api/event/banner/";
+        String ALLSPEAKER = SERVER + "api/speaker/allspeaker/";
         String SPEAKER = SERVER + "api/speaker/getcontent/";
         String MATERI = SERVER + "api/speaker/getmateri";
         String MATERIBYSPEAKER = SERVER + "api/speaker/getmateribyspeaker/";

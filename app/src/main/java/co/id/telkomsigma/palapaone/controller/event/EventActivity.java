@@ -40,9 +40,16 @@ public class EventActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewpager);
-        getEvent(sessionManager.getParentID());
+
+        if (sessionManager.getParentID().isEmpty()) {
+            getEvent("2");
+        } else {
+            getEvent(sessionManager.getParentID());
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Event");
     }
 
     @Override
@@ -72,11 +79,11 @@ public class EventActivity extends AppCompatActivity {
                                 String theme = object.getString(ConstantUtils.EVENT.TAG_THEME);
 
                                 Bundle bundle = new Bundle();
-                                bundle.putString("id", id );
-                                bundle.putString("name", name );
-                                bundle.putString("start", start );
-                                bundle.putString("end", end );
-                                bundle.putString("theme", theme );
+                                bundle.putString("id", id);
+                                bundle.putString("name", name);
+                                bundle.putString("start", start);
+                                bundle.putString("end", end);
+                                bundle.putString("theme", theme);
                                 EventFragment fragInfo = new EventFragment();
                                 fragInfo.setArguments(bundle);
 

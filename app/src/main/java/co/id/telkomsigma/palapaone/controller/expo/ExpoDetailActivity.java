@@ -41,7 +41,7 @@ public class ExpoDetailActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Expo");
+        getSupportActionBar().setTitle("Exhibition");
 
         Intent intent = getIntent();
         downloadImage(getApplicationContext(), intent.getStringExtra(ConstantUtils.EXPO.TAG_PROD), imageView);

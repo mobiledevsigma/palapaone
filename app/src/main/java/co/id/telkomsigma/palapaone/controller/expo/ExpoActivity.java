@@ -54,7 +54,7 @@ public class ExpoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Expo");
+        getSupportActionBar().setTitle("Exhibition");
 
         fontbold = Typeface.createFromAsset(ExpoActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(ExpoActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
@@ -66,10 +66,11 @@ public class ExpoActivity extends AppCompatActivity {
         lv_expo = findViewById(R.id.lv_expo);
         session = new SessionManager(getApplicationContext());
 
-
-        getExpoCat(session.getParentID());
-
-
+        if (session.getParentID().isEmpty()) {
+            getExpoCat("1");
+        } else {
+            getExpoCat(session.getParentID());
+        }
 
         spinnerCategory = new SpinnerDialog(ExpoActivity.this, listCatName, "Choose Expo");
         lay_expo_cat.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +85,7 @@ public class ExpoActivity extends AppCompatActivity {
             public void onClick(String lantai, int i) {
                 txt_choose.setTypeface(fontbold);
                 txt_choose.setText(lantai);
-                txt_expo2.setText("Choosen Expo : "+lantai);
+                txt_expo2.setText("Choosen Expo : " + lantai);
                 String idCategory = listCatID.get(i);
                 getDataExpo(idCategory, session.getParentID());
             }

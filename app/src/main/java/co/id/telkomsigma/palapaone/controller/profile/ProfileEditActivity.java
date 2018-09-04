@@ -48,7 +48,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         Typeface fontbold = Typeface.createFromAsset(ProfileEditActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         Typeface font = Typeface.createFromAsset(ProfileEditActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView ax = (TextView) findViewById(R.id.q);
@@ -120,6 +119,9 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Edit Profile");
     }
 
     @Override

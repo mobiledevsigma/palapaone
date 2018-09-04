@@ -3,6 +3,7 @@ package co.id.telkomsigma.palapaone.controller.event;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,11 +32,12 @@ import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.adapter.Adapter_acara;
-import co.id.telkomsigma.palapaone.adapter.Adapter_hari;
+
 import co.id.telkomsigma.palapaone.adapter.AgendaAdapter;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
 import co.id.telkomsigma.palapaone.model.AgendaModel;
 import co.id.telkomsigma.palapaone.model.RundownModel;
+import co.id.telkomsigma.palapaone.util.GPSHelper;
 import co.id.telkomsigma.palapaone.util.OnItemClickListener;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
@@ -51,17 +53,19 @@ public class EventFragment extends Fragment {
     private List<AgendaModel> modelList;
     private RecyclerView lv_time;
     private ListView lv_rundown;
-    private Adapter_hari adapterHari;
+    private AgendaAdapter adapterHari;
     private String idAgenda;
     private RundownModel rundownModel;
     private List<RundownModel> rundownModelList;
     private Adapter_acara adapterAcara;
+    private GPSHelper gpsHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_event, container, false);
+        gpsHelper = new GPSHelper(getActivity());
 
         LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -89,7 +93,26 @@ public class EventFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        Button btn_map = view.findViewById(R.id.button3);
+        btn_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDirection();
+            }
+        });
+
         return view;
+    }
+
+    private void getDirection() {
+        if (gpsHelper.canGetLocation()) {
+            double latitude = gpsHelper.getLatitude();
+            double longitude = gpsHelper.getLongitude();
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps?saddr=" + latitude + "," + longitude + "&daddr=" + "-7.790592" + "," + "110.366662"));
+            startActivity(intent);
+        }
     }
 
     public void getAgenda(String id) {
@@ -119,7 +142,7 @@ public class EventFragment extends Fragment {
                             }
                             LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getContext());
                             MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                            adapterHari = new Adapter_hari(getActivity(), dayList, new OnItemClickListener() {
+                            adapterHari = new AgendaAdapter(getActivity(), dayList, new OnItemClickListener() {
                                 @Override
                                 public void onItemClick(String id) {
                                     idAgenda = id;

@@ -57,16 +57,17 @@ public class SpeakerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Speakers");
 
+        if (session.getEventID().isEmpty()) {
+            allSpeaker();
+        } else {
             showSpeaker(session.getEventID());
-
-
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
                 onBackPressed();
                 return true;
             default:
@@ -74,16 +75,15 @@ public class SpeakerActivity extends AppCompatActivity {
         }
     }
 
-    private void showSpeaker(String id) {
-        AndroidNetworking.get(ConstantUtils.URL.SPEAKER + "{event_id}")
-                .addPathParameter("event_id", id)
+    private void allSpeaker() {
+        AndroidNetworking.get(ConstantUtils.URL.ALLSPEAKER)
                 .setTag("speaker")
                 .setPriority(Priority.LOW)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("hasil " +response);
+                        System.out.println("hasil " + response);
                         try {
                             listModel = new ArrayList<SpeakerModel>();
                             listPhoto = new ArrayList<String>();
@@ -106,7 +106,76 @@ public class SpeakerActivity extends AppCompatActivity {
                                 listPhoto.add(photo);
                                 listModel.add(model);
 
-                                System.out.println("speaker "+name);
+                                System.out.println("speaker " + name);
+                            }
+
+                            adapter = new SpeakerAdapter(getApplicationContext(), listModel);
+                            gv_speaker.setAdapter(adapter);
+                            gv_speaker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Intent intent = new Intent(getApplicationContext(), SpeakerDetailActivity.class);
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_ID, listModel.get(position).getSpeaker_id());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_NAME, listModel.get(position).getSpeaker_name());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_PHOTO, listModel.get(position).getSpeaker_photo());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_EMAIL, listModel.get(position).getSpeaker_email());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_PHONE, listModel.get(position).getSpeaker_phone());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_QUOTE, listModel.get(position).getSpeaker_quote());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_TOPIC, listModel.get(position).getSpeaker_topic());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_NATIONAL, listModel.get(position).getSpeaker_nationality());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_EVENT, listModel.get(position).getSpeaker_event());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_JOB, listModel.get(position).getSpeaker_job());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_DESC, listModel.get(position).getSpeaker_desc());
+                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_ABOUT, listModel.get(position).getSpeaker_about());
+                                    startActivity(intent);
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+    }
+
+    private void showSpeaker(String id) {
+        AndroidNetworking.get(ConstantUtils.URL.SPEAKER + "{event_id}")
+                .addPathParameter("event_id", id)
+                .setTag("speaker")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("hasil " + response);
+                        try {
+                            listModel = new ArrayList<SpeakerModel>();
+                            listPhoto = new ArrayList<String>();
+                            JSONArray jsonArray = response.getJSONArray(ConstantUtils.SPEAKER.TAG_TITLE);
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject object = jsonArray.getJSONObject(a);
+                                String id = object.getString(ConstantUtils.SPEAKER.TAG_ID);
+                                String name = object.getString(ConstantUtils.SPEAKER.TAG_NAME);
+                                String photo = object.getString(ConstantUtils.SPEAKER.TAG_PHOTO);
+                                String email = object.getString(ConstantUtils.SPEAKER.TAG_EMAIL);
+                                String phone = object.getString(ConstantUtils.SPEAKER.TAG_PHONE);
+                                String quotes = object.getString(ConstantUtils.SPEAKER.TAG_QUOTE);
+                                String topic = object.getString(ConstantUtils.SPEAKER.TAG_TOPIC);
+                                String national = object.getString(ConstantUtils.SPEAKER.TAG_NATIONAL);
+                                String event = object.getString(ConstantUtils.SPEAKER.TAG_EVENT);
+                                String job = object.getString(ConstantUtils.SPEAKER.TAG_JOB);
+                                String desc = object.getString(ConstantUtils.SPEAKER.TAG_DESC);
+                                String about = object.getString(ConstantUtils.SPEAKER.TAG_ABOUT);
+                                model = new SpeakerModel(id, name, photo, email, phone, quotes, topic, national, event, job, desc, about);
+                                listPhoto.add(photo);
+                                listModel.add(model);
+
+                                System.out.println("speaker " + name);
                             }
 
                             adapter = new SpeakerAdapter(getApplicationContext(), listModel);

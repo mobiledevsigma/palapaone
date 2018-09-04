@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class ContactUrgentAdapter extends BaseAdapter {
             btn_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    //Toast.makeText(mContext, "Data Not Found", Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -45,30 +45,9 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class MenuActivity extends AppCompatActivity {
 
-    //private ImageListener imageListener;
     private CarouselView carouselView;
     String[] lisImage ;
-
-    int[] sampleImages = {R.drawable.bannerku};
-    ImageListener imageListener = new ImageListener() {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(sampleImages[position]);
-        }
-    };
-//    ImageListener imageListener = new ImageListener() {
-//        @Override
-//        public void setImageForPosition(int position, ImageView imageView) {
-//            Picasso.with(getApplicationContext())
-//                    .load(lisImage.get(position))
-//                    //.placeholder(R.drawable.avatars)
-//                    .error(R.drawable.avatars)
-//                    .fit()
-//                    .centerCrop()
-//                    .into(imageView);
-//        }
-//    };
-    private TextView txt_msg, txt_presence, txt_event, txt_speaker, txt_modul, txt_media, txt_expo, txt_gallery, txt_partner, txt_help;
+    private TextView txt_name_menu, txt_msg, txt_presence, txt_event, txt_speaker, txt_modul, txt_media, txt_expo, txt_gallery, txt_partner, txt_help;
     private LinearLayout lay_presence, lay_event, lay_speaker, lay_modul, lay_media, lay_expo, lay_gallery, lay_partner, lay_help;
     private DictionaryManager dictionary;
     private HashMap<String, String> listDict;
@@ -88,6 +67,7 @@ public class MenuActivity extends AppCompatActivity {
         listDict = dictionary.getDictHome();
 
         lay_profile = findViewById(R.id.lay_profile);
+        txt_name_menu = findViewById(R.id.txt_name_menu);
         lay_inbox = findViewById(R.id.lay_inbox);
         carouselView = findViewById(R.id.carouselView);
         txt_msg = findViewById(R.id.txt_msg);
@@ -124,16 +104,7 @@ public class MenuActivity extends AppCompatActivity {
 
         getBanner(session.getEventID());
 
-//        carouselView.setPageCount(sampleImages.length);//banyak image
-//        carouselView.setImageListener(imageListener);
-//        carouselView.setImageClickListener(new ImageClickListener() {
-//            @Override
-//            public void onClick(int position) {
-//                Intent i = new Intent(MenuActivity.this, DetailBannerActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
+        txt_name_menu.setText(session.getName());
         txt_msg.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MSG));
         txt_presence.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_1));
         txt_event.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_2));
@@ -234,6 +205,12 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        System.exit(1);
+    }
+
     private void getBanner(String event_id) {
         AndroidNetworking.get(ConstantUtils.URL.BANNER + "{event_id}")
                 .addPathParameter("event_id", event_id)
@@ -254,16 +231,12 @@ public class MenuActivity extends AppCompatActivity {
                                 String img = object.getString(ConstantUtils.BANNER.TAG_IMAGE);
                                 String event = object.getString(ConstantUtils.BANNER.TAG_EVENT);
                                 String url = object.getString(ConstantUtils.BANNER.TAG_URL);
-                                //imagesURL[a] = img;
                                 lisImage[a] = img;
-                                System.out.println(lisImage[a]);
                             }
-
 
                             ImageListener imageListener = new ImageListener() {
                                 @Override
                                 public void setImageForPosition(int position, ImageView imageView) {
-
                                     Picasso.with(getApplicationContext())
                                             .load(lisImage[position])
                                             .error(R.drawable.avatars)
@@ -284,6 +257,4 @@ public class MenuActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 }

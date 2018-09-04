@@ -1,66 +1,88 @@
 package co.id.telkomsigma.palapaone.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
+import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.model.AgendaModel;
-import co.id.telkomsigma.palapaone.model.ExpoModel;
+import co.id.telkomsigma.palapaone.util.OnItemClickListener;
 
-public class AgendaAdapter extends BaseAdapter {
 
-    private Context mContext;
+/**
+ * Created by Biting on 2/27/2018.
+ */
+
+public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.MyViewHolder> {
+
+    MyViewHolder holder;
     private AgendaModel model;
-    private List<AgendaModel> listModel;
-    private TextView txt_expo, txt_cate;
-    private Typeface font, fontbold;
+    private List<AgendaModel> modelList;
+    private List<String> dayList;
+    private Context context;
+    private String idAgenda;
+    private OnItemClickListener onItemClickListener;
+    private int row_index = -1;
 
-    public AgendaAdapter(Context mContext, List<AgendaModel> listModel) {
-        this.mContext = mContext;
-        this.listModel = listModel;
-
-        fontbold = Typeface.createFromAsset(mContext.getAssets(), "fonts/AvenirLTStd-Medium.otf");
-        font = Typeface.createFromAsset(mContext.getAssets(), "fonts/AvenirLTStd-Book.otf");
+    public AgendaAdapter(Context context, List<String> dayList, OnItemClickListener onItemClickListener) {
+        this.dayList = dayList;
+        this.context = context;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
-    public int getCount() {
-        return listModel.size();
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // create a new view
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_list_dayx, parent, false);
+        MyViewHolder holder = new MyViewHolder(view);
+        return holder;
     }
 
     @Override
-    public Object getItem(int position) {
-        return listModel.get(position);
-    }
+    public void onBindViewHolder(MyViewHolder hold, final int position) {
+        holder = hold;
+        holder.titleTextView.setText(dayList.get(position).toString());
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
-        model = listModel.get(position);
-        if (view == null) {
-            LayoutInflater inflater = LayoutInflater.from(mContext);
-            view = inflater.inflate(R.layout.item_listacara, null);
+        holder.frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                idAgenda = dayList.get(position).toString();
+                onItemClickListener.onItemClick(idAgenda);
+                row_index = position;
+                notifyDataSetChanged();
+            }
+        });
+        if (row_index == position) {
+            holder.frameLayout.setBackgroundColor(Color.RED);
+            holder.titleTextView.setTextColor(Color.WHITE);
+        } else {
+            holder.frameLayout.setBackgroundColor(Color.GRAY);
+            holder.titleTextView.setTextColor(Color.BLACK);
         }
-        txt_expo = view.findViewById(R.id.txt_expo_name);
-        txt_cate = view.findViewById(R.id.txt_expo_category);
+    }
 
-        txt_expo.setTypeface(fontbold);
-        txt_cate.setTypeface(fontbold);
-//
-//        txt_expo.setText(model.getExpo_name());
-//        txt_cate.setText(model.getExpo_loca());
+    @Override
+    public int getItemCount() {
+        return dayList.size();
+    }
 
-        return view;
+    static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView titleTextView;
+        FrameLayout frameLayout;
+
+        MyViewHolder(View v) {
+            super(v);
+            frameLayout = v.findViewById(R.id.lay_kotak);
+            titleTextView = v.findViewById(R.id.textTime);
+        }
     }
 }

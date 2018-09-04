@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import co.id.telkomsigma.palapaone.R;
+import co.id.telkomsigma.palapaone.controller.event.EventActivity;
 import co.id.telkomsigma.palapaone.controller.expo.ExpoActivity;
 import co.id.telkomsigma.palapaone.controller.help.HelpActivity;
 import co.id.telkomsigma.palapaone.controller.media.MediaCenterActivity;
@@ -36,7 +37,16 @@ public class BeforeLoginActivity extends AppCompatActivity {
     Typeface font, fontbold;
 
     CarouselView carouselView;
-    String[] lisImage ;
+    String[] lisImage;
+    ImageListener imageListener = new ImageListener() {
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            Picasso.with(getApplicationContext())
+                    .load(lisImage[position])
+                    .error(R.drawable.avatars)
+                    .into(imageView);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +56,6 @@ public class BeforeLoginActivity extends AppCompatActivity {
         fontbold = Typeface.createFromAsset(BeforeLoginActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(BeforeLoginActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
-//        TextView toolbar = (TextView) findViewById(R.id.toolbartext);
-//        toolbar.setTypeface(fontbold);
         TextView schedule = (TextView) findViewById(R.id.text_presence);
         schedule.setTypeface(fontbold);
         TextView speaker = (TextView) findViewById(R.id.text_speaker);
@@ -76,8 +84,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
         getBanner(session.getParentID());
 
 
-
-      //  CarouselView goto_details= (CarouselView) findViewById(R.id.carouselView);
+        //  CarouselView goto_details= (CarouselView) findViewById(R.id.carouselView);
 //        goto_details.setImageClickListener(new ImageClickListener() {
 //            @Override
 //            public void onClick(int position) {
@@ -114,14 +121,14 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-//        LinearLayout goto_event = (LinearLayout) findViewById(R.id.layout_event);
-//        goto_presence.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View arg0) {
-//                Intent i = new Intent(getApplicationContext(), EventActivity.class);
-//                startActivity(i);
-//            }
-//        });
+        LinearLayout goto_event = (LinearLayout) findViewById(R.id.layout_event);
+        goto_event.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                Intent i = new Intent(getApplicationContext(), EventActivity.class);
+                startActivity(i);
+            }
+        });
 
         LinearLayout goto_a = (LinearLayout) findViewById(R.id.layout_speaker);
         goto_a.setOnClickListener(new View.OnClickListener() {
@@ -182,12 +189,6 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
     }
-//    ImageListener imageListener = new ImageListener() {
-//        @Override
-//        public void setImageForPosition(int position, ImageView imageView) {
-//            imageView.setImageResource(sampleImages[position]);
-//        }
-//    };
 
     private void getBanner(String event_id) {
         AndroidNetworking.get(ConstantUtils.URL.BANNER + "{event_id}")
@@ -201,7 +202,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
                         try {
                             JSONArray jsonArray = response.getJSONArray(ConstantUtils.BANNER.TAG_TITLE);
 
-                            System.out.println("coba"+jsonArray);
+                            System.out.println("coba" + jsonArray);
                             lisImage = new String[jsonArray.length()];
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject object = jsonArray.getJSONObject(a);
@@ -209,12 +210,9 @@ public class BeforeLoginActivity extends AppCompatActivity {
                                 String img = object.getString(ConstantUtils.BANNER.TAG_IMAGE);
                                 String event = object.getString(ConstantUtils.BANNER.TAG_EVENT);
                                 String url = object.getString(ConstantUtils.BANNER.TAG_URL);
-                                //imagesURL[a] = img;
+
                                 lisImage[a] = img;
-                                System.out.println(lisImage[a]);
                             }
-
-
                             carouselView.setImageListener(imageListener);
                             carouselView.setPageCount(lisImage.length);
                         } catch (JSONException e) {
@@ -228,15 +226,4 @@ public class BeforeLoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    ImageListener imageListener = new ImageListener() {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-
-            Picasso.with(getApplicationContext())
-                    .load(lisImage[position])
-                    .error(R.drawable.avatars)
-                    .into(imageView);
-        }
-    };
 }

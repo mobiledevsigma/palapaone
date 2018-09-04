@@ -26,6 +26,8 @@ public class DetailInboxActivity extends AppCompatActivity {
         schedullee.setTypeface(fontbold);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Inbox");
     }
     @Override
     public boolean onSupportNavigateUp(){

@@ -75,6 +75,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Login");
     }
 
     private void sendAuth(String user, String pass) {
@@ -108,7 +112,9 @@ public class LoginActivity extends AppCompatActivity {
                                 session.setUserSession(userid, username, name, email, phone, about, quote, job, office, role, eventid, event, parent, nasID, nasName);
 
                                 Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
                             }
