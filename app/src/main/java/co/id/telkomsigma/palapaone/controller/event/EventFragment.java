@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -31,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
-import co.id.telkomsigma.palapaone.adapter.Adapter_acara;
+import co.id.telkomsigma.palapaone.adapter.RundownAdapter;
 
 import co.id.telkomsigma.palapaone.adapter.AgendaAdapter;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
@@ -57,7 +55,7 @@ public class EventFragment extends Fragment {
     private String idAgenda;
     private RundownModel rundownModel;
     private List<RundownModel> rundownModelList;
-    private Adapter_acara adapterAcara;
+    private RundownAdapter adapterAcara;
     private GPSHelper gpsHelper;
 
     @Override
@@ -191,7 +189,7 @@ public class EventFragment extends Fragment {
                                 rundownModelList.add(rundownModel);
                             }
 
-                            adapterAcara = new Adapter_acara(getActivity().getApplicationContext(), rundownModelList);
+                            adapterAcara = new RundownAdapter(getActivity().getApplicationContext(), rundownModelList);
                             lv_rundown.setAdapter(adapterAcara);
                             lv_rundown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
