@@ -15,7 +15,6 @@ import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.model.GalleryModel;
-import co.id.telkomsigma.palapaone.model.SpeakerModel;
 
 public class GalleryAdapter extends BaseAdapter {
     private List<GalleryModel> mDataList;
@@ -75,7 +74,7 @@ public class GalleryAdapter extends BaseAdapter {
             txt_date.setText(model.getGallery_date());
             txt_caption.setText(model.getGallery_caption());
         } else {
-            mImageView.setImageResource(R.drawable.avatars);
+            mImageView.setImageResource(R.drawable.icon_avatars);
         }
         return view;
     }
@@ -83,7 +82,7 @@ public class GalleryAdapter extends BaseAdapter {
     private void downloadImage(Context context, String url, ImageView image) {
         Picasso.with(context)
                 .load(url)
-                .error(R.drawable.avatars)
+                .error(R.drawable.icon_avatars)
                 .into(image);
     }
 }

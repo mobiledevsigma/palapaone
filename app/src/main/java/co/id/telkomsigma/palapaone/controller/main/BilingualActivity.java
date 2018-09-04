@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -35,6 +37,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class BilingualActivity extends AppCompatActivity {
 
+    private boolean doubleBackToExitPressedOnce = false;
     private static final int REQUEST_PERMISSIONS = 1;
     private static final int PERMISSION_ALL = 100;
     private Button btn_english;
@@ -269,5 +272,25 @@ public class BilingualActivity extends AppCompatActivity {
         } else {
             Log.d("hasil code", String.valueOf(requestCode));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Klik lagi untuk ke menu utama", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

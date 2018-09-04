@@ -74,7 +74,7 @@ public class SpeakerAdapter extends BaseAdapter {
             txt_title.setText(model.getSpeaker_name());
             txt_job.setText(model.getSpeaker_job());
         } else {
-            mImageView.setImageResource(R.drawable.avatars);
+            mImageView.setImageResource(R.drawable.icon_avatars);
         }
 
         return view;
@@ -83,7 +83,7 @@ public class SpeakerAdapter extends BaseAdapter {
     private void downloadImage(Context context, String url, ImageView image) {
         Picasso.with(context)
                 .load(url)
-                .error(R.drawable.avatars)
+                .error(R.drawable.icon_avatars)
                 .into(image);
     }
 }

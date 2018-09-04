@@ -2,7 +2,6 @@ package co.id.telkomsigma.palapaone.controller.main;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,14 +16,12 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.id.telkomsigma.palapaone.R;
@@ -239,7 +236,7 @@ public class MenuActivity extends AppCompatActivity {
                                 public void setImageForPosition(int position, ImageView imageView) {
                                     Picasso.with(getApplicationContext())
                                             .load(lisImage[position])
-                                            .error(R.drawable.avatars)
+                                            .error(R.drawable.icon_avatars)
                                             .into(imageView);
                                 }
                             };

@@ -3,6 +3,7 @@ package co.id.telkomsigma.palapaone.controller.main;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +35,9 @@ import co.id.telkomsigma.palapaone.util.SessionManager;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class BeforeLoginActivity extends AppCompatActivity {
-    Typeface font, fontbold;
+
+    private Typeface font, fontbold;
+    private boolean doubleBackToExitPressedOnce = false;
 
     CarouselView carouselView;
     String[] lisImage;
@@ -43,7 +46,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
         public void setImageForPosition(int position, ImageView imageView) {
             Picasso.with(getApplicationContext())
                     .load(lisImage[position])
-                    .error(R.drawable.avatars)
+                    .error(R.drawable.icon_avatars)
                     .into(imageView);
         }
     };
@@ -102,16 +105,6 @@ public class BeforeLoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
-//        LinearLayout goto_event= (LinearLayout) findViewById(R.id.layout_event);
-//        goto_event.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View arg0) {
-//                Intent i = new Intent(getApplicationContext(), EventMapActivity.class);
-//                startActivity(i);
-//            }
-//        });
 
         LinearLayout goto_presence = (LinearLayout) findViewById(R.id.layout_qr);
         goto_presence.setOnClickListener(new View.OnClickListener() {
@@ -225,5 +218,25 @@ public class BeforeLoginActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Klik lagi untuk ke menu utama", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

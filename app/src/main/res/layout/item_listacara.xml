@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
-                android:src="@drawable/bell2" />
+                android:src="@drawable/icon_bell_off" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:visibility="gone"
-                android:src="@drawable/arrow" />
+                android:src="@drawable/icon_arrow" />
         </LinearLayout>
     </LinearLayout>
 

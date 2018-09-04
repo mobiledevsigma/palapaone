@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -14,7 +13,6 @@ import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.model.PartnerModel;
-import co.id.telkomsigma.palapaone.model.SpeakerModel;
 
 public class PartnerAdapter extends BaseAdapter {
     private List<PartnerModel> mDataList;
@@ -66,7 +64,7 @@ public class PartnerAdapter extends BaseAdapter {
             downloadImage(mContext, imgURL, mImageView);
             mImageView.setBackground(null);
         } else {
-            mImageView.setImageResource(R.drawable.avatars);
+            mImageView.setImageResource(R.drawable.icon_avatars);
         }
 
         return view;
@@ -75,7 +73,7 @@ public class PartnerAdapter extends BaseAdapter {
     private void downloadImage(Context context, String url, ImageView image) {
         Picasso.with(context)
                 .load(url)
-                .error(R.drawable.avatars)
+                .error(R.drawable.icon_avatars)
                 .into(image);
     }
 }

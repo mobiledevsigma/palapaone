@@ -29,11 +29,9 @@ import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.adapter.MateriAdapter;
-import co.id.telkomsigma.palapaone.adapter.SpeakerAdapter;
 import co.id.telkomsigma.palapaone.controller.asking.AskingActivity;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
 import co.id.telkomsigma.palapaone.model.MateriModel;
-import co.id.telkomsigma.palapaone.model.SpeakerModel;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class SpeakerDetailActivity extends AppCompatActivity {
@@ -171,7 +169,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
     private void downloadImage(Context context, String url, ImageView image) {
         Picasso.with(context)
                 .load(url)
-                .error(R.drawable.avatars)
+                .error(R.drawable.icon_avatars)
                 .into(image);
     }
 }

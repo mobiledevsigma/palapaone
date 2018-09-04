@@ -64,7 +64,7 @@ public class ExpoDetailActivity extends AppCompatActivity {
     private void downloadImage(Context context, String url, ImageView image) {
         Picasso.with(context)
                 .load(url)
-                .error(R.drawable.avatars)
+                .error(R.drawable.icon_avatars)
                 .into(image);
     }
 }
