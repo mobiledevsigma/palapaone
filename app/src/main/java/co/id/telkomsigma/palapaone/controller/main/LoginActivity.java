@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private TextInputLayout txt_username;
     private TextInputLayout txt_pass;
     private EditText et_username;
@@ -47,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         dictionary = new DictionaryManager(getApplicationContext());
 
+        progressBar = findViewById(R.id.progressBar);
         txt_username = findViewById(R.id.txt_username);
         txt_pass = findViewById(R.id.txt_password);
         et_username = findViewById(R.id.et_username);
@@ -59,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         et_pass.setTypeface(fontbold);
         btn_login.setTypeface(fontbold);
 
+        progressBar.setVisibility(View.GONE);
         txt_username.setHint(dictionary.getDictUname());
         txt_pass.setHint(dictionary.getDictPwd());
         btn_login.setText(dictionary.getDictLogin());
@@ -82,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendAuth(String user, String pass) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.post(ConstantUtils.URL.LOGIN)
                 .addBodyParameter("username", user)
                 .addBodyParameter("password", pass)
@@ -116,15 +121,19 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             } else {
+                                progressBar.setVisibility(View.GONE);
                                 Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
                             }
+                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                     @Override
                     public void onError(ANError error) {
                         // handle error
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

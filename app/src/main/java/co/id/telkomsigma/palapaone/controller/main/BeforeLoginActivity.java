@@ -82,7 +82,6 @@ public class BeforeLoginActivity extends AppCompatActivity {
 
         SessionManager session = new SessionManager(getApplicationContext());
 
-
         carouselView = findViewById(R.id.carouselView);
         getBanner(session.getParentID());
 

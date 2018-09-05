@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -26,21 +28,24 @@ import co.id.telkomsigma.palapaone.util.SessionManager;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class EventActivity extends AppCompatActivity {
-    Toolbar toolbar;
-    TabLayout tabLayout;
-    ViewPager viewPager;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
     private SessionManager sessionManager;
     private ViewPagerAdapter adapter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sessionManager = new SessionManager(getApplicationContext());
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_event);
 
+        progressBar = findViewById(R.id.progressBar);
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewpager);
 
+        progressBar.setVisibility(View.GONE);
         if (sessionManager.getParentID().isEmpty()) {
             getEvent("2");
         } else {
@@ -59,6 +64,7 @@ public class EventActivity extends AppCompatActivity {
     }
 
     private void getEvent(String id) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.EVENT + "{parent_id}")
                 .addPathParameter("parent_id", id)
                 .setTag("Event")
@@ -92,6 +98,7 @@ public class EventActivity extends AppCompatActivity {
 
                                 tabLayout.setupWithViewPager(viewPager);
                             }
+                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -99,7 +106,7 @@ public class EventActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
-
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

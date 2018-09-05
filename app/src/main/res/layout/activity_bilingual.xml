@@ -1,100 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:orientation="vertical"
-    android:weightSum="2">
+    android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.33"
-        android:orientation="vertical"
-        android:weightSum="2">
-
-        <ImageView
-            android:id="@+id/imageView40"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/bg_bilingual" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="1.67"
         android:orientation="vertical"
         android:weightSum="2">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:orientation="vertical">
+            android:layout_weight="0.33"
+            android:orientation="vertical"
+            android:weightSum="2">
 
-            <TextView
-                android:id="@+id/txt_choose"
+            <ImageView
+                android:id="@+id/imageView40"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="@fonts/AvenirLTStd-Medium.otf"
-                android:gravity="left|center"
-                android:text="Choose Language"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/bg_bilingual" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:layout_weight="1.67"
+            android:orientation="vertical"
             android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="1.5"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btn_english"
+                <TextView
+                    android:id="@+id/txt_choose"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/mybutton"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
                     android:fontFamily="@fonts/AvenirLTStd-Medium.otf"
-                    android:text="English"
-                    android:textAllCaps="false"
-                    android:textColor="#FFF"
+                    android:gravity="left|center"
+                    android:text="Choose Language"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_weight="0.5"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-                <Button
-                    android:id="@+id/btn_indo"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/mybutton2"
-                    android:fontFamily="@fonts/AvenirLTStd-Medium.otf"
-                    android:text="Indonesia"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn_english"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/mybutton"
+                        android:fontFamily="@fonts/AvenirLTStd-Medium.otf"
+                        android:text="English"
+                        android:textAllCaps="false"
+                        android:textColor="#FFF"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn_indo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/mybutton2"
+                        android:fontFamily="@fonts/AvenirLTStd-Medium.otf"
+                        android:text="Indonesia"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</FrameLayout>

@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -53,6 +54,7 @@ public class BilingualActivity extends AppCompatActivity {
             Manifest.permission.CALL_PHONE,
             Manifest.permission.CAMERA
     };
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +67,11 @@ public class BilingualActivity extends AppCompatActivity {
         dictionary = new DictionaryManager(getApplicationContext());
         session = new SessionManager(getApplicationContext());
 
+        progressBar = findViewById(R.id.progressBar);
         btn_english = findViewById(R.id.btn_english);
         btn_indo = findViewById(R.id.btn_indo);
         //
+        progressBar.setVisibility(View.GONE);
         btn_english.setTypeface(fontbold);
         btn_indo.setTypeface(fontbold);
 
@@ -114,6 +118,7 @@ public class BilingualActivity extends AppCompatActivity {
     }
 
     private void getLanguage(String kode) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.DICTIONARY + "{bahasa}")
                 .addPathParameter("bahasa", kode)
                 .setTag("bahasa")
@@ -150,6 +155,7 @@ public class BilingualActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
