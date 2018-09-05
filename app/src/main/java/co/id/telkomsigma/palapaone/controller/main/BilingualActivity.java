@@ -42,6 +42,7 @@ public class BilingualActivity extends AppCompatActivity {
     private static final int PERMISSION_ALL = 100;
     private Button btn_english;
     private Button btn_indo;
+    private int getClick;
     private DictionaryManager dictionary;
     private SessionManager session;
     private Typeface font, fontbold;
@@ -80,30 +81,22 @@ public class BilingualActivity extends AppCompatActivity {
 
         btn_english.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-//                if (isPermissionEnabled()) {
-//                    getLanguage("en");
-//                } else {
-//                    requestStoragePermission();
-//                }
                 if(!hasPermissions(BilingualActivity.this, PERMISSIONS)){
                     ActivityCompat.requestPermissions(BilingualActivity.this, PERMISSIONS, PERMISSION_ALL);
                 } else {
                     getLanguage("en");
+                    getClick = 0;
                 }
             }
         });
 
         btn_indo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-//                if (isPermissionEnabled()) {
-//                    getLanguage("id");
-//                } else {
-//                    requestStoragePermission();
-//                }
                 if(!hasPermissions(BilingualActivity.this, PERMISSIONS)){
                     ActivityCompat.requestPermissions(BilingualActivity.this, PERMISSIONS, PERMISSION_ALL);
                 } else {
                     getLanguage("en");
+                    getClick = 1;
                 }
             }
         });
@@ -144,6 +137,7 @@ public class BilingualActivity extends AppCompatActivity {
                             String menu8 = response.getString(ConstantUtils.DICTIONARY.TAG_MENU_8);
                             String menu9 = response.getString(ConstantUtils.DICTIONARY.TAG_MENU_9);
                             dictionary.setLanguageMain(uname, pwd, login, msg, menu1, menu2, menu3, menu4, menu5, menu6, menu7, menu8, menu9);
+                            session.setLanguage();
 
                             if (session.isLogin()) {
                                 Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
@@ -175,37 +169,6 @@ public class BilingualActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void showDialogPerm(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setCancelable(false)
-                .create()
-                .show();
-    }
-
-    public boolean isPermissionEnabled() {
-        return ContextCompat.checkSelfPermission(BilingualActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    public void requestStoragePermission() {
-//        ActivityCompat.requestPermissions(SplashScreen.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
-        showDialogPerm("The Permissions are required for this application. Please allow storage permission.",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == DialogInterface.BUTTON_POSITIVE) {
-                            ActivityCompat.requestPermissions(BilingualActivity.this,
-                                    new String[]{Manifest.permission.CALL_PHONE,
-                                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                            Manifest.permission.ACCESS_FINE_LOCATION,
-                                            Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_PERMISSIONS);
-                        }
-                    }
-                });
-        return;
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         //Log.d(TAG, "Permission callback called-------");
@@ -228,23 +191,17 @@ public class BilingualActivity extends AppCompatActivity {
                         || perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     //Log.d(TAG, "all permission granted");
                     // process the normal flow
-//                    btn_english.setOnClickListener(new View.OnClickListener() {
-//                        public void onClick(View arg0) {
-//                            getLanguage("en");
-//                        }
-//                    });
-//
-//                    btn_indo.setOnClickListener(new View.OnClickListener() {
-//                        public void onClick(View arg0) {
-//                            getLanguage("id");
-//                        }
-//                    });
+                    if (getClick == 0) {
+                        Intent intent = new Intent(getApplicationContext(), BeforeLoginActivity.class);
+                        startActivity(intent);
+                        getLanguage("en");
+                    } else if (getClick == 1){
+                        Intent intent = new Intent(getApplicationContext(), BeforeLoginActivity.class);
+                        startActivity(intent);
+                        getLanguage("en");
+                    }
                     //else any one or both the permissions are not granted
                 } else {
-                    //Log.d(TAG, "Some permissions are not granted ask again ");
-                    //permission is denied (this is the first time, when "never ask again" is not checked) so ask again explaining the usage of permission
-                    // shouldShowRequestPermissionRationale will return true
-                    //show the dialog or snackbar saying its necessary and try again otherwise proceed with setup.
                     if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         showDialogOK("The Permissions are required for this application",
                                 new DialogInterface.OnClickListener() {

@@ -17,6 +17,7 @@ public class SessionManager {
 
     private static final String PREFER_NAME = "PalapaOne";
     private static final String IS_LOGIN = "IsLoggedIn";
+    private static final String IS_LANGUAGE = "IsLanguage";
     SharedPreferences pref;
     Editor editor;
     Context _context;
@@ -54,7 +55,7 @@ public class SessionManager {
     }
 
 
-    public void updateUser(String name, String email, String about,String quote, String job) {
+    public void updateUser(String name, String email, String about, String quote, String job) {
 
         editor.putString(ConstantUtils.LOGIN.TAG_NAME, name);
         editor.putString(ConstantUtils.LOGIN.TAG_EMAIL, email);
@@ -108,15 +109,19 @@ public class SessionManager {
     public String getEventID() {
         return pref.getString(ConstantUtils.LOGIN.TAG_EVENTID, "");
     }
+
     public String getEvent() {
         return pref.getString(ConstantUtils.LOGIN.TAG_EVENT, "2");
     }
+
     public String getParentID() {
         return pref.getString(ConstantUtils.LOGIN.TAG_PARENT, "1");
     }
+
     public String getNationalID() {
         return pref.getString(ConstantUtils.LOGIN.TAG_NATIONAL_ID, "");
     }
+
     public String getNationalName() {
         return pref.getString(ConstantUtils.LOGIN.TAG_NATIONAL_NAME, "");
     }
@@ -138,5 +143,13 @@ public class SessionManager {
 
     public boolean isLogin() {
         return pref.getBoolean(IS_LOGIN, false);
+    }
+
+    public void setLanguage() {
+        editor.putBoolean(IS_LANGUAGE, true);
+    }
+
+    public boolean isLanguage() {
+        return pref.getBoolean(IS_LANGUAGE, false);
     }
 }
