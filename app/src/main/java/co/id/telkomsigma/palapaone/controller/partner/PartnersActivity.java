@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -31,6 +32,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class PartnersActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private TextView txt_partner;
     private GridView gridView;
     private PartnerModel model;
@@ -47,14 +49,12 @@ public class PartnersActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_partner);
         session = new SessionManager(getApplicationContext());
+        progressBar = findViewById(R.id.progressBar);
         txt_partner = findViewById(R.id.txt_partner);
         gridView = findViewById(R.id.gv_partner);
         //
+        progressBar.setVisibility(View.GONE);
         txt_partner.setTypeface(fontbold);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Partners");
 
         if (session.getParentID().isEmpty()) {
             getData("1");
@@ -62,6 +62,9 @@ public class PartnersActivity extends AppCompatActivity {
             getData(session.getParentID());
         }
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Partners");
     }
 
     @Override
@@ -77,6 +80,7 @@ public class PartnersActivity extends AppCompatActivity {
     }
 
     private void getData(String event_id) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.PARTNER + "{event_id}")
                 .addPathParameter("event_id", event_id)
                 .setTag("Media")
@@ -122,6 +126,7 @@ public class PartnersActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override

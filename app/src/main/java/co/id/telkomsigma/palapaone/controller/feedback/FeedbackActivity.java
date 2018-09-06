@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class FeedbackActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private TextView textView;
     private ListView listView;
     private Button button;
@@ -41,12 +43,14 @@ public class FeedbackActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
+        progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.txt_feedback);
         listView = findViewById(R.id.lv_feedback);
         button = findViewById(R.id.btn_submit_fb);
 
         getData("2");
 
+        progressBar.setVisibility(View.GONE);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +77,7 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     private void getData(String id) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.FEEDBACK + "{type_id}")
                 .addPathParameter("type_id", id)
                 .setTag("Feedback")
@@ -96,6 +101,7 @@ public class FeedbackActivity extends AppCompatActivity {
                             }
                             adapter = new FeedbackAdapter(getApplicationContext(), modelList);
                             listView.setAdapter(adapter);
+                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -31,6 +32,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class SpeakerActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private TextView txt_speaker_title;
     private GridView gv_speaker;
     private SpeakerAdapter adapter;
@@ -48,9 +50,11 @@ public class SpeakerActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
 
         setContentView(R.layout.activity_speaker);
+        progressBar = findViewById(R.id.progressBar);
         txt_speaker_title = findViewById(R.id.txt_speaker_title);
         gv_speaker = findViewById(R.id.gv_speaker);
         //
+        progressBar.setVisibility(View.GONE);
         txt_speaker_title.setTypeface(fontbold);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,6 +80,7 @@ public class SpeakerActivity extends AppCompatActivity {
     }
 
     private void allSpeaker() {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.ALLSPEAKER)
                 .setTag("speaker")
                 .setPriority(Priority.LOW)
@@ -134,11 +139,12 @@ public class SpeakerActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(ANError anError) {
-
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

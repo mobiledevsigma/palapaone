@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -32,6 +33,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class GalleryActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private TextView textView;
     private GridView gridView;
     private GalleryModel model;
@@ -41,7 +43,6 @@ public class GalleryActivity extends AppCompatActivity {
     private Button button;
     private Typeface font, fontbold;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +50,13 @@ public class GalleryActivity extends AppCompatActivity {
         fontbold = Typeface.createFromAsset(GalleryActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(GalleryActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
+        progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.txt_gallery);
         gridView = findViewById(R.id.gv_gallery);
         button = findViewById(R.id.btn_photo);
         session = new SessionManager(getApplicationContext());
 
+        progressBar.setVisibility(View.GONE);
         button.setTypeface(fontbold);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +85,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     private void getData(final String event_id) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.GALLERY + "{event_id}")
                 .addPathParameter("event_id", event_id)
                 .setTag("Gallery")
@@ -127,6 +131,7 @@ public class GalleryActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override

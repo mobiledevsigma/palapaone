@@ -18,6 +18,14 @@ public class MateriModel {
         this.materi_speakID = materi_speakID;
     }
 
+    public String getMateri_id() {
+        return materi_id;
+    }
+
+    public void setMateri_id(String materi_id) {
+        this.materi_id = materi_id;
+    }
+
     public String getMateri_title() {
         return materi_title;
     }

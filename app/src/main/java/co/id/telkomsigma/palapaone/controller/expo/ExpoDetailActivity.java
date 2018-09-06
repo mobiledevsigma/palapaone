@@ -39,14 +39,14 @@ public class ExpoDetailActivity extends AppCompatActivity {
         txt_desc.setTypeface(fontbold);
         button.setTypeface(fontbold);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Exhibition");
-
         Intent intent = getIntent();
         downloadImage(getApplicationContext(), intent.getStringExtra(ConstantUtils.EXPO.TAG_PROD), imageView);
         txt_name.setText(intent.getStringExtra(ConstantUtils.EXPO.TAG_NAME));
         txt_desc.setText(intent.getStringExtra(ConstantUtils.EXPO.TAG_DESC));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Exhibition");
     }
 
     @Override

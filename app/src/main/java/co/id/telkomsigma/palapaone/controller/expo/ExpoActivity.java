@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -34,6 +35,7 @@ import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 public class ExpoActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private TextView txt_expo;
     private LinearLayout lay_expo_cat;
     private TextView txt_choose, txt_expo2;
@@ -52,18 +54,17 @@ public class ExpoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expo);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Exhibition");
-
         fontbold = Typeface.createFromAsset(ExpoActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(ExpoActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
+        progressBar = findViewById(R.id.progressBar);
         txt_expo = findViewById(R.id.txt_expo_name);
         lay_expo_cat = findViewById(R.id.lay_expo_cat);
         txt_choose = findViewById(R.id.txt_spin_expo);
         txt_expo2 = findViewById(R.id.txt_expo_2);
         lv_expo = findViewById(R.id.lv_expo);
+
+        progressBar.setVisibility(View.GONE);
         session = new SessionManager(getApplicationContext());
 
         if (session.getParentID().isEmpty()) {
@@ -90,6 +91,10 @@ public class ExpoActivity extends AppCompatActivity {
                 getDataExpo(idCategory, session.getParentID());
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Exhibition");
     }
 
     @Override
@@ -105,6 +110,7 @@ public class ExpoActivity extends AppCompatActivity {
     }
 
     private void getExpoCat(String id) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.CAT_EXPO + "{event_id}")
                 .addPathParameter("event_id", id)
                 .setTag("Expo")
@@ -122,6 +128,7 @@ public class ExpoActivity extends AppCompatActivity {
                                 listCatID.add(id);
                                 listCatName.add(name);
                             }
+                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -129,12 +136,13 @@ public class ExpoActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
-
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
 
     private void getDataExpo(String idCat, String idEvent) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.EXPO + "{category_id}/{event_id}")
                 .addPathParameter("category_id", idCat)
                 .addPathParameter("event_id", idEvent)
@@ -171,6 +179,7 @@ public class ExpoActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
+                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class MateriActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private TextView txt_materi;
     private ListView listView;
     private MateriModel model;
@@ -53,16 +55,18 @@ public class MateriActivity extends AppCompatActivity {
         fontbold = Typeface.createFromAsset(MateriActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(MateriActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
+        progressBar = findViewById(R.id.progressBar);
         txt_materi = findViewById(R.id.txt_materi);
         listView = findViewById(R.id.lv_materi);
         //
+        progressBar.setVisibility(View.GONE);
         txt_materi.setTypeface(fontbold);
+
+        getMateri();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Documents");
-
-        getMateri();
     }
 
     @Override
@@ -78,6 +82,7 @@ public class MateriActivity extends AppCompatActivity {
     }
 
     private void getMateri() {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.MATERI)
                 .setTag("Materi")
                 .setPriority(Priority.LOW)
@@ -105,49 +110,21 @@ public class MateriActivity extends AppCompatActivity {
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    String linkDownload = listModel.get(position).getMateri_file();
-                                    Toast.makeText(getApplicationContext(),"Downloading file..",Toast.LENGTH_SHORT).show();
-                                    String destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
-                                    final String fileName = linkDownload.split("/")[linkDownload.split("/").length-1];
-
-                                    destination += fileName;
-                                    final Uri uri = Uri.parse("file://" + destination);
-
-
-                                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(linkDownload));
-                                    request.setDescription("Download " + fileName);
-                                    request.setTitle(fileName);
-
-                                    //set destination
-                                    request.setDestinationUri(uri);
-
-                                    // get download service and enqueue file
-                                    final DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                                    final long downloadId = manager.enqueue(request);
-
-                                    BroadcastReceiver onComplete = new BroadcastReceiver() {
-                                        public void onReceive(Context ctxt, Intent intent) {
-
-                                            Toast.makeText(getApplicationContext(),"File downloaded",Toast.LENGTH_SHORT).show();
-                                            NotificationCompat.Builder mBuilder =
-                                                    new NotificationCompat.Builder(getApplicationContext())
-                                                            .setSmallIcon(R.mipmap.ic_launcher)
-                                                            .setContentTitle(fileName)
-                                                            .setContentText("Download completed");
-
-
-                                            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                            notificationManager.notify(682736, mBuilder.build());
-                                        }
-                                    };
-                                    //register receiver for when .apk download is compete
-                                    registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+                                    Intent intent = new Intent(getApplicationContext(), MateriOptMenuActivity.class);
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_ID, listModel.get(position).getMateri_id());
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_NAME, listModel.get(position).getMateri_title());
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_FILE, listModel.get(position).getMateri_file());
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_SPEAK_ID, listModel.get(position).getMateri_speakID());
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_SPEAK_NAME, listModel.get(position).getMateri_author());
+                                    startActivity(intent);
                                 }
                             });
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override

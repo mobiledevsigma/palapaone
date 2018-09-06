@@ -28,7 +28,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/txt_asking"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -46,7 +46,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/et_asking"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -67,7 +67,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button6"
+                    android:id="@+id/btn_submit_asking"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
