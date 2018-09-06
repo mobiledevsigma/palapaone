@@ -7,6 +7,7 @@
     android:background="#E6E7E9"
     android:orientation="vertical"
     android:weightSum="1">
+    <!--edit-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,6 +21,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="7dp"
             android:layout_weight="1.6"
             android:orientation="horizontal"
             android:weightSum="2">
@@ -42,8 +44,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
                 android:layout_weight="0.7"
                 android:orientation="vertical"
+                android:padding="3dp"
                 android:weightSum="4">
 
                 <LinearLayout
@@ -99,12 +103,12 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txt_speaker_email"
+                        android:id="@+id/txt_speaker_job"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="left|center"
-                        android:text="Email" />
+                        android:text="Job's Speaker" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,14 +117,6 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/txt_speaker_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="left|center"
-                        android:text="081234568"
-                        android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -129,6 +125,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="7dp"
             android:layout_weight="0.4"
             android:orientation="vertical"
             android:weightSum="3">
@@ -137,14 +134,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:layout_weight="1.15"
+                android:layout_weight="1.05"
                 android:orientation="vertical"
                 android:weightSum="3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.1"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/txt_speaker_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.75"
+                        android:gravity="left|center"
+                        android:text="Email" />
+
+                    <TextView
+                        android:id="@+id/txt_speaker_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.75"
+                        android:gravity="right|center"
+                        android:text="081234568"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.9"
                     android:orientation="horizontal">
 
                     <TextView
@@ -152,8 +175,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="left|center"
-                        android:text="about spreaker" />
+                        android:gravity="top|left|center"
+                        android:hint="text"
+                        android:text="About spreaker" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -170,28 +194,13 @@
                         android:gravity="left|center"
                         android:text="Quotes' Speaker" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txt_speaker_job"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="left|center"
-                        android:text="Job's Speaker" />
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:layout_weight="0.55"
+                android:layout_weight="0.65"
                 android:orientation="vertical"
                 android:weightSum="2">
 

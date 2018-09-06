@@ -24,6 +24,7 @@ public interface ConstantUtils {
         String LOGIN = SERVER + "api/login/auth";
         String PROFILE_EDIT = SERVER + "api/profile/update";
         String FEEDBACK = SERVER + "api/feedback/content/";
+        String SEND_FEEDBACK = SERVER + "api/feedback/submit";
         String AGENDA = SERVER + "api/event/getagenda/";
         String EVENT = SERVER + "api/event/getevent/";
         String RUNDOWN = SERVER + "api/schedule/rundown/";
@@ -191,6 +192,14 @@ public interface ConstantUtils {
         String TAG_QUESTION = "feedback_question";
         String TAG_EVENTID = "event_id";
         String TAG_DATE = "created_date";
+    }
+
+    interface SUBMIT_FB {
+        String TAG_TITLE = "feedback";
+        String TAG_ID = "feedback_id";
+        String TAG_SCORE = "feedback_type";
+        String TAG_TEXT = "feedback_question";
+        String TAG_BY = "event_id";
     }
 
     interface EVENT {

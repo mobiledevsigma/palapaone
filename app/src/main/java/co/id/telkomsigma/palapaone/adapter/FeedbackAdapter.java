@@ -62,12 +62,15 @@ public class FeedbackAdapter extends BaseAdapter {
         txt_quest.setTypeface(fontbold);
         txt_quest.setText(model.getFeedback_question());
 
-//        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//                Toast.makeText(mContext, rating + "", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                Integer pos = (Integer) ratingBar.getTag();
+                FeedbackModel feedbackModel = listModel.get(pos);
+                int value = Math.round(rating);
+                ratingBar.setRating(value);
+            }
+        });
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

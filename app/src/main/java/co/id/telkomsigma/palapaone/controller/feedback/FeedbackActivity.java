@@ -16,6 +16,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ import java.util.List;
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.adapter.FeedbackAdapter;
 import co.id.telkomsigma.palapaone.model.FeedbackModel;
+import co.id.telkomsigma.palapaone.util.SessionManager;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class FeedbackActivity extends AppCompatActivity {
@@ -38,17 +40,25 @@ public class FeedbackActivity extends AppCompatActivity {
     private FeedbackModel model;
     private List<FeedbackModel> modelList;
     private FeedbackAdapter adapter;
+    private String typeFeedback, idUser;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
+        sessionManager = new SessionManager(getApplicationContext());
+
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.txt_feedback);
         listView = findViewById(R.id.lv_feedback);
         button = findViewById(R.id.btn_submit_fb);
 
-        getData("2");
+        idUser = sessionManager.getId();
+        Intent intent = getIntent();
+        typeFeedback = intent.getStringExtra(ConstantUtils.FEEDBACK.TAG_TYPE);
+        String eventID = sessionManager.getEventID();
+        getData(eventID);
 
         progressBar.setVisibility(View.GONE);
         button.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +78,6 @@ public class FeedbackActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
                 onBackPressed();
                 return true;
             default:
@@ -78,8 +87,8 @@ public class FeedbackActivity extends AppCompatActivity {
 
     private void getData(String id) {
         progressBar.setVisibility(View.VISIBLE);
-        AndroidNetworking.get(ConstantUtils.URL.FEEDBACK + "{type_id}")
-                .addPathParameter("type_id", id)
+        AndroidNetworking.get(ConstantUtils.URL.FEEDBACK + "{event_id}")
+                .addPathParameter("event_id", id)
                 .setTag("Feedback")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -91,13 +100,15 @@ public class FeedbackActivity extends AppCompatActivity {
                             JSONArray jsonArray = response.getJSONArray(ConstantUtils.FEEDBACK.TAG_TITLE);
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject object = jsonArray.getJSONObject(a);
-                                String id = object.getString(ConstantUtils.FEEDBACK.TAG_ID);
                                 String type = object.getString(ConstantUtils.FEEDBACK.TAG_TYPE);
-                                String quest = object.getString(ConstantUtils.FEEDBACK.TAG_QUESTION);
-                                String event = object.getString(ConstantUtils.FEEDBACK.TAG_EVENTID);
-                                String dates = object.getString(ConstantUtils.FEEDBACK.TAG_DATE);
-                                model = new FeedbackModel(id, type, quest, event, dates);
-                                modelList.add(model);
+                                if (type.equals(typeFeedback)) {
+                                    String id = object.getString(ConstantUtils.FEEDBACK.TAG_ID);
+                                    String quest = object.getString(ConstantUtils.FEEDBACK.TAG_QUESTION);
+                                    String event = object.getString(ConstantUtils.FEEDBACK.TAG_EVENTID);
+                                    String dates = object.getString(ConstantUtils.FEEDBACK.TAG_DATE);
+                                    model = new FeedbackModel(id, type, quest, event, dates);
+                                    modelList.add(model);
+                                }
                             }
                             adapter = new FeedbackAdapter(getApplicationContext(), modelList);
                             listView.setAdapter(adapter);
@@ -112,5 +123,42 @@ public class FeedbackActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void sendData() {
+        progressBar.setVisibility(View.VISIBLE);
+        try {
+            JsonArray jsonArray = new JsonArray();
+            JSONObject jsonTitle = new JSONObject();
+
+            for (int a = 0; a < modelList.size(); a++) {
+                FeedbackModel feedbackModel = modelList.get(a);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_SCORE, "Amit");
+                jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_TEXT, "-");
+                jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_BY, idUser);
+                jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_ID, feedbackModel.getFeedback_id());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        AndroidNetworking.post("https://fierce-cove-29863.herokuapp.com/createUser")
+//                .addJSONObjectBody(jsonObject) // posting json
+//                .setTag("test")
+//                .setPriority(Priority.MEDIUM)
+//                .build()
+//                .getAsJSONArray(new JSONArrayRequestListener() {
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                        // do anything with response
+//                    }
+//
+//                    @Override
+//                    public void onError(ANError error) {
+//                        // handle error
+//                    }
+//                });
     }
 }

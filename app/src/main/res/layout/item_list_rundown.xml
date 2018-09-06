@@ -97,7 +97,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView18"
+                android:id="@+id/iv_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"

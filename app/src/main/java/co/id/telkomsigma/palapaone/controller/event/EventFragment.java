@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -45,6 +46,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
  */
 public class EventFragment extends Fragment {
 
+    private ProgressBar progressBar;
     Typeface font, fontbold;
     private List<String> dayList;
     private AgendaModel model;
@@ -71,10 +73,13 @@ public class EventFragment extends Fragment {
         fontbold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AvenirLTStd-Book.otf");
 
+        progressBar = view.findViewById(R.id.progressBar);
         lv_time = view.findViewById(R.id.lv_time);
         lv_rundown = view.findViewById(R.id.lv_rundown);
 
-        TextView daftarkios = (TextView) view.findViewById(R.id.tanggal);
+        progressBar.setVisibility(View.GONE);
+
+        TextView daftarkios = view.findViewById(R.id.tanggal);
         daftarkios.setTypeface(font);
 
         String myValue = this.getArguments().getString("name");
@@ -114,7 +119,7 @@ public class EventFragment extends Fragment {
     }
 
     public void getAgenda(String id) {
-        System.out.println("nila " + id);
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.AGENDA + "{sub_event_id}")
                 .addPathParameter("sub_event_id", id)
                 .setTag("Agenda")
@@ -150,20 +155,22 @@ public class EventFragment extends Fragment {
                             lv_time.setHasFixedSize(true);
                             lv_time.setAdapter(adapterHari);
                             lv_time.setLayoutManager(MyLayoutManager);
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(ANError anError) {
-
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
 
     public void getRundown(String id) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.RUNDOWN + "{agenda_id}")
                 .addPathParameter("agenda_id", id)
                 .setTag("Rundwon")
@@ -201,11 +208,12 @@ public class EventFragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(ANError anError) {
-
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

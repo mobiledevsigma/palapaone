@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,29 +50,41 @@ public class RundownAdapter extends BaseAdapter {
     }
 
 
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
         model = listModel.get(position);
+        final ViewHolder holder;
+
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             view = inflater.inflate(R.layout.item_list_rundown, null);
+            holder = new ViewHolder();
+            holder.txtTitle_tiga = view.findViewById(R.id.txt_jam);
+            holder.txtTitle_empat = view.findViewById(R.id.txt_acara);
+            holder.txtTitle_enam = view.findViewById(R.id.txt_speaker);
+            holder.txtTitle_lima = view.findViewById(R.id.txt_room);
+            holder.lay_reminder = view.findViewById(R.id.lay_reminder);
+            holder.imageView = view.findViewById(R.id.iv_reminder);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
         }
 
-        TextView txtTitle_tiga = (TextView) view.findViewById(R.id.txt_jam);
-        txtTitle_tiga.setText(model.getRundown_start() + " - " + model.getRundown_end());
-        txtTitle_tiga.setTypeface(fontbold);
-        TextView txtTitle_empat = (TextView) view.findViewById(R.id.txt_acara);
-        txtTitle_empat.setText(model.getRundown_name());
-        txtTitle_empat.setTypeface(fontbold);
-        TextView txtTitle_enam = (TextView) view.findViewById(R.id.txt_speaker);
-        txtTitle_enam.setText(model.getRundown_name());
-        txtTitle_enam.setVisibility(View.GONE);
-        txtTitle_enam.setTypeface(fontbold);
-        TextView txtTitle_lima = (TextView) view.findViewById(R.id.txt_room);
-        txtTitle_lima.setText(model.getRundown_place());
-        txtTitle_lima.setTypeface(fontbold);
+        holder.txtTitle_tiga.setText(model.getRundown_start() + " - " + model.getRundown_end());
+        holder.txtTitle_tiga.setTypeface(fontbold);
+        holder.txtTitle_empat.setText(model.getRundown_name());
+        holder.txtTitle_empat.setTypeface(fontbold);
+        holder.txtTitle_enam.setText(model.getRundown_name());
+        holder.txtTitle_enam.setVisibility(View.GONE);
+        holder.txtTitle_enam.setTypeface(fontbold);
+        holder.txtTitle_lima.setText(model.getRundown_place());
+        holder.txtTitle_lima.setTypeface(fontbold);
 
-        LinearLayout lay_reminder = view.findViewById(R.id.lay_reminder);
-        lay_reminder.setOnClickListener(new View.OnClickListener() {
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTimeInMillis(System.currentTimeMillis());
+//        cal.clear();
+//        cal.set(2012, 2, 8, 18, 16);
+
+        holder.lay_reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(v.getRootView().getContext())
@@ -80,6 +93,8 @@ public class RundownAdapter extends BaseAdapter {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Toast.makeText(mContext, "Alarm has been set, see you soon!", Toast.LENGTH_SHORT).show();
+                                holder.imageView.setImageResource(R.drawable.icon_bell_on);
+                                holder.imageView.setTag(position);
                             }
                         })
                         .setNegativeButton("No", null)
@@ -88,6 +103,15 @@ public class RundownAdapter extends BaseAdapter {
         });
 
         return view;
+    }
+
+    class ViewHolder {
+        TextView txtTitle_tiga;
+        TextView txtTitle_empat;
+        TextView txtTitle_enam;
+        TextView txtTitle_lima;
+        LinearLayout lay_reminder;
+        ImageView imageView;
     }
 }
 

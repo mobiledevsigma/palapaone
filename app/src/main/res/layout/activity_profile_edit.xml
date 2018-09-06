@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F2F2F2">
+    <!--edit-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -285,7 +286,6 @@
                         </LinearLayout>
 
                     </LinearLayout>
-                    //Country
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -326,7 +326,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
-                    <!--//Role-->
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -367,7 +367,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
-                    <!--//Job-->
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -406,28 +406,29 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/done"
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:gravity="right">
 
                     <LinearLayout
-                        android:layout_width="90dp"
-                        android:layout_height="25dp"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/field_background">
+                        android:id="@+id/done"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right">
 
-                        <TextView
-                            android:id="@+id/q3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Done" />
+                        <LinearLayout
+                            android:layout_width="90dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/field_background">
+
+                            <TextView
+                                android:id="@+id/q3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Done" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
