@@ -1,6 +1,7 @@
 package co.id.telkomsigma.palapaone.model;
 
 public class FeedbackModel {
+    private float ratingStar;
     private String feedback_id;
     private String feedback_type;
     private String feedback_question;
@@ -13,6 +14,14 @@ public class FeedbackModel {
         this.feedback_question = feedback_question;
         this.event_id = event_id;
         this.created_date = created_date;
+    }
+
+    public float getRatingStar() {
+        return ratingStar;
+    }
+
+    public void setRatingStar(float ratingStar) {
+        this.ratingStar = ratingStar;
     }
 
     public String getFeedback_id() {

@@ -70,7 +70,7 @@ public class EventFragment extends Fragment {
         gpsHelper = new GPSHelper(getActivity());
         dataSess = new DataSession(getActivity(), "event" + idAgenda);
 
-        LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+        LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getActivity());
         MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         fontbold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AvenirLTStd-Medium.otf");
@@ -97,6 +97,7 @@ public class EventFragment extends Fragment {
 
             public void onClick(View arg0) {
                 Intent i = new Intent(getActivity(), FeedbackActivity.class);
+                i.putExtra(ConstantUtils.FEEDBACK.TAG_TYPE, "0");
                 startActivity(i);
             }
         });
