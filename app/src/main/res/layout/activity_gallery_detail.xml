@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6E7E9"
+    android:background="#F2F2F2"
     android:orientation="vertical">
 
     <LinearLayout
@@ -35,8 +35,8 @@
                     android:id="@+id/iv_gall_detail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ballroom1"
-                    android:scaleType="fitCenter"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ballroom1" />
             </LinearLayout>
 
             <LinearLayout

@@ -75,8 +75,6 @@ public class BilingualActivity extends AppCompatActivity {
         btn_english.setTypeface(fontbold);
         btn_indo.setTypeface(fontbold);
 
-
-        System.out.println("TES "+session.isLogin());
         if(session.isLogin()){
             Intent i = new Intent(BilingualActivity.this,MenuActivity.class);
             startActivity(i);

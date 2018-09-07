@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -31,11 +32,13 @@ import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.adapter.MateriAdapter;
 import co.id.telkomsigma.palapaone.controller.asking.AskingActivity;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
+import co.id.telkomsigma.palapaone.controller.materi.MateriOptMenuActivity;
 import co.id.telkomsigma.palapaone.model.MateriModel;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class SpeakerDetailActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private ImageView imageView;
     private TextView txt_name, txt_national, txt_email, txt_phone, txt_about, txt_quote, txt_job;
     private ListView listView;
@@ -52,6 +55,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
         font = Typeface.createFromAsset(SpeakerDetailActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
         setContentView(R.layout.activity_speaker_detail);
+        progressBar = findViewById(R.id.progressBar);
         imageView = findViewById(R.id.iv_speaker);
         txt_name = findViewById(R.id.txt_speaker_name);
         txt_national = findViewById(R.id.txt_speaker_national);
@@ -64,6 +68,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
         btn_fb = findViewById(R.id.btn_speaker_fb);
         btn_ask = findViewById(R.id.btn_speaker_ask);
         //
+        progressBar.setVisibility(View.GONE);
         txt_name.setTypeface(fontbold);
         txt_national.setTypeface(fontbold);
         txt_email.setTypeface(fontbold);
@@ -123,6 +128,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
         intent.getStringExtra(ConstantUtils.SPEAKER.TAG_EVENT);
         intent.getStringExtra(ConstantUtils.SPEAKER.TAG_TOPIC);
 
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.MATERIBYSPEAKER + "{speaker_id}")
                 .addPathParameter("speaker_id", id)
                 .setTag("Materi")
@@ -151,17 +157,20 @@ public class SpeakerDetailActivity extends AppCompatActivity {
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Intent intent = new Intent(getApplicationContext(), MateriOptMenuActivity.class);
+                                    startActivity(intent);
                                 }
                             });
-
+                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

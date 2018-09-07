@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import co.id.telkomsigma.palapaone.util.SessionManager;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class ProfileEditActivity extends AppCompatActivity {
+    private ProgressBar progressBar;
     Typeface font, fontbold;
     EditText a3;
     EditText a5;
@@ -49,6 +51,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(ProfileEditActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         TextView ax = (TextView) findViewById(R.id.q);
         ax.setTypeface(fontbold);
@@ -131,6 +136,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     private void saveEdit(final String name, final String email, String phone, final String about, final String quote, final String job, String office, String nation, String user) {
+        progressBar.setVisibility(View.VISIBLE);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(ConstantUtils.LOGIN.TAG_NAME, name);
@@ -157,21 +163,23 @@ public class ProfileEditActivity extends AppCompatActivity {
                         // do anything with response
                         try{
                             if(response.getString("status").equals("1")){
-                                //session.setUserSession(session.getId(),session.getUsername(),name,);
                                 session.updateUser(name,email,about,quote,job);
                                 Toast.makeText(ProfileEditActivity.this,"Data Saved",Toast.LENGTH_SHORT).show();
                                 finish();
-
+                                progressBar.setVisibility(View.GONE);
                             }else{
                                 Toast.makeText(ProfileEditActivity.this,"Data not saved",Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
                             }
                         }catch (Exception e){
                             Toast.makeText(ProfileEditActivity.this,"Data not saved, please check your connection",Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
 
                     @Override
                     public void onError(ANError error) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(ProfileEditActivity.this,"Data not saved, please check your connection",Toast.LENGTH_SHORT).show();
                         // handle error
                     }

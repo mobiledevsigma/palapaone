@@ -64,7 +64,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/temunasional" />
+                        app:srcCompat="@drawable/temnas" />
 
                 </LinearLayout>
 
@@ -154,7 +154,8 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@fonts/AvenirLTStd-Medium.otf"
                         android:gravity="center"
-                        android:text="Forgot your password ?" />
+                        android:text="Forgot your password ?"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
             </LinearLayout>

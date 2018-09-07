@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import co.id.telkomsigma.palapaone.R;
 
 public class InboxActivity extends AppCompatActivity {
+    private ProgressBar progressBar;
     Typeface font,fontbold;
     String[] date={
             "29 Agustus 2018",
@@ -58,6 +60,8 @@ public class InboxActivity extends AppCompatActivity {
         fontbold = Typeface.createFromAsset(InboxActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(InboxActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         TextView daftarkios= (TextView) findViewById(R.id.inbox);
         daftarkios.setTypeface(fontbold);
 

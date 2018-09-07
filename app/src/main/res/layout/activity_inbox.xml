@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F2F2"
     android:orientation="vertical">
 
     <LinearLayout
@@ -36,13 +37,14 @@
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:layout_weight="0.1"
-            android:background="@drawable/field_stroke"
             android:orientation="vertical">
 
             <ListView
                 android:id="@+id/list_inbox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:divider="#FFF"
+                android:dividerHeight="2.0sp">
 
             </ListView>
 

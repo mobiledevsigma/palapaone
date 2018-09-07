@@ -3,12 +3,14 @@ package co.id.telkomsigma.palapaone.controller.main;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -42,6 +44,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class MenuActivity extends AppCompatActivity {
 
+    private boolean doubleBackToExitPressedOnce = false;
     private CarouselView carouselView;
     String[] lisImage ;
     private TextView txt_name_menu, txt_msg, txt_presence, txt_event, txt_speaker, txt_modul, txt_media, txt_expo, txt_gallery, txt_partner, txt_help;
@@ -202,12 +205,6 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        System.exit(1);
-    }
-
     private void getBanner(String event_id) {
         AndroidNetworking.get(ConstantUtils.URL.BANNER + "{event_id}")
                 .addPathParameter("event_id", event_id)
@@ -253,5 +250,25 @@ public class MenuActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Klik lagi untuk ke menu utama", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

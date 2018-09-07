@@ -198,12 +198,6 @@ public class EventFragment extends Fragment {
 
                             adapterAcara = new RundownAdapter(getActivity().getApplicationContext(), rundownModelList);
                             lv_rundown.setAdapter(adapterAcara);
-                            lv_rundown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                }
-                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();

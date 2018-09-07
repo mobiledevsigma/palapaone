@@ -28,6 +28,7 @@ public interface ConstantUtils {
         String AGENDA = SERVER + "api/event/getagenda/";
         String EVENT = SERVER + "api/event/getevent/";
         String RUNDOWN = SERVER + "api/schedule/rundown/";
+        String SEND_ASKING = SERVER + "api/asking/askingadd/";
         String LOGOUT = SERVER + "api_login/logout/";
     }
 
@@ -224,5 +225,14 @@ public interface ConstantUtils {
         String TAG_DESC = "rundown_desc";
         String TAG_PLACE = "rundown_place";
         String TAG_LAYOUT = "rundown_layout";
+    }
+
+    interface ASKING {
+        String TAG_BY = "asking_by";
+        String TAG_QUESTION = "asking_question";
+        String TAG_STATUS = "asking_status";
+        String TAG_EVENTID = "event_id";
+        String TAG_MATERIID = "materi_id";
+        String TAG_STAT = "status";
     }
 }
