@@ -29,6 +29,7 @@ public interface ConstantUtils {
         String EVENT = SERVER + "api/event/getevent/";
         String RUNDOWN = SERVER + "api/schedule/rundown/";
         String SEND_ASKING = SERVER + "api/asking/askingadd/";
+        String NOTIFICATION = SERVER + "api/notification/content/";
         String LOGOUT = SERVER + "api_login/logout/";
     }
 
@@ -234,5 +235,17 @@ public interface ConstantUtils {
         String TAG_EVENTID = "event_id";
         String TAG_MATERIID = "materi_id";
         String TAG_STAT = "status";
+    }
+
+    interface NOTIF {
+        String TAG_ID = "notification_id";
+        String TAG_HEAD = "notification";
+        String TAG_TITLE = "notification_title";
+        String TAG_TEXT = "notification_text";
+        String TAG_TYPE = "notification_type";
+        String TAG_ATTACH = "notification_attachment";
+        String TAG_CATEGORY = "notif_category_id";
+        String TAG_EVENTID = "event_id";
+        String TAG_DATE = "created_date";
     }
 }
