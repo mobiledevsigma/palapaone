@@ -17,6 +17,7 @@ import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.model.RundownModel;
+import co.id.telkomsigma.palapaone.util.DataSession;
 
 public class RundownAdapter extends BaseAdapter {
 
@@ -25,10 +26,14 @@ public class RundownAdapter extends BaseAdapter {
     private List<RundownModel> listModel;
     private TextView txt_expo, txt_cate;
     private Typeface font, fontbold;
+    private DataSession dataSess;
+    private String idAgenda;
 
-    public RundownAdapter(Context mContext, List<RundownModel> listModel) {
+    public RundownAdapter(Context mContext, List<RundownModel> listModel, DataSession dataSess, String idAgenda) {
         this.mContext = mContext;
         this.listModel = listModel;
+        this.dataSess = dataSess;
+        this.idAgenda = idAgenda;
 
         fontbold = Typeface.createFromAsset(mContext.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(mContext.getAssets(), "fonts/AvenirLTStd-Book.otf");
@@ -79,6 +84,17 @@ public class RundownAdapter extends BaseAdapter {
         holder.txtTitle_lima.setText(model.getRundown_place());
         holder.txtTitle_lima.setTypeface(fontbold);
 
+        String lonceng = dataSess.getData("lonceng" + (position) + idAgenda);
+        if (lonceng.equals("")) {
+            holder.imageView.setImageResource(R.drawable.icon_bell_off);
+            dataSess.setData("lonceng" + (position) + idAgenda, "off");
+        } else {
+            if (lonceng.equals("off")) {
+                holder.imageView.setImageResource(R.drawable.icon_bell_off);
+            } else {
+                holder.imageView.setImageResource(R.drawable.icon_bell_on);
+            }
+        }
 //        Calendar cal = Calendar.getInstance();
 //        cal.setTimeInMillis(System.currentTimeMillis());
 //        cal.clear();
@@ -95,6 +111,7 @@ public class RundownAdapter extends BaseAdapter {
                                 Toast.makeText(mContext, "Alarm has been set, see you soon!", Toast.LENGTH_SHORT).show();
                                 holder.imageView.setImageResource(R.drawable.icon_bell_on);
                                 holder.imageView.setTag(position);
+                                dataSess.setData("lonceng" + (position) + idAgenda, "on");
                             }
                         })
                         .setNegativeButton("No", null)

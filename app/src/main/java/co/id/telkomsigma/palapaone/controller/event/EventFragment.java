@@ -36,6 +36,7 @@ import co.id.telkomsigma.palapaone.adapter.AgendaAdapter;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
 import co.id.telkomsigma.palapaone.model.AgendaModel;
 import co.id.telkomsigma.palapaone.model.RundownModel;
+import co.id.telkomsigma.palapaone.util.DataSession;
 import co.id.telkomsigma.palapaone.util.GPSHelper;
 import co.id.telkomsigma.palapaone.util.OnItemClickListener;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
@@ -59,6 +60,7 @@ public class EventFragment extends Fragment {
     private List<RundownModel> rundownModelList;
     private RundownAdapter adapterAcara;
     private GPSHelper gpsHelper;
+    private DataSession dataSess;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +68,7 @@ public class EventFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_event, container, false);
         gpsHelper = new GPSHelper(getActivity());
+        dataSess = new DataSession(getActivity(), "event" + idAgenda);
 
         LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -196,7 +199,7 @@ public class EventFragment extends Fragment {
                                 rundownModelList.add(rundownModel);
                             }
 
-                            adapterAcara = new RundownAdapter(getActivity().getApplicationContext(), rundownModelList);
+                            adapterAcara = new RundownAdapter(getActivity().getApplicationContext(), rundownModelList, dataSess, idAgenda);
                             lv_rundown.setAdapter(adapterAcara);
 
                         } catch (JSONException e) {
