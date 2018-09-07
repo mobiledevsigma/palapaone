@@ -262,7 +262,8 @@
                     android:layout_margin="3dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/btn_speaker_ask"

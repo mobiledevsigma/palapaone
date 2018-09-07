@@ -47,6 +47,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
     private List<MateriModel> listModel;
     private MateriAdapter adapter;
     private Typeface font, fontbold;
+    private String materiID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -158,6 +159,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                     Intent intent = new Intent(getApplicationContext(), MateriOptMenuActivity.class);
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_ID, listModel.get(position).getMateri_id());
                                     startActivity(intent);
                                 }
                             });

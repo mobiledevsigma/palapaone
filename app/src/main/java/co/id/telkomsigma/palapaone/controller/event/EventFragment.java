@@ -55,7 +55,7 @@ public class EventFragment extends Fragment {
     private RecyclerView lv_time;
     private ListView lv_rundown;
     private AgendaAdapter adapterHari;
-    private String idAgenda;
+    private String idAgenda, idEvent;
     private RundownModel rundownModel;
     private List<RundownModel> rundownModelList;
     private RundownAdapter adapterAcara;
@@ -88,6 +88,7 @@ public class EventFragment extends Fragment {
         String myValue = this.getArguments().getString("name");
         String myValue2 = this.getArguments().getString("id");
 
+        idEvent = myValue2;
         getAgenda(myValue2);
         daftarkios.setText(myValue);
 
@@ -199,7 +200,7 @@ public class EventFragment extends Fragment {
                                 rundownModelList.add(rundownModel);
                             }
 
-                            adapterAcara = new RundownAdapter(getActivity().getApplicationContext(), rundownModelList, dataSess, idAgenda);
+                            adapterAcara = new RundownAdapter(getActivity().getApplicationContext(), rundownModelList, dataSess, idEvent, idAgenda);
                             lv_rundown.setAdapter(adapterAcara);
 
                         } catch (JSONException e) {

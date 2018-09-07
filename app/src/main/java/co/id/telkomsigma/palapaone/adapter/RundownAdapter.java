@@ -28,11 +28,13 @@ public class RundownAdapter extends BaseAdapter {
     private Typeface font, fontbold;
     private DataSession dataSess;
     private String idAgenda;
+    private String idEvent;
 
-    public RundownAdapter(Context mContext, List<RundownModel> listModel, DataSession dataSess, String idAgenda) {
+    public RundownAdapter(Context mContext, List<RundownModel> listModel, DataSession dataSess, String idEvent, String idAgenda) {
         this.mContext = mContext;
         this.listModel = listModel;
         this.dataSess = dataSess;
+        this.idEvent = idEvent;
         this.idAgenda = idAgenda;
 
         fontbold = Typeface.createFromAsset(mContext.getAssets(), "fonts/AvenirLTStd-Medium.otf");
@@ -84,40 +86,73 @@ public class RundownAdapter extends BaseAdapter {
         holder.txtTitle_lima.setText(model.getRundown_place());
         holder.txtTitle_lima.setTypeface(fontbold);
 
-        String lonceng = dataSess.getData("lonceng" + (position) + idAgenda);
+        String lonceng = dataSess.getData("lonceng" + (position) + idEvent + idAgenda);
         if (lonceng.equals("")) {
             holder.imageView.setImageResource(R.drawable.icon_bell_off);
-            dataSess.setData("lonceng" + (position) + idAgenda, "off");
+            dataSess.setData("lonceng" + (position) + idEvent + idAgenda, "off");
+
+            holder.lay_reminder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(v.getRootView().getContext())
+                            .setMessage("Are you sure you want to turn on reminder?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Toast.makeText(mContext, "Alarm has been set, see you soon!", Toast.LENGTH_SHORT).show();
+                                    holder.imageView.setImageResource(R.drawable.icon_bell_on);
+                                    holder.imageView.setTag(position);
+                                    dataSess.setData("lonceng" + (position) + idEvent + idAgenda, "on");
+                                }
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                }
+            });
         } else {
             if (lonceng.equals("off")) {
                 holder.imageView.setImageResource(R.drawable.icon_bell_off);
+
+                holder.lay_reminder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(v.getRootView().getContext())
+                                .setMessage("Are you sure you want to turn on reminder?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Toast.makeText(mContext, "Alarm has been set, see you soon!", Toast.LENGTH_SHORT).show();
+                                        holder.imageView.setImageResource(R.drawable.icon_bell_on);
+                                        holder.imageView.setTag(position);
+                                        dataSess.setData("lonceng" + (position) + idEvent + idAgenda, "on");
+                                    }
+                                })
+                                .setNegativeButton("No", null)
+                                .show();
+                    }
+                });
             } else {
                 holder.imageView.setImageResource(R.drawable.icon_bell_on);
+
+                holder.lay_reminder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(v.getRootView().getContext())
+                                .setMessage("Are you sure you want to turn off reminder?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        holder.imageView.setImageResource(R.drawable.icon_bell_off);
+                                        holder.imageView.setTag(position);
+                                        dataSess.setData("lonceng" + (position) + idEvent + idAgenda, "off");
+                                    }
+                                })
+                                .setNegativeButton("No", null)
+                                .show();
+                    }
+                });
             }
         }
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTimeInMillis(System.currentTimeMillis());
-//        cal.clear();
-//        cal.set(2012, 2, 8, 18, 16);
-
-        holder.lay_reminder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(v.getRootView().getContext())
-                        .setMessage("Are you sure you want to set reminder?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Toast.makeText(mContext, "Alarm has been set, see you soon!", Toast.LENGTH_SHORT).show();
-                                holder.imageView.setImageResource(R.drawable.icon_bell_on);
-                                holder.imageView.setTag(position);
-                                dataSess.setData("lonceng" + (position) + idAgenda, "on");
-                            }
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
-            }
-        });
 
         return view;
     }

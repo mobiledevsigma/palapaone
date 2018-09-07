@@ -31,6 +31,7 @@ public class AskingActivity extends AppCompatActivity {
     private EditText editText;
     private Button button;
     private SessionManager sessionManager;
+    private String materiID, isiText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,16 +43,17 @@ public class AskingActivity extends AppCompatActivity {
         button = findViewById(R.id.btn_submit_asking);
         //
         Intent intent = getIntent();
-        final String materiID = intent.getStringExtra(ConstantUtils.MATERI.TAG_ID);
+        materiID = intent.getStringExtra(ConstantUtils.MATERI.TAG_ID);
         sessionManager = new SessionManager(getApplicationContext());
         progressBar.setVisibility(View.GONE);
-        final String edit = editText.getText().toString();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!edit.isEmpty()) {
-                    sendAsking(sessionManager.getId(), edit, sessionManager.getEventID(), materiID);
+                isiText = editText.getText().toString();
+                if (!editText.getText().toString().isEmpty()) {
+                    sendAsking(sessionManager.getId(), isiText, sessionManager.getEventID(), materiID);
+                    Toast.makeText(getApplicationContext(), "Data Send", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Please, fill the required field", Toast.LENGTH_SHORT).show();
                 }
@@ -60,7 +62,7 @@ public class AskingActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Asking");
+        getSupportActionBar().setTitle("Ask");
     }
 
     @Override
@@ -82,24 +84,24 @@ public class AskingActivity extends AppCompatActivity {
                 .addBodyParameter(ConstantUtils.ASKING.TAG_STATUS, "1")
                 .addBodyParameter(ConstantUtils.ASKING.TAG_EVENTID, eventID)
                 .addBodyParameter(ConstantUtils.ASKING.TAG_MATERIID, materi)
-                .setTag("test")
+                .setTag("Materi")
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // do anything with response
                         try {
                             if (response.getString(ConstantUtils.ASKING.TAG_STAT).equals("1")) {
                                 progressBar.setVisibility(View.GONE);
+                                editText.setText("");
+                                onBackPressed();
                             } else {
                                 progressBar.setVisibility(View.GONE);
                             }
-                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            progressBar.setVisibility(View.GONE);
                         }
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override

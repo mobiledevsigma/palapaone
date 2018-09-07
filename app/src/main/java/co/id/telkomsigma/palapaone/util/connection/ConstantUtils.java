@@ -233,7 +233,7 @@ public interface ConstantUtils {
         String TAG_QUESTION = "asking_question";
         String TAG_STATUS = "asking_status";
         String TAG_EVENTID = "event_id";
-        String TAG_MATERIID = "materi_id";
+        String TAG_MATERIID = "material_id";
         String TAG_STAT = "status";
     }
 

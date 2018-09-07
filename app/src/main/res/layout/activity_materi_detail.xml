@@ -66,14 +66,15 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="3dp">
+            android:padding="3dp"
+            android:weightSum="2">
 
             <Button
-                android:id="@+id/btn_fb_materi"
+                android:id="@+id/btn_asking_materi"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/mybutton"
-                android:text="Feedback"
+                android:text="Ask"
                 android:textColor="#FFF" />
         </LinearLayout>
 
@@ -83,16 +84,16 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="3dp"
-            android:weightSum="2">
+            android:padding="3dp">
 
             <Button
-                android:id="@+id/btn_asking_materi"
+                android:id="@+id/btn_fb_materi"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/mybutton"
-                android:text="Asking"
-                android:textColor="#FFF" />
+                android:text="Feedback"
+                android:textColor="#FFF"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </LinearLayout>
