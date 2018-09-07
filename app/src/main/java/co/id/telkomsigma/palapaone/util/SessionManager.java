@@ -18,6 +18,7 @@ public class SessionManager {
     private static final String PREFER_NAME = "PalapaOne";
     private static final String IS_LOGIN = "IsLoggedIn";
     private static final String IS_LANGUAGE = "IsLanguage";
+    public static  String ACTIVITY_KEY;
     SharedPreferences pref;
     Editor editor;
     Context _context;
