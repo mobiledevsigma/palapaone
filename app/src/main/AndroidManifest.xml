@@ -64,7 +64,7 @@
         <activity android:name=".controller.inbox.InboxActivity"></activity>
         <activity android:name=".controller.inbox.DetailInboxActivity"></activity>
         <activity android:name=".controller.event.EventActivity"></activity>
-        <activity android:name=".controller.event.DetailEventMapActivity"></activity>
+        <activity android:name=".controller.event.DetailEventActivity"></activity>
         <activity android:name=".controller.event.ShowLayoutActivity"></activity>
         <activity android:name=".controller.materi.MateriOptMenuActivity"></activity>
     </application>

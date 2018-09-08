@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -26,19 +28,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import co.id.telkomsigma.palapaone.R;
-import co.id.telkomsigma.palapaone.adapter.RundownAdapter;
-
 import co.id.telkomsigma.palapaone.adapter.AgendaAdapter;
+import co.id.telkomsigma.palapaone.adapter.RundownAdapter;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
 import co.id.telkomsigma.palapaone.model.AgendaModel;
 import co.id.telkomsigma.palapaone.model.RundownModel;
 import co.id.telkomsigma.palapaone.util.DataSession;
 import co.id.telkomsigma.palapaone.util.GPSHelper;
 import co.id.telkomsigma.palapaone.util.OnItemClickListener;
+import co.id.telkomsigma.palapaone.util.SessionManager;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 
@@ -47,20 +53,24 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
  */
 public class EventFragment extends Fragment {
 
-    private ProgressBar progressBar;
     Typeface font, fontbold;
+    private ProgressBar progressBar;
     private List<String> dayList;
+    private List<String> dateList;
     private AgendaModel model;
     private List<AgendaModel> modelList;
     private RecyclerView lv_time;
     private ListView lv_rundown;
     private AgendaAdapter adapterHari;
-    private String idAgenda, idEvent;
+    private String idAgenda = "", idEvent;
     private RundownModel rundownModel;
     private List<RundownModel> rundownModelList;
     private RundownAdapter adapterAcara;
     private GPSHelper gpsHelper;
     private DataSession dataSess;
+    private SessionManager session;
+    private TextView tanggal;
+    private LinearLayout lay_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +79,7 @@ public class EventFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
         gpsHelper = new GPSHelper(getActivity());
         dataSess = new DataSession(getActivity(), "event" + idAgenda);
+        session = new SessionManager(getActivity());
 
         LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getActivity());
         MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -82,19 +93,26 @@ public class EventFragment extends Fragment {
 
         progressBar.setVisibility(View.GONE);
 
-        TextView daftarkios = view.findViewById(R.id.tanggal);
-        daftarkios.setTypeface(font);
+        tanggal = view.findViewById(R.id.tanggal);
+        lay_btn = view.findViewById(R.id.lay_button);
+        Button btn_fb = view.findViewById(R.id.button2);
+        Button btn_map = view.findViewById(R.id.button3);
+
+        tanggal.setTypeface(font);
 
         String myValue = this.getArguments().getString("name");
         String myValue2 = this.getArguments().getString("id");
 
         idEvent = myValue2;
         getAgenda(myValue2);
-        daftarkios.setText(myValue);
 
-        Button goto_home = (Button) view.findViewById(R.id.button2);
-        goto_home.setOnClickListener(new View.OnClickListener() {
+        if (session.isLogin()) {
+            lay_btn.setVisibility(View.VISIBLE);
+        } else {
+            lay_btn.setVisibility(View.GONE);
+        }
 
+        btn_fb.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent i = new Intent(getActivity(), FeedbackActivity.class);
                 i.putExtra(ConstantUtils.FEEDBACK.TAG_TYPE, "0");
@@ -102,7 +120,6 @@ public class EventFragment extends Fragment {
             }
         });
 
-        Button btn_map = view.findViewById(R.id.button3);
         btn_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +140,7 @@ public class EventFragment extends Fragment {
         }
     }
 
-    public void getAgenda(String id) {
+    public void getAgenda(final String id) {
         progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.AGENDA + "{sub_event_id}")
                 .addPathParameter("sub_event_id", id)
@@ -134,8 +151,12 @@ public class EventFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+                            Date local = new Date();
+
                             modelList = new ArrayList<AgendaModel>();
                             dayList = new ArrayList<String>();
+                            dateList = new ArrayList<String>();
                             JSONArray jsonArray = response.getJSONArray(ConstantUtils.AGENDA.TAG_TITLE);
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject object = jsonArray.getJSONObject(a);
@@ -147,16 +168,37 @@ public class EventFragment extends Fragment {
                                 model = new AgendaModel(id, name, date, event, day);
                                 modelList.add(model);
                                 dayList.add(day);
+                                dateList.add(date);
+
+                                //convert date server
+                                SimpleDateFormat fServer = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                try {
+                                    Date dateServer = fServer.parse(date);
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
+                                    String theDay = sdf.format(dateServer);
+                                    String today = formatter.format(local);
+                                    System.out.println("baa " + theDay + " baa " + today);
+                                    if (idAgenda.isEmpty()) {
+                                        if (theDay.equals(today)) {
+                                            getRundown(id);
+                                        }
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
                             }
                             LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getContext());
                             MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
                             adapterHari = new AgendaAdapter(getActivity(), dayList, new OnItemClickListener() {
                                 @Override
                                 public void onItemClick(String id) {
-                                    idAgenda = id;
+                                    idAgenda = modelList.get(Integer.parseInt(id) - 1).getAgenda_id();;
                                     getRundown(idAgenda);
+                                    tanggal.setText(modelList.get(Integer.parseInt(id) - 1).getAgenda_date());
                                 }
                             });
+
                             lv_time.setHasFixedSize(true);
                             lv_time.setAdapter(adapterHari);
                             lv_time.setLayoutManager(MyLayoutManager);
@@ -203,6 +245,24 @@ public class EventFragment extends Fragment {
 
                             adapterAcara = new RundownAdapter(getActivity().getApplicationContext(), rundownModelList, dataSess, idEvent, idAgenda);
                             lv_rundown.setAdapter(adapterAcara);
+
+                            lv_rundown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    if (session.isLogin()) {
+                                        Intent intent = new Intent(getActivity().getApplicationContext(), DetailEventActivity.class);
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_ID, rundownModelList.get(position).getRundown_id());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_NAME, rundownModelList.get(position).getRundown_name());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_START, rundownModelList.get(position).getRundown_start());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_END, rundownModelList.get(position).getRundown_end());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_PLACE, rundownModelList.get(position).getRundown_place());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_LAYOUT, rundownModelList.get(position).getRundown_layout());
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(getActivity(), "You have to login first", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();

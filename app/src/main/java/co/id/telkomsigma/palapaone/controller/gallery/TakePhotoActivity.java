@@ -28,6 +28,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -57,7 +59,8 @@ public class TakePhotoActivity extends AppCompatActivity {
     private static final int CAPTURE_PHOTO = 2;
     private static final int CAPTURE_GALLERY = 3;
     private ImageView imageView;
-    private Button btn_choose;
+    private LinearLayout btn_choose;
+    private TextView txt_choose;
     private EditText editText;
     private Button btn_upload;
     private Typeface font, fontbold;
@@ -90,10 +93,11 @@ public class TakePhotoActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.iv_take_photo);
         btn_choose = findViewById(R.id.btn_choose);
+        txt_choose = findViewById(R.id.txt_choose);
         editText = findViewById(R.id.et_caption);
         btn_upload = findViewById(R.id.btn_upload);
 
-        btn_choose.setTypeface(fontbold);
+        txt_choose.setTypeface(fontbold);
         editText.setTypeface(fontbold);
         btn_upload.setTypeface(fontbold);
 

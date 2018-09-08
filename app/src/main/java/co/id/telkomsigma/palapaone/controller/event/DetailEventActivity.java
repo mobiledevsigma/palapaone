@@ -12,15 +12,15 @@ import android.widget.TextView;
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.controller.speaker.SpeakerDetailActivity;
 
-public class DetailEventMapActivity extends AppCompatActivity {
+public class DetailEventActivity extends AppCompatActivity {
     Typeface font,fontbold;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_event_map);
+        setContentView(R.layout.activity_detail_event);
 
-        fontbold = Typeface.createFromAsset(DetailEventMapActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
-        font = Typeface.createFromAsset(DetailEventMapActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
+        fontbold = Typeface.createFromAsset(DetailEventActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
+        font = Typeface.createFromAsset(DetailEventActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
         Button map2 = (Button) findViewById(R.id.self);
         map2.setTypeface(fontbold);

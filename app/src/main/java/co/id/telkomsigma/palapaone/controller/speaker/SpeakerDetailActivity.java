@@ -122,7 +122,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
         txt_national.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_NATIONAL));
         txt_email.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_EMAIL));
         txt_phone.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_PHONE));
-        txt_about.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_ABOUT));
+        txt_about.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_DESC));
         txt_quote.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_QUOTE));
         txt_job.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_JOB));
         String id = intent.getStringExtra(ConstantUtils.SPEAKER.TAG_ID);

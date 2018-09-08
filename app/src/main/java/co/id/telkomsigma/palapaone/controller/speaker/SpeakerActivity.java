@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -119,20 +120,24 @@ public class SpeakerActivity extends AppCompatActivity {
                             gv_speaker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Intent intent = new Intent(getApplicationContext(), SpeakerDetailActivity.class);
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_ID, listModel.get(position).getSpeaker_id());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_NAME, listModel.get(position).getSpeaker_name());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_PHOTO, listModel.get(position).getSpeaker_photo());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_EMAIL, listModel.get(position).getSpeaker_email());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_PHONE, listModel.get(position).getSpeaker_phone());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_QUOTE, listModel.get(position).getSpeaker_quote());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_TOPIC, listModel.get(position).getSpeaker_topic());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_NATIONAL, listModel.get(position).getSpeaker_nationality());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_EVENT, listModel.get(position).getSpeaker_event());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_JOB, listModel.get(position).getSpeaker_job());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_DESC, listModel.get(position).getSpeaker_desc());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_ABOUT, listModel.get(position).getSpeaker_about());
-                                    startActivity(intent);
+                                    if (session.isLogin()) {
+                                        Intent intent = new Intent(getApplicationContext(), SpeakerDetailActivity.class);
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_ID, listModel.get(position).getSpeaker_id());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_NAME, listModel.get(position).getSpeaker_name());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_PHOTO, listModel.get(position).getSpeaker_photo());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_EMAIL, listModel.get(position).getSpeaker_email());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_PHONE, listModel.get(position).getSpeaker_phone());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_QUOTE, listModel.get(position).getSpeaker_quote());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_TOPIC, listModel.get(position).getSpeaker_topic());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_NATIONAL, listModel.get(position).getSpeaker_nationality());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_EVENT, listModel.get(position).getSpeaker_event());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_JOB, listModel.get(position).getSpeaker_job());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_DESC, listModel.get(position).getSpeaker_desc());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_ABOUT, listModel.get(position).getSpeaker_about());
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Yo have to login first", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
 

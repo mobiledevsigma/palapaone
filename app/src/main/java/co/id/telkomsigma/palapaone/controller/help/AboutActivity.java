@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import co.id.telkomsigma.palapaone.BuildConfig;
 import co.id.telkomsigma.palapaone.R;
 
 public class AboutActivity extends AppCompatActivity {
@@ -13,6 +15,9 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        TextView textView = findViewById(R.id.txt_version);
+
+        textView.setText(BuildConfig.VERSION_NAME);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -23,7 +28,6 @@ public class AboutActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
                 onBackPressed();
                 return true;
             default:

@@ -37,6 +37,11 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.MyViewHold
         this.onItemClickListener = onItemClickListener;
     }
 
+    public AgendaAdapter(Context context, List<String> dayList) {
+        this.dayList = dayList;
+        this.context = context;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
@@ -60,6 +65,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.MyViewHold
                 notifyDataSetChanged();
             }
         });
+
         if (row_index == position) {
             holder.frameLayout.setBackgroundColor(Color.RED);
             holder.titleTextView.setTextColor(Color.WHITE);
