@@ -1,6 +1,17 @@
 package co.id.telkomsigma.palapaone.util.firebase;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
+
+import java.util.Random;
+
+import co.id.telkomsigma.palapaone.util.SessionManager;
+import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
