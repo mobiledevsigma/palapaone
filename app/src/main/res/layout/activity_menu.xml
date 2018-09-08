@@ -8,7 +8,6 @@
     android:weightSum="3">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginBottom="3dp"
@@ -29,7 +28,6 @@
                 android:padding="3dp">
 
                 <ImageView
-                    android:id="@+id/imageView10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
@@ -43,7 +41,6 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/imageView30"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
@@ -59,7 +56,6 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/imageView320"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -101,7 +97,6 @@
                     android:padding="5dp">
 
                     <ImageView
-                        android:id="@+id/imageView5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="3dp"
@@ -125,7 +120,6 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/greet"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -160,7 +154,6 @@
                 android:weightSum="2">
 
                 <LinearLayout
-                    android:id="@+id/layout_pesan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
@@ -170,7 +163,6 @@
                     android:padding="6dp">
 
                     <ImageView
-                        android:id="@+id/imageView11"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="3dp"
@@ -204,14 +196,12 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/total"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/greet9"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="8dp"
@@ -289,7 +279,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -333,7 +322,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -377,7 +365,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -431,7 +418,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -475,7 +461,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -518,7 +503,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -572,7 +556,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView212"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -615,7 +598,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView21"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -658,7 +640,6 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/imageView22"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

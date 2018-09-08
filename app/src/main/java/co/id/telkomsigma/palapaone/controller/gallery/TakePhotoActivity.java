@@ -29,6 +29,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.UploadProgressListener;
+
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,13 +46,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import co.id.telkomsigma.palapaone.R;
+import co.id.telkomsigma.palapaone.util.SessionManager;
+import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 import co.id.telkomsigma.palapaone.util.photo.PhotoUtil;
 import co.id.telkomsigma.palapaone.util.photo.TakePhotoUtil;
 
 public class TakePhotoActivity extends AppCompatActivity {
 
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    private static final int REQUEST_CODE = 1;
     private static final int CAPTURE_PHOTO = 2;
     private static final int CAPTURE_GALLERY = 3;
     private ImageView imageView;
@@ -60,6 +69,8 @@ public class TakePhotoActivity extends AppCompatActivity {
     private String realPath;
     private File filePath;
     private String fileName;
+    private SessionManager sessionManager;
+    private String userID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +78,9 @@ public class TakePhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_photo);
         fontbold = Typeface.createFromAsset(TakePhotoActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(TakePhotoActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
+
+        sessionManager = new SessionManager(getApplicationContext());
+        userID = sessionManager.getId();
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -240,7 +254,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         //String imageFileName = username + "_";
-        String imageFileName = "username" + "_";
+        String imageFileName = userID + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName,  /* prefix */
@@ -357,5 +371,30 @@ public class TakePhotoActivity extends AppCompatActivity {
         imageView.setImageBitmap(scaledBitmap);
 //        img_bg.setImageBitmap(scaledBitmap);
 //        img_ic.setVisibility(View.GONE);
+    }
+
+    private void sendData() {
+//        AndroidNetworking.upload(ConstantUtils.URL.SEND_FEEDBACK)
+//                .addMultipartFile("image", bitmapPhoto)
+//                .addMultipartParameter("key","value")
+//                .setTag("uploadTest")
+//                .setPriority(Priority.HIGH)
+//                .build()
+//                .setUploadProgressListener(new UploadProgressListener() {
+//                    @Override
+//                    public void onProgress(long bytesUploaded, long totalBytes) {
+//                        // do anything with progress
+//                    }
+//                })
+//                .getAsJSONObject(new JSONObjectRequestListener() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        // do anything with response
+//                    }
+//                    @Override
+//                    public void onError(ANError error) {
+//                        // handle error
+//                    }
+//                });
     }
 }

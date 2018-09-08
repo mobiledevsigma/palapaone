@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.JsonArray;
 
@@ -115,12 +116,13 @@ public class FeedbackActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -128,7 +130,7 @@ public class FeedbackActivity extends AppCompatActivity {
     private void sendData() {
         progressBar.setVisibility(View.VISIBLE);
         try {
-            JsonArray jsonArray = new JsonArray();
+            JSONArray jsonArray = new JSONArray();
             JSONObject jsonTitle = new JSONObject();
 
             for (int a = 0; a < modelList.size(); a++) {
@@ -138,27 +140,36 @@ public class FeedbackActivity extends AppCompatActivity {
                 jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_TEXT, "-");
                 jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_BY, idUser);
                 jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_ID, feedbackModel.getFeedback_id());
+
+                jsonArray.put(jsonObject);
             }
+            jsonTitle.put(ConstantUtils.FEEDBACK.TAG_TITLE, jsonArray);
+
+            AndroidNetworking.post(ConstantUtils.URL.SEND_FEEDBACK)
+                    .addJSONObjectBody(jsonTitle) // posting json
+                    .setTag("SubmitFB")
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.getString("status").equals("1")) {
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+
+                        }
+                    });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        AndroidNetworking.post("https://fierce-cove-29863.herokuapp.com/createUser")
-//                .addJSONObjectBody(jsonObject) // posting json
-//                .setTag("test")
-//                .setPriority(Priority.MEDIUM)
-//                .build()
-//                .getAsJSONArray(new JSONArrayRequestListener() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        // do anything with response
-//                    }
-//
-//                    @Override
-//                    public void onError(ANError error) {
-//                        // handle error
-//                    }
-//                });
     }
 }

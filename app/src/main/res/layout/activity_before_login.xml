@@ -9,7 +9,6 @@
     android:weightSum="3">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="3dp"
@@ -31,7 +30,6 @@
                 android:padding="3dp">
 
                 <ImageView
-                    android:id="@+id/imageView10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
@@ -46,7 +44,6 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/imageView30"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
@@ -61,7 +58,6 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/imageView300"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
@@ -133,7 +129,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView23"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -175,7 +170,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView240"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -218,7 +212,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView250"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -268,7 +261,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView230"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -310,7 +302,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView24"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -352,7 +343,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView25"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -402,7 +392,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView26"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -444,7 +433,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView27"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -486,7 +474,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView28"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"

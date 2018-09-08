@@ -46,7 +46,6 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/profileedit"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:src="@drawable/icon_avatars" />
@@ -301,7 +300,6 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/d"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="15dp"
@@ -341,7 +339,6 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/g"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="15dp"
@@ -382,7 +379,6 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/j"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="15dp"
@@ -420,7 +416,6 @@
                             android:background="@drawable/field_background">
 
                             <TextView
-                                android:id="@+id/q3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
