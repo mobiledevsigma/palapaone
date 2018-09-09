@@ -89,7 +89,6 @@ public class SpeakerActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("hasil " + response);
                         try {
                             listModel = new ArrayList<SpeakerModel>();
                             listPhoto = new ArrayList<String>();
@@ -104,15 +103,14 @@ public class SpeakerActivity extends AppCompatActivity {
                                 String quotes = object.getString(ConstantUtils.SPEAKER.TAG_QUOTE);
                                 String topic = object.getString(ConstantUtils.SPEAKER.TAG_TOPIC);
                                 String national = object.getString(ConstantUtils.SPEAKER.TAG_NATIONAL);
+                                System.out.println("hasil " + national);
                                 String event = object.getString(ConstantUtils.SPEAKER.TAG_EVENT);
                                 String job = object.getString(ConstantUtils.SPEAKER.TAG_JOB);
                                 String desc = object.getString(ConstantUtils.SPEAKER.TAG_DESC);
                                 String about = object.getString(ConstantUtils.SPEAKER.TAG_ABOUT);
-                                model = new SpeakerModel(id, name, photo, email, phone, quotes, topic, national, event, job, desc, about);
+                                model = new SpeakerModel(id, name, photo, email, phone, quotes, national, event, topic, job, desc, about);
                                 listPhoto.add(photo);
                                 listModel.add(model);
-
-                                System.out.println("speaker " + name);
                             }
 
                             adapter = new SpeakerAdapter(getApplicationContext(), listModel);
@@ -155,6 +153,7 @@ public class SpeakerActivity extends AppCompatActivity {
     }
 
     private void showSpeaker(String id) {
+        progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.SPEAKER + "{event_id}")
                 .addPathParameter("event_id", id)
                 .setTag("speaker")
@@ -182,7 +181,7 @@ public class SpeakerActivity extends AppCompatActivity {
                                 String job = object.getString(ConstantUtils.SPEAKER.TAG_JOB);
                                 String desc = object.getString(ConstantUtils.SPEAKER.TAG_DESC);
                                 String about = object.getString(ConstantUtils.SPEAKER.TAG_ABOUT);
-                                model = new SpeakerModel(id, name, photo, email, phone, quotes, topic, national, event, job, desc, about);
+                                model = new SpeakerModel(id, name, photo, email, phone, quotes, national, event, topic, job, desc, about);
                                 listPhoto.add(photo);
                                 listModel.add(model);
 
@@ -194,23 +193,27 @@ public class SpeakerActivity extends AppCompatActivity {
                             gv_speaker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Intent intent = new Intent(getApplicationContext(), SpeakerDetailActivity.class);
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_ID, listModel.get(position).getSpeaker_id());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_NAME, listModel.get(position).getSpeaker_name());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_PHOTO, listModel.get(position).getSpeaker_photo());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_EMAIL, listModel.get(position).getSpeaker_email());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_PHONE, listModel.get(position).getSpeaker_phone());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_QUOTE, listModel.get(position).getSpeaker_quote());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_TOPIC, listModel.get(position).getSpeaker_topic());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_NATIONAL, listModel.get(position).getSpeaker_nationality());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_EVENT, listModel.get(position).getSpeaker_event());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_JOB, listModel.get(position).getSpeaker_job());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_DESC, listModel.get(position).getSpeaker_desc());
-                                    intent.putExtra(ConstantUtils.SPEAKER.TAG_ABOUT, listModel.get(position).getSpeaker_about());
-                                    startActivity(intent);
+                                    if (session.isLogin()) {
+                                        Intent intent = new Intent(getApplicationContext(), SpeakerDetailActivity.class);
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_ID, listModel.get(position).getSpeaker_id());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_NAME, listModel.get(position).getSpeaker_name());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_PHOTO, listModel.get(position).getSpeaker_photo());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_EMAIL, listModel.get(position).getSpeaker_email());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_PHONE, listModel.get(position).getSpeaker_phone());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_QUOTE, listModel.get(position).getSpeaker_quote());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_TOPIC, listModel.get(position).getSpeaker_topic());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_NATIONAL, listModel.get(position).getSpeaker_nationality());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_EVENT, listModel.get(position).getSpeaker_event());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_JOB, listModel.get(position).getSpeaker_job());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_DESC, listModel.get(position).getSpeaker_desc());
+                                        intent.putExtra(ConstantUtils.SPEAKER.TAG_ABOUT, listModel.get(position).getSpeaker_about());
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Yo have to login first", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
-
+                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -218,7 +221,7 @@ public class SpeakerActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
-
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

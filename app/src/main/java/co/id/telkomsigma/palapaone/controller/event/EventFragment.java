@@ -71,6 +71,7 @@ public class EventFragment extends Fragment {
     private SessionManager session;
     private TextView tanggal;
     private LinearLayout lay_btn;
+    private int kode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -177,9 +178,12 @@ public class EventFragment extends Fragment {
                                     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
                                     String theDay = sdf.format(dateServer);
                                     String today = formatter.format(local);
-                                    System.out.println("baa " + theDay + " baa " + today);
+
                                     if (idAgenda.isEmpty()) {
                                         if (theDay.equals(today)) {
+                                            tanggal.setText(theDay);
+//                                            kode = Integer.parseInt(id);
+//                                            adapterHari = new AgendaAdapter(getActivity(), dayList, 4);
                                             getRundown(id);
                                         }
                                     }
@@ -187,17 +191,28 @@ public class EventFragment extends Fragment {
                                     e.printStackTrace();
                                 }
                             }
-                            LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getContext());
-                            MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
                             adapterHari = new AgendaAdapter(getActivity(), dayList, new OnItemClickListener() {
                                 @Override
                                 public void onItemClick(String id) {
+                                    String date = modelList.get(Integer.parseInt(id) - 1).getAgenda_date();
+                                    SimpleDateFormat fServer = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    try {
+                                        Date dateServer = fServer.parse(date);
+                                        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
+                                        String theDay = sdf.format(dateServer);
+                                        tanggal.setText(theDay);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
                                     idAgenda = modelList.get(Integer.parseInt(id) - 1).getAgenda_id();;
                                     getRundown(idAgenda);
-                                    tanggal.setText(modelList.get(Integer.parseInt(id) - 1).getAgenda_date());
                                 }
                             });
+
+                            LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getContext());
+                            MyLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
                             lv_time.setHasFixedSize(true);
                             lv_time.setAdapter(adapterHari);

@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -37,6 +38,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -74,6 +76,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     private String fileName;
     private SessionManager sessionManager;
     private String userID;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,7 +86,7 @@ public class TakePhotoActivity extends AppCompatActivity {
         font = Typeface.createFromAsset(TakePhotoActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
         sessionManager = new SessionManager(getApplicationContext());
-        userID = sessionManager.getId();
+        userID = sessionManager.getId() + sessionManager.getEvent();
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -91,12 +94,14 @@ public class TakePhotoActivity extends AppCompatActivity {
         photoUtil = new TakePhotoUtil();
         imageUtil = new PhotoUtil();
 
+        progressBar = findViewById(R.id.progressBar);
         imageView = findViewById(R.id.iv_take_photo);
         btn_choose = findViewById(R.id.btn_choose);
         txt_choose = findViewById(R.id.txt_choose);
         editText = findViewById(R.id.et_caption);
         btn_upload = findViewById(R.id.btn_upload);
 
+        progressBar.setVisibility(View.GONE);
         txt_choose.setTypeface(fontbold);
         editText.setTypeface(fontbold);
         btn_upload.setTypeface(fontbold);
@@ -106,6 +111,13 @@ public class TakePhotoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "This feature is currently unavailable", Toast.LENGTH_SHORT).show();
                 selectAction();
+            }
+        });
+
+        btn_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendData();
             }
         });
 
@@ -378,27 +390,51 @@ public class TakePhotoActivity extends AppCompatActivity {
     }
 
     private void sendData() {
-//        AndroidNetworking.upload(ConstantUtils.URL.SEND_FEEDBACK)
-//                .addMultipartFile("image", bitmapPhoto)
-//                .addMultipartParameter("key","value")
-//                .setTag("uploadTest")
-//                .setPriority(Priority.HIGH)
-//                .build()
-//                .setUploadProgressListener(new UploadProgressListener() {
-//                    @Override
-//                    public void onProgress(long bytesUploaded, long totalBytes) {
-//                        // do anything with progress
-//                    }
-//                })
-//                .getAsJSONObject(new JSONObjectRequestListener() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        // do anything with response
-//                    }
-//                    @Override
-//                    public void onError(ANError error) {
-//                        // handle error
-//                    }
-//                });
+        JSONObject jsontitle = new JSONObject();
+        JSONObject json1 = new JSONObject();
+        String caption = editText.getText().toString();
+
+        try {
+            json1.put(ConstantUtils.SUBMIT_GALLERY.TAG_URL, img_data);
+            json1.put(ConstantUtils.SUBMIT_GALLERY.TAG_CAPTION, caption);
+            json1.put(ConstantUtils.SUBMIT_GALLERY.TAG_BY, sessionManager.getId());
+            json1.put(ConstantUtils.SUBMIT_GALLERY.TAG_EVENTID, sessionManager.getEventID());
+
+            jsontitle.put(ConstantUtils.SUBMIT_GALLERY.TAG_TITLE, json1);
+        } catch (JSONException e) {
+            //Log.d("hasil exception", e.toString());
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
+        AndroidNetworking.post(ConstantUtils.URL.SEND_GALLERY)
+                .addJSONObjectBody(jsontitle)
+                .setTag("Gallery")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getString(ConstantUtils.SUBMIT_GALLERY.TAG_MSG).equals("Success")) {
+                                progressBar.setVisibility(View.GONE);
+                                editText.setText("");
+                                onBackPressed();
+                            } else {
+                                System.out.println("satu");
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        System.out.println("satu1");
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
     }
 }

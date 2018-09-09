@@ -30,6 +30,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.MyViewHold
     private String idAgenda;
     private OnItemClickListener onItemClickListener;
     private int row_index = -1;
+    private int pos;
 
     public AgendaAdapter(Context context, List<String> dayList, OnItemClickListener onItemClickListener) {
         this.dayList = dayList;
@@ -37,9 +38,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.MyViewHold
         this.onItemClickListener = onItemClickListener;
     }
 
-    public AgendaAdapter(Context context, List<String> dayList) {
+    public AgendaAdapter(Context context, List<String> dayList, int pos) {
         this.dayList = dayList;
         this.context = context;
+        this.pos = pos;
     }
 
     @Override
@@ -73,6 +75,21 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.MyViewHold
             holder.frameLayout.setBackgroundColor(Color.GRAY);
             holder.titleTextView.setTextColor(Color.BLACK);
         }
+
+//        if (pos < 0) {
+//            holder.frameLayout.setBackgroundColor(Color.GRAY);
+//            holder.titleTextView.setTextColor(Color.BLACK);
+//        } else {
+//            System.out.println("hmm " + pos);
+//            row_index = pos;
+//            if (row_index == position) {
+//                holder.frameLayout.setBackgroundColor(Color.RED);
+//                holder.titleTextView.setTextColor(Color.WHITE);
+//            } else {
+//                holder.frameLayout.setBackgroundColor(Color.GRAY);
+//                holder.titleTextView.setTextColor(Color.BLACK);
+//            }
+//        }
     }
 
     @Override

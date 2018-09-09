@@ -18,6 +18,7 @@ public interface ConstantUtils {
         String PARTNER = SERVER + "api/partner/content/";
         String CALL_CENTER = SERVER + "api/callcenter/content/";
         String GALLERY = SERVER + "api/gallery/getcontent/";
+        String SEND_GALLERY = SERVER + "api/gallery/postphoto/";
         String EXPO = SERVER + "api/expo/getexpo/";
         String CAT_EXPO = SERVER + "api/expo/getcategory/";
         String VERSION = SERVER + "api_version/checkVersion";
@@ -247,5 +248,14 @@ public interface ConstantUtils {
         String TAG_CATEGORY = "notif_category_id";
         String TAG_EVENTID = "event_id";
         String TAG_DATE = "created_date";
+    }
+
+    interface SUBMIT_GALLERY {
+        String TAG_TITLE = "photo";
+        String TAG_URL = "gallery_img_url";
+        String TAG_CAPTION = "gallery_caption";
+        String TAG_BY = "gallery_posted_by";
+        String TAG_EVENTID = "event_id";
+        String TAG_MSG = "message";
     }
 }

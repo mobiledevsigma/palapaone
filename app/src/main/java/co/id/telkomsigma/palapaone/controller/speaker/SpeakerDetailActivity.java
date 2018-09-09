@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -79,6 +80,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
         txt_job.setTypeface(fontbold);
         btn_fb.setTypeface(fontbold);
         btn_ask.setTypeface(fontbold);
+        txt_about.setMovementMethod(new ScrollingMovementMethod());
 
         getDetail();
 
@@ -107,7 +109,6 @@ public class SpeakerDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
                 onBackPressed();
                 return true;
             default:
