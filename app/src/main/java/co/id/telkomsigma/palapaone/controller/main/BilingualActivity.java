@@ -97,7 +97,7 @@ public class BilingualActivity extends AppCompatActivity {
                 if(!hasPermissions(BilingualActivity.this, PERMISSIONS)){
                     ActivityCompat.requestPermissions(BilingualActivity.this, PERMISSIONS, PERMISSION_ALL);
                 } else {
-                    getLanguage("en");
+                    getLanguage("id");
                     getClick = 1;
                 }
             }
@@ -125,6 +125,7 @@ public class BilingualActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        System.out.println("check " +response);
                         try {
                             String uname = response.getString(ConstantUtils.DICTIONARY.TAG_USERNAME);
                             String pwd = response.getString(ConstantUtils.DICTIONARY.TAG_PASSWORD);
@@ -202,7 +203,7 @@ public class BilingualActivity extends AppCompatActivity {
                     } else if (getClick == 1){
                         Intent intent = new Intent(getApplicationContext(), BeforeLoginActivity.class);
                         startActivity(intent);
-                        getLanguage("en");
+                        getLanguage("id");
                     }
                     //else any one or both the permissions are not granted
                 } else {

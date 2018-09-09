@@ -31,6 +31,7 @@ public interface ConstantUtils {
         String RUNDOWN = SERVER + "api/schedule/rundown/";
         String SEND_ASKING = SERVER + "api/asking/askingadd/";
         String NOTIFICATION = SERVER + "api/notification/content/";
+        String UPDATE_PP = SERVER + "api/profile/ubahPhoto/";
         String LOGOUT = SERVER + "api_login/logout/";
     }
 
@@ -75,6 +76,7 @@ public interface ConstantUtils {
         String TAG_NATIONAL_ID = "nationality_id";
         String TAG_NATIONAL_NAME = "nationality_name";
         String TAG_OFFICE = "user_office";
+        String TAG_PHOTO = "user_photo";
         String TAG_SUCCESS = "success";
     }
 
@@ -257,5 +259,12 @@ public interface ConstantUtils {
         String TAG_BY = "gallery_posted_by";
         String TAG_EVENTID = "event_id";
         String TAG_MSG = "message";
+    }
+
+    interface UPDATE_PP {
+        String TAG_TITLE = "photo";
+        String TAG_BASE64 = "base_64";
+        String TAG_NAME = "user_photo";
+        String TAG_USER = "user_id";
     }
 }

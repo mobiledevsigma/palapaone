@@ -126,7 +126,9 @@ public class LoginActivity extends AppCompatActivity {
                                 String parent = response.getString(ConstantUtils.LOGIN.TAG_PARENT);
                                 String nasID = response.getString(ConstantUtils.LOGIN.TAG_NATIONAL_ID);
                                 String nasName = response.getString(ConstantUtils.LOGIN.TAG_NATIONAL_NAME);
-                                session.setUserSession(userid, username, name, email, phone, about, quote, job, office, role, eventid, event, parent, nasID, nasName);
+                                String photo = response.getString(ConstantUtils.LOGIN.TAG_PHOTO);
+                                session.setUserSession(userid, username, name, email, phone, about, quote, job, office, role, eventid,
+                                        event, parent, nasID, nasName, photo);
 
                                 Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

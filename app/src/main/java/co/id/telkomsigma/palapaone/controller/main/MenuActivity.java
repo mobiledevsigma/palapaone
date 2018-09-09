@@ -51,8 +51,8 @@ public class MenuActivity extends AppCompatActivity {
     private LinearLayout lay_presence, lay_event, lay_speaker, lay_modul, lay_media, lay_expo, lay_gallery, lay_partner, lay_help;
     private DictionaryManager dictionary;
     private HashMap<String, String> listDict;
-    private LinearLayout lay_profile, lay_inbox;
     private SessionManager session;
+    private LinearLayout lay_profile, lay_inbox;
     private Typeface font, fontbold;
 
     @Override

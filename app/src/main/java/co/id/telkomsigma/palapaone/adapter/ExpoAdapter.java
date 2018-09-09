@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ public class ExpoAdapter extends BaseAdapter {
     private List<ExpoModel> listModel;
     private TextView txt_expo, txt_cate;
     private Typeface font, fontbold;
+    private ImageView imageView;
 
     public ExpoAdapter(Context mContext, List<ExpoModel> listModel) {
         this.mContext = mContext;
@@ -51,6 +55,7 @@ public class ExpoAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             view = inflater.inflate(R.layout.item_list_expo, null);
         }
+        imageView = view.findViewById(R.id.iv_expo);
         txt_expo = view.findViewById(R.id.txt_expo_name);
         txt_cate = view.findViewById(R.id.txt_expo_category);
 
@@ -59,7 +64,15 @@ public class ExpoAdapter extends BaseAdapter {
 
         txt_expo.setText(model.getExpo_name());
         txt_cate.setText(model.getExpo_loca());
+        downloadImage(mContext, model.getExpo_prod(), imageView);
 
         return view;
+    }
+
+    private void downloadImage(Context context, String url, ImageView image) {
+        Picasso.with(context)
+                .load(url)
+                .error(R.drawable.icon_expo)
+                .into(image);
     }
 }

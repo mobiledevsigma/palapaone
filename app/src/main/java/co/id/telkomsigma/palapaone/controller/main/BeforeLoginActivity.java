@@ -24,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.controller.event.EventActivity;
 import co.id.telkomsigma.palapaone.controller.expo.ExpoActivity;
@@ -31,6 +33,7 @@ import co.id.telkomsigma.palapaone.controller.help.HelpActivity;
 import co.id.telkomsigma.palapaone.controller.media.MediaCenterActivity;
 import co.id.telkomsigma.palapaone.controller.partner.PartnersActivity;
 import co.id.telkomsigma.palapaone.controller.speaker.SpeakerActivity;
+import co.id.telkomsigma.palapaone.util.DictionaryManager;
 import co.id.telkomsigma.palapaone.util.SessionManager;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
@@ -38,6 +41,8 @@ public class BeforeLoginActivity extends AppCompatActivity {
 
     private Typeface font, fontbold;
     private boolean doubleBackToExitPressedOnce = false;
+    private DictionaryManager dictionary;
+    private HashMap<String, String> listDict;
 
     CarouselView carouselView;
     String[] lisImage;
@@ -56,47 +61,50 @@ public class BeforeLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_before_login);
 
+        dictionary = new DictionaryManager(getApplicationContext());
+        listDict = dictionary.getDictHome();
+
         fontbold = Typeface.createFromAsset(BeforeLoginActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(BeforeLoginActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
-        TextView schedule = (TextView) findViewById(R.id.text_presence);
-        schedule.setTypeface(fontbold);
-        TextView speaker = (TextView) findViewById(R.id.text_speaker);
+        TextView presence = findViewById(R.id.text_presence);
+        TextView speaker = findViewById(R.id.text_speaker);
+        TextView document = findViewById(R.id.text_document);
+        TextView event = findViewById(R.id.text_event);
+        TextView media = findViewById(R.id.text_media);
+        TextView galleries = findViewById(R.id.text_galleries);
+        TextView partner = findViewById(R.id.text_partner);
+        TextView help = findViewById(R.id.text_help);
+        TextView expo = findViewById(R.id.text_expo);
+        Button login = findViewById(R.id.button_login);
+        carouselView = findViewById(R.id.carouselView);
+        //
+        presence.setTypeface(fontbold);
         speaker.setTypeface(fontbold);
-        TextView sspeaker = (TextView) findViewById(R.id.text_schedule);
-        sspeaker.setTypeface(fontbold);
-        TextView speakers = (TextView) findViewById(R.id.text_event);
-        speakers.setTypeface(fontbold);
-        TextView committee = (TextView) findViewById(R.id.text_committee);
-        committee.setTypeface(fontbold);
-        TextView galleries = (TextView) findViewById(R.id.text_galleries);
+        document.setTypeface(fontbold);
+        event.setTypeface(fontbold);
+        media.setTypeface(fontbold);
         galleries.setTypeface(fontbold);
-        TextView kios = (TextView) findViewById(R.id.text_partner);
-        kios.setTypeface(fontbold);
-        TextView kontak = (TextView) findViewById(R.id.text_help);
-        kontak.setTypeface(fontbold);
-        TextView kkontak = (TextView) findViewById(R.id.text_expo);
-        kkontak.setTypeface(fontbold);
-        Button login = (Button) findViewById(R.id.button_login);
+        partner.setTypeface(fontbold);
+        help.setTypeface(fontbold);
+        expo.setTypeface(fontbold);
         login.setTypeface(fontbold);
+        //
+        presence.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_1));
+        event.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_2));
+        speaker.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_3));
+        document.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_4));
+        media.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_5));
+        expo.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_6));
+        galleries.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_7));
+        partner.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_8));
+        help.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MENU_9));
 
         SessionManager session = new SessionManager(getApplicationContext());
 
-        carouselView = findViewById(R.id.carouselView);
         getBanner(session.getParentID());
 
-
-        //  CarouselView goto_details= (CarouselView) findViewById(R.id.carouselView);
-//        goto_details.setImageClickListener(new ImageClickListener() {
-//            @Override
-//            public void onClick(int position) {
-//                Intent i = new Intent(BeforeLoginActivity.this, DetailBannerActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
-
-        Button goto_login = (Button) findViewById(R.id.button_login);
+        Button goto_login = findViewById(R.id.button_login);
         goto_login.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -105,7 +113,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_presence = (LinearLayout) findViewById(R.id.layout_qr);
+        LinearLayout goto_presence = findViewById(R.id.layout_qr);
         goto_presence.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -113,7 +121,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_event = (LinearLayout) findViewById(R.id.layout_event);
+        LinearLayout goto_event = findViewById(R.id.layout_event);
         goto_event.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -122,7 +130,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_a = (LinearLayout) findViewById(R.id.layout_speaker);
+        LinearLayout goto_a = findViewById(R.id.layout_speaker);
         goto_a.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -131,7 +139,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_module = (LinearLayout) findViewById(R.id.layout_module);
+        LinearLayout goto_module = findViewById(R.id.layout_module);
         goto_module.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -139,7 +147,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_news = (LinearLayout) findViewById(R.id.layout_media);
+        LinearLayout goto_news = findViewById(R.id.layout_media);
         goto_news.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -148,7 +156,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_partner = (LinearLayout) findViewById(R.id.layout_partner);
+        LinearLayout goto_partner = findViewById(R.id.layout_partner);
         goto_partner.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent i = new Intent(getApplicationContext(), PartnersActivity.class);
@@ -156,7 +164,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_galeri = (LinearLayout) findViewById(R.id.layout_galleries);
+        LinearLayout goto_galeri = findViewById(R.id.layout_galleries);
         goto_galeri.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -164,7 +172,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_expo = (LinearLayout) findViewById(R.id.layout_expo);
+        LinearLayout goto_expo = findViewById(R.id.layout_expo);
         goto_expo.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -172,7 +180,7 @@ public class BeforeLoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        LinearLayout goto_help = (LinearLayout) findViewById(R.id.layout_help);
+        LinearLayout goto_help = findViewById(R.id.layout_help);
         goto_help.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {

@@ -1,5 +1,6 @@
 package co.id.telkomsigma.palapaone.controller.profile;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -7,8 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
@@ -29,36 +33,44 @@ public class ProfileActivity extends AppCompatActivity {
         fontbold = Typeface.createFromAsset(ProfileActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(ProfileActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
-        TextView nama = (TextView) findViewById(R.id.text_uname);
+        ImageView pict = findViewById(R.id.iv_profile);
+        TextView nama = findViewById(R.id.text_uname);
+        TextView uname = findViewById(R.id.text_bangsa);
+        TextView alamat = findViewById(R.id.text_role);
+        TextView email = findViewById(R.id.text_pekerjaan);
+        TextView contact = findViewById(R.id.text_about);
+        TextView emails = findViewById(R.id.text_email);
+        TextView b = findViewById(R.id.no_telp);
+        TextView c = findViewById(R.id.text_quotes);
+        TextView logoutt = findViewById(R.id.text_logout);
+        TextView logoutts = findViewById(R.id.text_kontak);
+        //
         nama.setTypeface(fontbold);
-        nama.setText(session.getName());
-        TextView uname = (TextView) findViewById(R.id.text_bangsa);
         uname.setTypeface(fontbold);
-        uname.setText(session.getNationalName());
-        TextView alamat = (TextView) findViewById(R.id.text_role);
         alamat.setTypeface(fontbold);
-        alamat.setText(session.getEvent());
-        TextView email = (TextView) findViewById(R.id.text_pekerjaan);
         email.setTypeface(fontbold);
-        email.setText(session.getJob());
-        TextView contact = (TextView) findViewById(R.id.text_about);
         contact.setTypeface(fontbold);
-        contact.setText(session.getAbout());
-        TextView emails = (TextView) findViewById(R.id.text_email);
         emails.setTypeface(fontbold);
-        emails.setText(session.getEmail());
-        TextView b = (TextView) findViewById(R.id.no_telp);
         b.setTypeface(fontbold);
-        b.setText(session.getPhone());
-        TextView c = (TextView) findViewById(R.id.text_quotes);
         c.setTypeface(fontbold);
-        c.setText(session.getQuote());
-        TextView logoutt = (TextView) findViewById(R.id.text_logout);
         logoutt.setTypeface(fontbold);
-        TextView logoutts = (TextView) findViewById(R.id.text_kontak);
         logoutts.setTypeface(fontbold);
+        //
+        if (session.getPhoto().isEmpty()) {
+            pict.setImageResource(R.drawable.icon_avatars);
+        } else {
+            downloadImage(getApplicationContext(), session.getPhoto(), pict);
+        }
+        nama.setText(session.getName());
+        uname.setText(session.getNationalName());
+        alamat.setText(session.getEvent());
+        email.setText(session.getJob());
+        contact.setText(session.getAbout());
+        emails.setText(session.getEmail());
+        b.setText(session.getPhone());
+        c.setText(session.getQuote());
 
-        LinearLayout logout = (LinearLayout) findViewById(R.id.layout_logout);
+        LinearLayout logout = findViewById(R.id.layout_logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_contact = (LinearLayout) findViewById(R.id.feedback);
+        LinearLayout goto_contact = findViewById(R.id.feedback);
         goto_contact.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -75,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout goto_edit = (LinearLayout) findViewById(R.id.edit);
+        LinearLayout goto_edit = findViewById(R.id.edit);
         goto_edit.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -89,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void showAlertDialog() {
-        AlertDialog show = new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
                 .setMessage("Are you sure you want to logout?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -105,5 +117,12 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    private void downloadImage(Context context, String url, ImageView image) {
+        Picasso.with(context)
+                .load(url)
+                .error(R.drawable.icon_avatars)
+                .into(image);
     }
 }

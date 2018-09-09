@@ -71,9 +71,6 @@ public class TakePhotoActivity extends AppCompatActivity {
     private String img_data, mCurrentPhotoPath;
     private PhotoUtil imageUtil;
     private String TAG = "TAG Selfie";
-    private String realPath;
-    private File filePath;
-    private String fileName;
     private SessionManager sessionManager;
     private String userID;
     private ProgressBar progressBar;

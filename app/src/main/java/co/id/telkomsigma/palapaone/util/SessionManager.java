@@ -8,6 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
 
 import co.id.telkomsigma.palapaone.controller.main.Splashscreen;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
@@ -32,7 +36,8 @@ public class SessionManager {
     }
 
     public void setUserSession(String id, String username, String name, String email, String phone, String about,
-                               String quote, String job, String office, String role, String eventID, String event, String parent, String nas_id, String nas_name) {
+                               String quote, String job, String office, String role, String eventID, String event,
+                               String parent, String nas_id, String nas_name, String photo) {
 
         editor.putBoolean(IS_LOGIN, true);
         editor.putBoolean("notifStatus", true);
@@ -51,13 +56,12 @@ public class SessionManager {
         editor.putString(ConstantUtils.LOGIN.TAG_PARENT, parent);
         editor.putString(ConstantUtils.LOGIN.TAG_NATIONAL_ID, nas_id);
         editor.putString(ConstantUtils.LOGIN.TAG_NATIONAL_NAME, nas_name);
+        editor.putString(ConstantUtils.LOGIN.TAG_PHOTO, photo);
         // commit changes
         editor.commit();
     }
 
-
     public void updateUser(String name, String email, String about, String quote, String job) {
-
         editor.putString(ConstantUtils.LOGIN.TAG_NAME, name);
         editor.putString(ConstantUtils.LOGIN.TAG_EMAIL, email);
         editor.putString(ConstantUtils.LOGIN.TAG_ABOUT, about);
@@ -125,6 +129,10 @@ public class SessionManager {
 
     public String getNationalName() {
         return pref.getString(ConstantUtils.LOGIN.TAG_NATIONAL_NAME, "");
+    }
+
+    public String getPhoto() {
+        return pref.getString(ConstantUtils.LOGIN.TAG_PHOTO, "");
     }
 
     public void logoutUser() {
