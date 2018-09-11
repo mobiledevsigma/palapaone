@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.controller.feedback.FeedbackActivity;
-import co.id.telkomsigma.palapaone.controller.main.MainActivity;
+import co.id.telkomsigma.palapaone.controller.main.MenuActivity;
 import co.id.telkomsigma.palapaone.util.SessionManager;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -59,8 +59,10 @@ public class ProfileActivity extends AppCompatActivity {
         if (session.getPhoto().isEmpty()) {
             pict.setImageResource(R.drawable.icon_avatars);
         } else {
+            System.out.println("foto session " + session.getPhoto());
             downloadImage(getApplicationContext(), session.getPhoto(), pict);
         }
+
         nama.setText(session.getName());
         uname.setText(session.getNationalName());
         alamat.setText(session.getEvent());
@@ -115,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+        onBackPressed();
         return true;
     }
 
@@ -124,5 +126,11 @@ public class ProfileActivity extends AppCompatActivity {
                 .load(url)
                 .error(R.drawable.icon_avatars)
                 .into(image);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
     }
 }

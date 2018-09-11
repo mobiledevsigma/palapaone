@@ -3,7 +3,8 @@
     android:id="@+id/lay_kotak"
     android:layout_width="50dp"
     android:layout_height="50dp"
-    android:background="@drawable/field_background">
+    android:background="@drawable/field_background"
+    android:layout_margin="8dp">
 
     <TextView
         android:id="@+id/textTime"

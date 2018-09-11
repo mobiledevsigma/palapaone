@@ -8,8 +8,7 @@ import java.util.HashMap;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class DictionaryManager {
-    private static final String PREFER_NAME = "PalapaOne";
-    private static final String IS_LOGIN = "IsLoggedIn";
+    private static final String PREFER_NAME = "DictPalapaOne";
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context _context;
@@ -22,8 +21,8 @@ public class DictionaryManager {
         editor = pref.edit();
     }
 
-    public void setLanguageMain(String uname, String pwd, String login, String msg, String menu1, String menu2, String menu3, String menu4, String menu5
-            , String menu6, String menu7, String menu8, String menu9) {
+    public void setLanguageMain(String uname, String pwd, String login, String msg, String menu1, String menu2, String menu3,
+                                String menu4, String menu5, String menu6, String menu7, String menu8, String menu9, String kode) {
         editor.putString(ConstantUtils.DICTIONARY.TAG_USERNAME, uname);
         editor.putString(ConstantUtils.DICTIONARY.TAG_PASSWORD, pwd);
         editor.putString(ConstantUtils.DICTIONARY.TAG_LOGIN, login);
@@ -37,8 +36,13 @@ public class DictionaryManager {
         editor.putString(ConstantUtils.DICTIONARY.TAG_MENU_7, menu7);
         editor.putString(ConstantUtils.DICTIONARY.TAG_MENU_8, menu8);
         editor.putString(ConstantUtils.DICTIONARY.TAG_MENU_9, menu9);
+        editor.putString(ConstantUtils.DICTIONARY.TAG_KODE, kode);
         // commit changes
         editor.commit();
+    }
+
+    public String getDictKode() {
+        return pref.getString(ConstantUtils.DICTIONARY.TAG_KODE, "");
     }
 
     public String getDictUname() {

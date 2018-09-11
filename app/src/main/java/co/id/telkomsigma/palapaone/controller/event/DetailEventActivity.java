@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.controller.speaker.SpeakerDetailActivity;
+import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class DetailEventActivity extends AppCompatActivity {
     Typeface font,fontbold;
@@ -19,24 +20,38 @@ public class DetailEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_event);
 
+        Intent intent = getIntent();
+        String runID = intent.getStringExtra(ConstantUtils.RUNDOWN.TAG_ID);
+        String runName = intent.getStringExtra(ConstantUtils.RUNDOWN.TAG_NAME);
+        String runStart = intent.getStringExtra(ConstantUtils.RUNDOWN.TAG_START);
+        String runEnd = intent.getStringExtra(ConstantUtils.RUNDOWN.TAG_END);
+        String runPlace = intent.getStringExtra(ConstantUtils.RUNDOWN.TAG_PLACE);
+        String runLayout = intent.getStringExtra(ConstantUtils.RUNDOWN.TAG_LAYOUT);
+
         fontbold = Typeface.createFromAsset(DetailEventActivity.this.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(DetailEventActivity.this.getAssets(), "fonts/AvenirLTStd-Book.otf");
 
         Button map2 = (Button) findViewById(R.id.self);
         map2.setTypeface(fontbold);
 
-        TextView a= (TextView) findViewById(R.id.acara);
+        TextView a= findViewById(R.id.acara);
+        TextView b= findViewById(R.id.acara1);
+        TextView c= findViewById(R.id.acara2);
+        TextView d= findViewById(R.id.acara3);
+        TextView e= findViewById(R.id.acara4);
+        TextView f= findViewById(R.id.deskripsi);
+        //
         a.setTypeface(fontbold);
-        TextView b= (TextView) findViewById(R.id.acara1);
         b.setTypeface(fontbold);
-        TextView c= (TextView) findViewById(R.id.acara2);
         c.setTypeface(fontbold);
-        TextView d= (TextView) findViewById(R.id.acara3);
         d.setTypeface(fontbold);
-        TextView e= (TextView) findViewById(R.id.acara4);
         e.setTypeface(fontbold);
-        TextView f= (TextView) findViewById(R.id.deskripsi);
         f.setTypeface(fontbold);
+        //
+        e.setText(runName);
+        c.setText("speaker");
+        d.setText(runPlace);
+        f.setText("desc");
 
         LinearLayout goto_speaker= (LinearLayout) findViewById(R.id.pembicara);
         goto_speaker.setOnClickListener(new View.OnClickListener() {

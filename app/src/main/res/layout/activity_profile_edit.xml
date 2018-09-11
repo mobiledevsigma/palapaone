@@ -302,7 +302,7 @@
                             <EditText
                                 android:id="@+id/s"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="60dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="I was graduated from Harvard"
@@ -313,14 +313,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="60dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
 
@@ -335,14 +335,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="0.7"
                             android:orientation="vertical">
 
                             <EditText
                                 android:id="@+id/hotelconcern"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="60dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="Hotel"
@@ -353,14 +353,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="60dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
 
@@ -375,14 +375,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="0.7"
                             android:orientation="vertical">
 
                             <EditText
                                 android:id="@+id/airlineconcern"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="70dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="Airline"
@@ -393,14 +393,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="60dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
 
@@ -415,14 +415,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="0.7"
                             android:orientation="vertical">
 
                             <EditText
                                 android:id="@+id/tourconcern"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="60dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="tour"
@@ -433,14 +433,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="60dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
 
@@ -455,14 +455,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="0.7"
                             android:orientation="vertical">
 
                             <EditText
                                 android:id="@+id/foodconcern"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="60dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="Vegetarian"
@@ -473,14 +473,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="60dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
 
@@ -495,14 +495,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="0.7"
                             android:orientation="vertical">
 
                             <EditText
                                 android:id="@+id/healthconcern"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="60dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="headache"
@@ -513,14 +513,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
 
@@ -535,14 +535,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="0.7"
                             android:orientation="vertical">
 
                             <EditText
                                 android:id="@+id/f"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="60dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="reza@gmail.com"
@@ -553,14 +553,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
 
@@ -575,14 +575,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="0.7"
                             android:orientation="vertical">
 
                             <EditText
                                 android:id="@+id/h"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="60dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="0812839289423"
@@ -593,14 +593,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
 
@@ -615,17 +615,18 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="60dp"
                             android:layout_weight="0.7"
                             android:orientation="vertical">
 
                             <EditText
                                 android:id="@+id/k"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="60dp"
                                 android:layout_marginRight="15dp"
                                 android:gravity="center|left"
                                 android:hint="There is a will there is a way"
+                                android:inputType="textCapSentences|textMultiLine"
                                 android:textSize="14sp" />
                         </LinearLayout>
 
@@ -634,7 +635,7 @@
                     <LinearLayout
                         android:id="@+id/done"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="60dp"
                         android:gravity="right">
 
                         <LinearLayout

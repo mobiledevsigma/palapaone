@@ -24,6 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import co.id.telkomsigma.palapaone.R;
@@ -47,7 +51,7 @@ public class MenuActivity extends AppCompatActivity {
     private boolean doubleBackToExitPressedOnce = false;
     private CarouselView carouselView;
     String[] lisImage ;
-    private TextView txt_name_menu, txt_msg, txt_presence, txt_event, txt_speaker, txt_modul, txt_media, txt_expo, txt_gallery, txt_partner, txt_help;
+    private TextView txt_greet, txt_count, txt_name_menu, txt_msg, txt_presence, txt_event, txt_speaker, txt_modul, txt_media, txt_expo, txt_gallery, txt_partner, txt_help;
     private LinearLayout lay_presence, lay_event, lay_speaker, lay_modul, lay_media, lay_expo, lay_gallery, lay_partner, lay_help;
     private DictionaryManager dictionary;
     private HashMap<String, String> listDict;
@@ -67,9 +71,11 @@ public class MenuActivity extends AppCompatActivity {
         listDict = dictionary.getDictHome();
 
         lay_profile = findViewById(R.id.lay_profile);
+        txt_count = findViewById(R.id.txt_count);
         txt_name_menu = findViewById(R.id.txt_name_menu);
         lay_inbox = findViewById(R.id.lay_inbox);
         carouselView = findViewById(R.id.carouselView);
+        txt_greet = findViewById(R.id.txt_greeting);
         txt_msg = findViewById(R.id.txt_msg);
         txt_presence = findViewById(R.id.txt_menu_presence);
         txt_event = findViewById(R.id.txt_menu_event);
@@ -91,6 +97,8 @@ public class MenuActivity extends AppCompatActivity {
         lay_partner = findViewById(R.id.layout_partners);
         lay_help = findViewById(R.id.layout_help);
         //
+        txt_count.setTypeface(fontbold);
+        txt_greet.setTypeface(fontbold);
         txt_msg.setTypeface(fontbold);
         txt_presence.setTypeface(fontbold);
         txt_event.setTypeface(fontbold);
@@ -103,6 +111,7 @@ public class MenuActivity extends AppCompatActivity {
         txt_help.setTypeface(fontbold);
 
         getBanner(session.getEventID());
+        getCountInbox(session.getEventID());
 
         txt_name_menu.setText(session.getName());
         txt_msg.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MSG));
@@ -203,6 +212,54 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        setGreeting();
+    }
+
+    private void setGreeting() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm");
+        String tim = mdformat.format(calendar.getTime());
+        try {
+            Date current = mdformat.parse(tim);
+            Date six = mdformat.parse("06:00");
+            Date twelve = mdformat.parse("12:00");
+            Date eighteen = mdformat.parse("18:00");
+            Date twentyfour = mdformat.parse("24:00");
+
+            if (dictionary.getDictKode().equals("en")) {
+                if (current.after(six) && current.before(twelve)) {
+                    //morning
+                    txt_greet.setText("Good Morning");
+                } else if (current.after(twelve) && current.before(eighteen)) {
+                    //afternoon
+                    txt_greet.setText("Good Afternoon");
+                } else if (current.after(eighteen) && current.before(twentyfour)) {
+                    //evening
+                    txt_greet.setText("Good Evening");
+                } else if (current.after(twentyfour) && current.before(six)) {
+                    //morning
+                    txt_greet.setText("Good Morning");
+                }
+            } else {
+                if (current.after(six) && current.before(twelve)) {
+                    //morning
+                    txt_greet.setText("Selamat Pagi");
+                } else if (current.after(twelve) && current.before(eighteen)) {
+                    //afternoon
+                    txt_greet.setText("Selamat Siang");
+                } else if (current.after(eighteen) && current.before(twentyfour)) {
+                    //evening
+                    txt_greet.setText("Selamat Sore");
+                } else if (current.after(twentyfour) && current.before(six)) {
+                    //morning
+                    txt_greet.setText("Selamat Pagi");
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void getBanner(String event_id) {
@@ -216,8 +273,6 @@ public class MenuActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray jsonArray = response.getJSONArray(ConstantUtils.BANNER.TAG_TITLE);
-
-                            System.out.println("coba"+jsonArray);
                             lisImage = new String[jsonArray.length()];
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject object = jsonArray.getJSONObject(a);
@@ -252,6 +307,30 @@ public class MenuActivity extends AppCompatActivity {
                 });
     }
 
+    private void getCountInbox(String event_id) {
+        AndroidNetworking.get(ConstantUtils.URL.AMOUNT_NOTIF + "{event_id}")
+                .addPathParameter("event_id", event_id)
+                .setTag("Count")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String count = response.getString("count");
+                            txt_count.setText(count);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+    }
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -262,7 +341,11 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Klik lagi untuk ke menu utama", Toast.LENGTH_SHORT).show();
+        if (dictionary.getDictKode().equals("en")) {
+            Toast.makeText(this, "Tap again to exit", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Tekan lagi untuk keluar", Toast.LENGTH_SHORT).show();
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override

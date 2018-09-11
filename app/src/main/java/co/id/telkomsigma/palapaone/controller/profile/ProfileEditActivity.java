@@ -2,9 +2,11 @@ package co.id.telkomsigma.palapaone.controller.profile;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -90,7 +92,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         photoUtil = new TakePhotoUtil();
         imageUtil = new PhotoUtil();
 
-        userID = session.getId() + session.getEvent();
+        userID = session.getId();
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
@@ -161,9 +163,10 @@ public class ProfileEditActivity extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-//                                saveEdit(a3.getText().toString(), email.getText().toString(), phone.getText().toString(), about.getText().toString(), quote.getText().toString(),
-//                                        job.getText().toString(), session.getOffice(), session.getNationalID(), session.getId());
-                                updatePhoto(session.getId());
+                                saveEdit(a3.getText().toString(), email.getText().toString(), phone.getText().toString(), about.getText().toString(), quote.getText().toString(),
+                                        job.getText().toString(), session.getOffice(), session.getNationalID(), session.getId());
+                                //updatePhoto(session.getId());
+
                             }
                         })
                         .setNegativeButton("No", null)
@@ -296,7 +299,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                 }
                 setPic();
             } else if (requestCode == CAPTURE_GALLERY) {
-                onSelectFromGalleryResult(data);
+                selectGallery(data);
             }
         } else {
             //Toast.makeText(getActivity().getApplicationContext(), "request code == null", Toast.LENGTH_SHORT).show();
@@ -306,7 +309,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         //String imageFileName = username + "_";
-        String imageFileName = userID + "_";
+        String imageFileName = "user_" + userID;
         fileName = imageFileName + ".jpg";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
@@ -320,19 +323,100 @@ public class ProfileEditActivity extends AppCompatActivity {
         return image;
     }
 
-    @SuppressWarnings("deprecation")
-    private void onSelectFromGalleryResult(Intent data) {
+    private void selectGallery(Intent data) {
+        Bitmap scaledBitmap = null;
+        Uri selectedImageUri = data.getData();
+        String[] projection = {MediaStore.MediaColumns.DATA};
+        CursorLoader cursorLoader = new CursorLoader(getApplicationContext(), selectedImageUri, projection, null, null, null);
+        Cursor cursor = cursorLoader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+        String selectedImagePath = cursor.getString(column_index);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        Bitmap bmp = BitmapFactory.decodeFile(selectedImagePath, options);
 
-        Bitmap bm = null;
-        if (data != null) {
-            try {
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-            } catch (IOException e) {
-                e.printStackTrace();
+        int actualHeight = options.outHeight;
+        int actualWidth = options.outWidth;
+        float maxHeight = 816.0f;
+        float maxWidth = 612.0f;
+        float imgRatio = actualWidth / actualHeight;
+        float maxRatio = maxWidth / maxHeight;
+
+        if (actualHeight > maxHeight || actualWidth > maxWidth) {
+            if (imgRatio < maxRatio) {
+                imgRatio = maxHeight / actualHeight;
+                actualWidth = (int) (imgRatio * actualWidth);
+                actualHeight = (int) maxHeight;
+            } else if (imgRatio > maxRatio) {
+                imgRatio = maxWidth / actualWidth;
+                actualHeight = (int) (imgRatio * actualHeight);
+                actualWidth = (int) maxWidth;
+            } else {
+                actualHeight = (int) maxHeight;
+                actualWidth = (int) maxWidth;
             }
         }
 
-        imageView.setImageBitmap(bm);
+        options.inSampleSize = imageUtil.calculateInSampleSize(options, actualWidth, actualHeight);
+        options.inJustDecodeBounds = false;
+        options.inDither = false;
+        options.inPurgeable = true;
+        options.inInputShareable = true;
+        options.inTempStorage = new byte[16 * 1024];
+
+        try {
+            bmp = BitmapFactory.decodeFile(selectedImagePath, options);
+        } catch (OutOfMemoryError exception) {
+            exception.printStackTrace();
+
+        }
+        try {
+            scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
+        } catch (OutOfMemoryError exception) {
+            exception.printStackTrace();
+        }
+
+        float ratioX = actualWidth / (float) options.outWidth;
+        float ratioY = actualHeight / (float) options.outHeight;
+        float middleX = actualWidth / 2.0f;
+        float middleY = actualHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+
+        ExifInterface exif;
+        try {
+            exif = new ExifInterface(selectedImagePath);
+
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0);
+            Log.d("EXIF", "Exif: " + orientation);
+            Matrix matrix = new Matrix();
+            if (orientation == 6) {
+                matrix.postRotate(90);
+                Log.d("EXIF", "Exif: " + orientation);
+            } else if (orientation == 3) {
+                matrix.postRotate(180);
+                Log.d("EXIF", "Exif: " + orientation);
+            } else if (orientation == 8) {
+                matrix.postRotate(270);
+                Log.d("EXIF", "Exif: " + orientation);
+            }
+            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        bitmapPhoto = BitmapFactory.decodeFile(selectedImagePath, options);
+        img_data = photoUtil.getStringBase64Bitmap(scaledBitmap);
+        imageView.setImageBitmap(scaledBitmap);
+        //img_bg.setImageBitmap(scaledBitmap);
+        //img_ic.setVisibility(View.GONE);
     }
 
     private void setPic() {
@@ -444,9 +528,9 @@ public class ProfileEditActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if (!img_data.isEmpty()) {
+//        if (!img_data.equals("")) {
             updatePhoto(user);
-        }
+//        }
 
         AndroidNetworking.post(ConstantUtils.URL.PROFILE_EDIT)
                 .addJSONObjectBody(jsonObject) // posting json
@@ -471,7 +555,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             Toast.makeText(ProfileEditActivity.this, "Data not saved, please check your connection", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
-                            System.out.println("dua " + e);
                         }
                     }
 
@@ -479,7 +562,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                     public void onError(ANError error) {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(ProfileEditActivity.this, "Data not saved, please check your connection", Toast.LENGTH_SHORT).show();
-                        System.out.println("dua1 " + error);
                     }
                 });
     }
@@ -507,10 +589,12 @@ public class ProfileEditActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if (response.getString(ConstantUtils.SUBMIT_GALLERY.TAG_MSG).equals("Success")) {
+                            if (response.getString(ConstantUtils.SUBMIT_GALLERY.TAG_MSG).equals("success")) {
                                 progressBar.setVisibility(View.GONE);
+                                String phot = response.getString(ConstantUtils.LOGIN.TAG_PHOTO);
+                                session.updatePhoto("http://180.250.242.69:8083/icw/image/user/"+phot);
+                                System.out.println("foto edit " + phot);
                             } else {
-                                System.out.println("satu");
                                 progressBar.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
@@ -522,7 +606,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError error) {
                         // handle error
-                        System.out.println("satu1");
                         progressBar.setVisibility(View.GONE);
                     }
                 });

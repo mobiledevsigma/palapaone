@@ -71,8 +71,6 @@ public class RundownAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.txtTitle_tiga = view.findViewById(R.id.txt_jam);
             holder.txtTitle_empat = view.findViewById(R.id.txt_acara);
-            holder.txtTitle_enam = view.findViewById(R.id.txt_speaker);
-            holder.txtTitle_lima = view.findViewById(R.id.txt_room);
             holder.lay_reminder = view.findViewById(R.id.lay_reminder);
             holder.imageView = view.findViewById(R.id.iv_reminder);
             view.setTag(holder);
@@ -84,11 +82,6 @@ public class RundownAdapter extends BaseAdapter {
         holder.txtTitle_tiga.setTypeface(fontbold);
         holder.txtTitle_empat.setText(model.getRundown_name());
         holder.txtTitle_empat.setTypeface(fontbold);
-        holder.txtTitle_enam.setText(model.getRundown_name());
-        holder.txtTitle_enam.setVisibility(View.GONE);
-        holder.txtTitle_enam.setTypeface(fontbold);
-        holder.txtTitle_lima.setText(model.getRundown_place());
-        holder.txtTitle_lima.setTypeface(fontbold);
 
         String lonceng = dataSess.getData("lonceng" + (position) + idEvent + idAgenda);
         if (lonceng.equals("")) {
@@ -164,8 +157,6 @@ public class RundownAdapter extends BaseAdapter {
     class ViewHolder {
         TextView txtTitle_tiga;
         TextView txtTitle_empat;
-        TextView txtTitle_enam;
-        TextView txtTitle_lima;
         LinearLayout lay_reminder;
         ImageView imageView;
     }

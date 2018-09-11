@@ -71,6 +71,12 @@ public class SessionManager {
         editor.commit();
     }
 
+    public void updatePhoto(String photo) {
+        editor.putString(ConstantUtils.LOGIN.TAG_PHOTO, photo);
+        // commit changes
+        editor.commit();
+    }
+
     public String getId() {
         return pref.getString(ConstantUtils.LOGIN.TAG_USERID, "");
     }

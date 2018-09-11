@@ -27,6 +27,7 @@ import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.adapter.GalleryAdapter;
+import co.id.telkomsigma.palapaone.controller.main.MenuActivity;
 import co.id.telkomsigma.palapaone.model.GalleryModel;
 import co.id.telkomsigma.palapaone.util.SessionManager;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
@@ -82,6 +83,12 @@ public class GalleryActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
     }
 
     private void getData(final String event_id) {

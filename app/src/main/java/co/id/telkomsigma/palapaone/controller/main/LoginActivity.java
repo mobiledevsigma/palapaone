@@ -133,12 +133,11 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                                finish();
+                                progressBar.setVisibility(View.GONE);
                             } else {
                                 progressBar.setVisibility(View.GONE);
                                 Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
                             }
-                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             progressBar.setVisibility(View.GONE);

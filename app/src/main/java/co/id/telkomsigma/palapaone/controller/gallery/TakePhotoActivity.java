@@ -2,6 +2,7 @@ package co.id.telkomsigma.palapaone.controller.gallery;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -242,9 +243,10 @@ public class TakePhotoActivity extends AppCompatActivity {
 
     private void reset() {
         editText.setText("");
+        editText.setHint("Write Caption Here");
         imageView.setImageResource(R.drawable.icon_avatars);
-        //img_bg.setImageResource(R.drawable.bg_photo);
-        //img_ic.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(getApplicationContext(), GalleryActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -257,7 +259,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                 }
                 setPic();
             } else if (requestCode == CAPTURE_GALLERY) {
-                onSelectFromGalleryResult(data);
+                selectGallery(data);
             }
         } else {
             //Toast.makeText(getActivity().getApplicationContext(), "request code == null", Toast.LENGTH_SHORT).show();
@@ -278,21 +280,6 @@ public class TakePhotoActivity extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
-    }
-
-    @SuppressWarnings("deprecation")
-    private void onSelectFromGalleryResult(Intent data) {
-
-        Bitmap bm=null;
-        if (data != null) {
-            try {
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        imageView.setImageBitmap(bm);
     }
 
     private void setPic() {
@@ -386,6 +373,102 @@ public class TakePhotoActivity extends AppCompatActivity {
 //        img_ic.setVisibility(View.GONE);
     }
 
+    private void selectGallery(Intent data) {
+        Bitmap scaledBitmap = null;
+        Uri selectedImageUri = data.getData();
+        String[] projection = {MediaStore.MediaColumns.DATA};
+        CursorLoader cursorLoader = new CursorLoader(getApplicationContext(), selectedImageUri, projection, null, null, null);
+        Cursor cursor = cursorLoader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+        String selectedImagePath = cursor.getString(column_index);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        Bitmap bmp = BitmapFactory.decodeFile(selectedImagePath, options);
+
+        int actualHeight = options.outHeight;
+        int actualWidth = options.outWidth;
+        float maxHeight = 816.0f;
+        float maxWidth = 612.0f;
+        float imgRatio = actualWidth / actualHeight;
+        float maxRatio = maxWidth / maxHeight;
+
+        if (actualHeight > maxHeight || actualWidth > maxWidth) {
+            if (imgRatio < maxRatio) {
+                imgRatio = maxHeight / actualHeight;
+                actualWidth = (int) (imgRatio * actualWidth);
+                actualHeight = (int) maxHeight;
+            } else if (imgRatio > maxRatio) {
+                imgRatio = maxWidth / actualWidth;
+                actualHeight = (int) (imgRatio * actualHeight);
+                actualWidth = (int) maxWidth;
+            } else {
+                actualHeight = (int) maxHeight;
+                actualWidth = (int) maxWidth;
+            }
+        }
+
+        options.inSampleSize = imageUtil.calculateInSampleSize(options, actualWidth, actualHeight);
+        options.inJustDecodeBounds = false;
+        options.inDither = false;
+        options.inPurgeable = true;
+        options.inInputShareable = true;
+        options.inTempStorage = new byte[16 * 1024];
+
+        try {
+            bmp = BitmapFactory.decodeFile(selectedImagePath, options);
+        } catch (OutOfMemoryError exception) {
+            exception.printStackTrace();
+
+        }
+        try {
+            scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
+        } catch (OutOfMemoryError exception) {
+            exception.printStackTrace();
+        }
+
+        float ratioX = actualWidth / (float) options.outWidth;
+        float ratioY = actualHeight / (float) options.outHeight;
+        float middleX = actualWidth / 2.0f;
+        float middleY = actualHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+
+        ExifInterface exif;
+        try {
+            exif = new ExifInterface(selectedImagePath);
+
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0);
+            Log.d("EXIF", "Exif: " + orientation);
+            Matrix matrix = new Matrix();
+            if (orientation == 6) {
+                matrix.postRotate(90);
+                Log.d("EXIF", "Exif: " + orientation);
+            } else if (orientation == 3) {
+                matrix.postRotate(180);
+                Log.d("EXIF", "Exif: " + orientation);
+            } else if (orientation == 8) {
+                matrix.postRotate(270);
+                Log.d("EXIF", "Exif: " + orientation);
+            }
+            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        bitmapPhoto = BitmapFactory.decodeFile(selectedImagePath, options);
+        img_data = photoUtil.getStringBase64Bitmap(scaledBitmap);
+        imageView.setImageBitmap(scaledBitmap);
+        //img_bg.setImageBitmap(scaledBitmap);
+        //img_ic.setVisibility(View.GONE);
+    }
+
     private void sendData() {
         JSONObject jsontitle = new JSONObject();
         JSONObject json1 = new JSONObject();
@@ -414,10 +497,8 @@ public class TakePhotoActivity extends AppCompatActivity {
                         try {
                             if (response.getString(ConstantUtils.SUBMIT_GALLERY.TAG_MSG).equals("Success")) {
                                 progressBar.setVisibility(View.GONE);
-                                editText.setText("");
-                                onBackPressed();
+                                reset();
                             } else {
-                                System.out.println("satu");
                                 progressBar.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
@@ -429,7 +510,6 @@ public class TakePhotoActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError error) {
                         // handle error
-                        System.out.println("satu1");
                         progressBar.setVisibility(View.GONE);
                     }
                 });

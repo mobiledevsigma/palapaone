@@ -85,6 +85,7 @@ public class MediaCenterActivity extends AppCompatActivity {
 
     private void getData(String event_id) {
         progressBar.setVisibility(View.VISIBLE);
+        System.out.println("tot " + event_id);
         AndroidNetworking.get(ConstantUtils.URL.MEDIA + "{event_id}")
                 .addPathParameter("event_id", event_id)
                 .setTag("Media")

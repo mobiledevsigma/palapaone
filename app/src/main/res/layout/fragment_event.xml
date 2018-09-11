@@ -22,14 +22,13 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1.2"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:layout_weight="0.3"
-                android:gravity="center"
                 android:text="Day"
                 android:textSize="18dp" />
 

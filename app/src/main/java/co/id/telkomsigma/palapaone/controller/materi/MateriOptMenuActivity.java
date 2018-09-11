@@ -71,10 +71,10 @@ public class MateriOptMenuActivity extends Activity {
 
     }
 
-    private void DownloadFile(String linkDownload){
-        Toast.makeText(getApplicationContext(),"Downloading file..",Toast.LENGTH_SHORT).show();
+    private void DownloadFile(String linkDownload) {
+        Toast.makeText(getApplicationContext(), "Downloading file..", Toast.LENGTH_SHORT).show();
         String destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
-        final String fileName = linkDownload.split("/")[linkDownload.split("/").length-1];
+        final String fileName = linkDownload.split("/")[linkDownload.split("/").length - 1];
 
         destination += fileName;
         final Uri uri = Uri.parse("file://" + destination);
@@ -94,7 +94,7 @@ public class MateriOptMenuActivity extends Activity {
         BroadcastReceiver onComplete = new BroadcastReceiver() {
             public void onReceive(Context ctxt, Intent intent) {
 
-                Toast.makeText(getApplicationContext(),"File downloaded",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "File downloaded", Toast.LENGTH_SHORT).show();
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(getApplicationContext())
                                 .setSmallIcon(R.mipmap.ic_launcher)

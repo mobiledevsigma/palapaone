@@ -143,6 +143,7 @@ public class EventFragment extends Fragment {
 
     public void getAgenda(final String id) {
         progressBar.setVisibility(View.VISIBLE);
+        System.out.println("agenda " + id);
         AndroidNetworking.get(ConstantUtils.URL.AGENDA + "{sub_event_id}")
                 .addPathParameter("sub_event_id", id)
                 .setTag("Agenda")
@@ -180,11 +181,12 @@ public class EventFragment extends Fragment {
                                     String today = formatter.format(local);
 
                                     if (idAgenda.isEmpty()) {
+                                        getRundown(id);
                                         if (theDay.equals(today)) {
                                             tanggal.setText(theDay);
 //                                            kode = Integer.parseInt(id);
 //                                            adapterHari = new AgendaAdapter(getActivity(), dayList, 4);
-                                            getRundown(id);
+                                            //getRundown(id);
                                         }
                                     }
                                 } catch (ParseException e) {
@@ -264,18 +266,18 @@ public class EventFragment extends Fragment {
                             lv_rundown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    if (session.isLogin()) {
-                                        Intent intent = new Intent(getActivity().getApplicationContext(), DetailEventActivity.class);
-                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_ID, rundownModelList.get(position).getRundown_id());
-                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_NAME, rundownModelList.get(position).getRundown_name());
-                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_START, rundownModelList.get(position).getRundown_start());
-                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_END, rundownModelList.get(position).getRundown_end());
-                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_PLACE, rundownModelList.get(position).getRundown_place());
-                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_LAYOUT, rundownModelList.get(position).getRundown_layout());
-                                        startActivity(intent);
-                                    } else {
-                                        Toast.makeText(getActivity(), "You have to login first", Toast.LENGTH_SHORT).show();
-                                    }
+//                                    if (session.isLogin()) {
+//                                        Intent intent = new Intent(getActivity().getApplicationContext(), DetailEventActivity.class);
+//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_ID, rundownModelList.get(position).getRundown_id());
+//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_NAME, rundownModelList.get(position).getRundown_name());
+//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_START, rundownModelList.get(position).getRundown_start());
+//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_END, rundownModelList.get(position).getRundown_end());
+//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_PLACE, rundownModelList.get(position).getRundown_place());
+//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_LAYOUT, rundownModelList.get(position).getRundown_layout());
+//                                        startActivity(intent);
+//                                    } else {
+//                                        Toast.makeText(getActivity(), "You have to login first", Toast.LENGTH_SHORT).show();
+//                                    }
                                 }
                             });
 

@@ -9,21 +9,27 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.model.FeedbackModel;
+import co.id.telkomsigma.palapaone.util.DataSession;
 
 public class FeedbackAdapter extends BaseAdapter {
     private Context mContext;
     private FeedbackModel model;
     private List<FeedbackModel> listModel;
     private Typeface font, fontbold;
+    private DataSession dataSession;
+    private String typeFeedback;
 
-    public FeedbackAdapter(Context mContext, List<FeedbackModel> listModel) {
+    public FeedbackAdapter(Context mContext, List<FeedbackModel> listModel, DataSession dataSession, String typeFeedback) {
         this.mContext = mContext;
         this.listModel = listModel;
+        this.dataSession = dataSession;
+        this.typeFeedback = typeFeedback;
 
         fontbold = Typeface.createFromAsset(mContext.getAssets(), "fonts/AvenirLTStd-Medium.otf");
         font = Typeface.createFromAsset(mContext.getAssets(), "fonts/AvenirLTStd-Book.otf");
@@ -72,7 +78,8 @@ public class FeedbackAdapter extends BaseAdapter {
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 FeedbackModel item = getItem(position);
                 item.setRatingStar(v);
-                Log.i("Adapter", "star: " + v);
+                int nilai = Math.round(v);
+                dataSession.setData("feedback" + (position) + typeFeedback, String.valueOf(nilai));
             }
         };
     }

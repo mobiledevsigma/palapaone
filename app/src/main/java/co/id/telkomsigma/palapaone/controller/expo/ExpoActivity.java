@@ -73,6 +73,7 @@ public class ExpoActivity extends AppCompatActivity {
             getExpoCat(session.getParentID());
         }
 
+        getAllExpo();
         spinnerCategory = new SpinnerDialog(ExpoActivity.this, listCatName, "Choose Expo");
         lay_expo_cat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +102,6 @@ public class ExpoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
                 onBackPressed();
                 return true;
             default:
@@ -188,6 +188,55 @@ public class ExpoActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError anError) {
 
+                    }
+                });
+    }
+
+    private void getAllExpo() {
+        progressBar.setVisibility(View.VISIBLE);
+        AndroidNetworking.get(ConstantUtils.URL.ALL_EXPO)
+                .setTag("Expo")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("expo all " + response);
+                        try {
+                            modelList = new ArrayList<ExpoModel>();
+                            JSONArray jsonArray = response.getJSONArray(ConstantUtils.EXPO.TAG_TITLE);
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject object = jsonArray.getJSONObject(a);
+                                String id = object.getString(ConstantUtils.EXPO.TAG_ID);
+                                String name = object.getString(ConstantUtils.EXPO.TAG_NAME);
+                                String desc = object.getString(ConstantUtils.EXPO.TAG_DESC);
+                                String prod = object.getString(ConstantUtils.EXPO.TAG_PROD);
+                                String map = object.getString(ConstantUtils.EXPO.TAG_MAP);
+                                String loca = object.getString(ConstantUtils.EXPO.TAG_LOC);
+                                model = new ExpoModel(id, name, desc, prod, map, loca);
+                                modelList.add(model);
+                            }
+                            adapter = new ExpoAdapter(getApplicationContext(), modelList);
+                            lv_expo.setAdapter(adapter);
+                            lv_expo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Intent intent = new Intent(getApplicationContext(), ExpoDetailActivity.class);
+                                    intent.putExtra(ConstantUtils.EXPO.TAG_NAME, modelList.get(position).getExpo_name());
+                                    intent.putExtra(ConstantUtils.EXPO.TAG_DESC, modelList.get(position).getExpo_desc());
+                                    intent.putExtra(ConstantUtils.EXPO.TAG_PROD, modelList.get(position).getExpo_prod());
+                                    startActivity(intent);
+                                }
+                            });
+                            progressBar.setVisibility(View.GONE);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

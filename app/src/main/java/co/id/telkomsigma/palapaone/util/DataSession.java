@@ -15,7 +15,7 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class DataSession {
 
-    private static final String PREFER_NAME = "PalapaOne";
+    private static final String PREFER_NAME = "DataPalapaOne";
     public static  String ACTIVITY_KEY;
     private SharedPreferences pref;
     private Editor editor;

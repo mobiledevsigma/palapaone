@@ -8,6 +8,7 @@ public class RundownModel {
     private String rundown_end;
     private String rundown_place;
     private String rundown_layout;
+    private String rundown_desc;
 
     public RundownModel(String rundown_id, String rundown_name, String rundown_start, String rundown_end, String rundown_place, String rundown_layout) {
         this.rundown_id = rundown_id;

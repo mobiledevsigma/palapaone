@@ -1,8 +1,10 @@
 package co.id.telkomsigma.palapaone.controller.feedback;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,9 +17,7 @@ import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +29,7 @@ import java.util.List;
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.adapter.FeedbackAdapter;
 import co.id.telkomsigma.palapaone.model.FeedbackModel;
+import co.id.telkomsigma.palapaone.util.DataSession;
 import co.id.telkomsigma.palapaone.util.SessionManager;
 import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
@@ -43,12 +44,14 @@ public class FeedbackActivity extends AppCompatActivity {
     private FeedbackAdapter adapter;
     private String typeFeedback, idUser;
     private SessionManager sessionManager;
+    private DataSession dataSession;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         sessionManager = new SessionManager(getApplicationContext());
+        dataSession = new DataSession(getApplicationContext());
 
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.txt_feedback);
@@ -65,8 +68,34 @@ public class FeedbackActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Thankyou for your feedback", Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                if (modelList.size() > 0) {
+                    int check = 0;
+                    int listSize = 0;
+                    for (int a = 0; a < modelList.size(); a++) {
+                        String data = dataSession.getData("feedbcak" + a + typeFeedback);
+                        if (!data.equals("")) {
+                            check++;
+                        }
+                    }
+
+                    if (check == listSize) {
+                        new AlertDialog.Builder(FeedbackActivity.this)
+                                .setTitle("Perhatian !!")
+                                .setMessage("Apakah anda yakin akan mengirim data?")
+                                .setCancelable(false)
+                                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        sendData();
+                                    }
+                                })
+                                .setNegativeButton("Tidak", null)
+                                .show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Harap lengkapi semua data..", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Harap lengkapi semua data..", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -111,7 +140,7 @@ public class FeedbackActivity extends AppCompatActivity {
                                     modelList.add(model);
                                 }
                             }
-                            adapter = new FeedbackAdapter(getApplicationContext(), modelList);
+                            adapter = new FeedbackAdapter(getApplicationContext(), modelList, dataSession, typeFeedback);
                             listView.setAdapter(adapter);
                             progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
@@ -136,7 +165,7 @@ public class FeedbackActivity extends AppCompatActivity {
             for (int a = 0; a < modelList.size(); a++) {
                 FeedbackModel feedbackModel = modelList.get(a);
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_SCORE, "Amit");
+                jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_SCORE, dataSession.getData("feedback" + a + typeFeedback));
                 jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_TEXT, "-");
                 jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_BY, idUser);
                 jsonObject.put(ConstantUtils.SUBMIT_FB.TAG_ID, feedbackModel.getFeedback_id());
@@ -144,6 +173,7 @@ public class FeedbackActivity extends AppCompatActivity {
                 jsonArray.put(jsonObject);
             }
             jsonTitle.put(ConstantUtils.FEEDBACK.TAG_TITLE, jsonArray);
+            System.out.println("feeedback " + jsonTitle);
 
             AndroidNetworking.post(ConstantUtils.URL.SEND_FEEDBACK)
                     .addJSONObjectBody(jsonTitle) // posting json
@@ -156,6 +186,8 @@ public class FeedbackActivity extends AppCompatActivity {
                             try {
                                 if (response.getString("status").equals("1")) {
                                     progressBar.setVisibility(View.GONE);
+                                    dataSession.destroySession();
+                                    onBackPressed();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

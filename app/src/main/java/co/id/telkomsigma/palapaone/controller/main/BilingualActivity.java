@@ -115,8 +115,9 @@ public class BilingualActivity extends AppCompatActivity {
         return true;
     }
 
-    private void getLanguage(String kode) {
+    private void getLanguage(final String kode) {
         progressBar.setVisibility(View.VISIBLE);
+        System.out.println("bahasa0 ");
         AndroidNetworking.get(ConstantUtils.URL.DICTIONARY + "{bahasa}")
                 .addPathParameter("bahasa", kode)
                 .setTag("bahasa")
@@ -125,7 +126,7 @@ public class BilingualActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("check " +response);
+                        System.out.println("bahasa " +response);
                         try {
                             String uname = response.getString(ConstantUtils.DICTIONARY.TAG_USERNAME);
                             String pwd = response.getString(ConstantUtils.DICTIONARY.TAG_PASSWORD);
@@ -140,7 +141,7 @@ public class BilingualActivity extends AppCompatActivity {
                             String menu7 = response.getString(ConstantUtils.DICTIONARY.TAG_MENU_7);
                             String menu8 = response.getString(ConstantUtils.DICTIONARY.TAG_MENU_8);
                             String menu9 = response.getString(ConstantUtils.DICTIONARY.TAG_MENU_9);
-                            dictionary.setLanguageMain(uname, pwd, login, msg, menu1, menu2, menu3, menu4, menu5, menu6, menu7, menu8, menu9);
+                            dictionary.setLanguageMain(uname, pwd, login, msg, menu1, menu2, menu3, menu4, menu5, menu6, menu7, menu8, menu9, kode);
                             session.setLanguage();
 
                             if (session.isLogin()) {
@@ -159,7 +160,7 @@ public class BilingualActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
-
+                        System.out.println("bahasa2 ");
                     }
                 });
     }
@@ -246,7 +247,7 @@ public class BilingualActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Klik lagi untuk ke menu utama", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Tap one again to exit", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override

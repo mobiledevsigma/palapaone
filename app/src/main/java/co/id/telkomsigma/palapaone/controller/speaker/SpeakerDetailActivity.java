@@ -161,6 +161,10 @@ public class SpeakerDetailActivity extends AppCompatActivity {
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                     Intent intent = new Intent(getApplicationContext(), MateriOptMenuActivity.class);
                                     intent.putExtra(ConstantUtils.MATERI.TAG_ID, listModel.get(position).getMateri_id());
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_NAME, listModel.get(position).getMateri_title());
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_FILE, listModel.get(position).getMateri_file());
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_SPEAK_ID, listModel.get(position).getMateri_speakID());
+                                    intent.putExtra(ConstantUtils.MATERI.TAG_SPEAK_NAME, listModel.get(position).getMateri_author());
                                     startActivity(intent);
                                 }
                             });

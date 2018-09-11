@@ -17,6 +17,7 @@ import com.google.zxing.WriterException;
 
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.util.SessionManager;
+import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 import co.id.telkomsigma.palapaone.util.qrcode.Contents;
 import co.id.telkomsigma.palapaone.util.qrcode.QRCodeEncoder;
 
@@ -49,7 +50,8 @@ public class PresenceActivity extends AppCompatActivity {
         txt_scanRole.setTypeface(fontbold);
         txt_scanNation.setTypeface(fontbold);
 
-        generateQRCode(session.getId(), img_qr);
+        String isiQR = ConstantUtils.URL.GREETINGS + session.getId() + "/" +session.getEventID();
+        generateQRCode(isiQR, img_qr);
         txt_scanName.setText(session.getName());
         txt_scanRole.setText(session.getEvent());
         txt_scanNation.setText(session.getNationalName());

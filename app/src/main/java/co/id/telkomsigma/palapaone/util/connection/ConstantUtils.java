@@ -8,6 +8,7 @@ public interface ConstantUtils {
 
     interface URL {
         String SERVER = "http://palapaone.id/icw/";
+        String GREETINGS = SERVER + "greeting/index/";
         String DICTIONARY = SERVER + "api/home/lang/";
         String BANNER = SERVER + "api/event/banner/";
         String ALLSPEAKER = SERVER + "api/speaker/allspeaker/";
@@ -19,6 +20,7 @@ public interface ConstantUtils {
         String CALL_CENTER = SERVER + "api/callcenter/content/";
         String GALLERY = SERVER + "api/gallery/getcontent/";
         String SEND_GALLERY = SERVER + "api/gallery/postphoto/";
+        String ALL_EXPO = SERVER + "api/expo/getallexpo/";
         String EXPO = SERVER + "api/expo/getexpo/";
         String CAT_EXPO = SERVER + "api/expo/getcategory/";
         String VERSION = SERVER + "api_version/checkVersion";
@@ -31,6 +33,7 @@ public interface ConstantUtils {
         String RUNDOWN = SERVER + "api/schedule/rundown/";
         String SEND_ASKING = SERVER + "api/asking/askingadd/";
         String NOTIFICATION = SERVER + "api/notification/content/";
+        String AMOUNT_NOTIF = SERVER + "api/notification/ammount/";
         String UPDATE_PP = SERVER + "api/profile/ubahPhoto/";
         String LOGOUT = SERVER + "api_login/logout/";
     }
@@ -49,6 +52,7 @@ public interface ConstantUtils {
         String TAG_MENU_7 = "menu7";
         String TAG_MENU_8 = "menu8";
         String TAG_MENU_9 = "menu9";
+        String TAG_KODE = "kode";
     }
 
     interface VERSION {
@@ -202,9 +206,9 @@ public interface ConstantUtils {
     interface SUBMIT_FB {
         String TAG_TITLE = "feedback";
         String TAG_ID = "feedback_id";
-        String TAG_SCORE = "feedback_type";
-        String TAG_TEXT = "feedback_question";
-        String TAG_BY = "event_id";
+        String TAG_SCORE = "feedback_result_score";
+        String TAG_TEXT = "feedback_result_text";
+        String TAG_BY = "feedback_result_by";
     }
 
     interface EVENT {
