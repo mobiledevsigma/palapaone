@@ -88,6 +88,7 @@ public class SpeakerDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FeedbackActivity.class);
+                intent.putExtra(ConstantUtils.FEEDBACK.TAG_TYPE, "1");
                 startActivity(intent);
             }
         });
@@ -127,8 +128,8 @@ public class SpeakerDetailActivity extends AppCompatActivity {
         txt_quote.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_QUOTE));
         txt_job.setText(intent.getStringExtra(ConstantUtils.SPEAKER.TAG_JOB));
         String id = intent.getStringExtra(ConstantUtils.SPEAKER.TAG_ID);
-        intent.getStringExtra(ConstantUtils.SPEAKER.TAG_EVENT);
-        intent.getStringExtra(ConstantUtils.SPEAKER.TAG_TOPIC);
+        //intent.getStringExtra(ConstantUtils.SPEAKER.TAG_EVENT);
+        //intent.getStringExtra(ConstantUtils.SPEAKER.TAG_TOPIC);
 
         progressBar.setVisibility(View.VISIBLE);
         AndroidNetworking.get(ConstantUtils.URL.MATERIBYSPEAKER + "{speaker_id}")

@@ -83,12 +83,17 @@ public class EventActivity extends AppCompatActivity {
                                 String start = object.getString(ConstantUtils.EVENT.TAG_START);
                                 String end = object.getString(ConstantUtils.EVENT.TAG_END);
                                 String theme = object.getString(ConstantUtils.EVENT.TAG_THEME);
+                                String longitude = object.getString(ConstantUtils.EVENT.TAG_LONGI);
+                                String latitude = object.getString(ConstantUtils.EVENT.TAG_LATIT);
 
                                 Bundle bundle = new Bundle();
                                 bundle.putString("id", id);
                                 bundle.putString("name", name);
                                 bundle.putString("start", start);
                                 bundle.putString("end", end);
+                                bundle.putString("theme", theme);
+                                bundle.putString(ConstantUtils.EVENT.TAG_LONGI, longitude);
+                                bundle.putString(ConstantUtils.EVENT.TAG_LATIT, latitude);
                                 bundle.putString("theme", theme);
                                 EventFragment fragInfo = new EventFragment();
                                 fragInfo.setArguments(bundle);

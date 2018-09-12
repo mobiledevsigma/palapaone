@@ -67,6 +67,13 @@
         <activity android:name=".controller.event.DetailEventActivity"></activity>
         <activity android:name=".controller.event.ShowLayoutActivity"></activity>
         <activity android:name=".controller.materi.MateriOptMenuActivity"></activity>
+        <!-- Register the Alarm Receiver -->
+        <receiver android:name=".util.reminder.AlarmReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

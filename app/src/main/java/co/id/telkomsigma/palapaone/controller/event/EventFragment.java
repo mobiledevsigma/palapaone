@@ -72,6 +72,7 @@ public class EventFragment extends Fragment {
     private TextView tanggal;
     private LinearLayout lay_btn;
     private int kode;
+    private String theDay, agendaName, longs, lats;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,6 +104,8 @@ public class EventFragment extends Fragment {
 
         String myValue = this.getArguments().getString("name");
         String myValue2 = this.getArguments().getString("id");
+        longs = this.getArguments().getString(ConstantUtils.EVENT.TAG_LONGI);
+        lats= this.getArguments().getString(ConstantUtils.EVENT.TAG_LATIT);
 
         idEvent = myValue2;
         getAgenda(myValue2);
@@ -136,7 +139,7 @@ public class EventFragment extends Fragment {
             double latitude = gpsHelper.getLatitude();
             double longitude = gpsHelper.getLongitude();
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                    Uri.parse("http://maps.google.com/maps?saddr=" + latitude + "," + longitude + "&daddr=" + "-7.790592" + "," + "110.366662"));
+                    Uri.parse("http://maps.google.com/maps?saddr=" + latitude + "," + longitude + "&daddr=" + lats + "," + longs));
             startActivity(intent);
         }
     }
@@ -177,11 +180,11 @@ public class EventFragment extends Fragment {
                                 try {
                                     Date dateServer = fServer.parse(date);
                                     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
-                                    String theDay = sdf.format(dateServer);
+                                    theDay = sdf.format(dateServer);
                                     String today = formatter.format(local);
 
                                     if (idAgenda.isEmpty()) {
-                                        getRundown(id);
+                                        getRundown(modelList.get(0).getAgenda_id());
                                         if (theDay.equals(today)) {
                                             tanggal.setText(theDay);
 //                                            kode = Integer.parseInt(id);
@@ -197,6 +200,7 @@ public class EventFragment extends Fragment {
                             adapterHari = new AgendaAdapter(getActivity(), dayList, new OnItemClickListener() {
                                 @Override
                                 public void onItemClick(String id) {
+                                    agendaName = modelList.get(Integer.parseInt(id) - 1).getAgenda_name();
                                     String date = modelList.get(Integer.parseInt(id) - 1).getAgenda_date();
                                     SimpleDateFormat fServer = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                     try {
@@ -256,7 +260,7 @@ public class EventFragment extends Fragment {
                                 String end = object.getString(ConstantUtils.RUNDOWN.TAG_END);
                                 String place = object.getString(ConstantUtils.RUNDOWN.TAG_PLACE);
                                 String layout = object.getString(ConstantUtils.RUNDOWN.TAG_LAYOUT);
-                                rundownModel = new RundownModel(id, name, start, end, place, layout);
+                                rundownModel = new RundownModel(id, name, start, end, place, layout, desc);
                                 rundownModelList.add(rundownModel);
                             }
 
@@ -266,18 +270,21 @@ public class EventFragment extends Fragment {
                             lv_rundown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                    if (session.isLogin()) {
-//                                        Intent intent = new Intent(getActivity().getApplicationContext(), DetailEventActivity.class);
-//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_ID, rundownModelList.get(position).getRundown_id());
-//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_NAME, rundownModelList.get(position).getRundown_name());
-//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_START, rundownModelList.get(position).getRundown_start());
-//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_END, rundownModelList.get(position).getRundown_end());
-//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_PLACE, rundownModelList.get(position).getRundown_place());
-//                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_LAYOUT, rundownModelList.get(position).getRundown_layout());
-//                                        startActivity(intent);
-//                                    } else {
-//                                        Toast.makeText(getActivity(), "You have to login first", Toast.LENGTH_SHORT).show();
-//                                    }
+                                    if (session.isLogin()) {
+                                        Intent intent = new Intent(getActivity().getApplicationContext(), DetailEventActivity.class);
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_ID, rundownModelList.get(position).getRundown_id());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_NAME, rundownModelList.get(position).getRundown_name());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_START, rundownModelList.get(position).getRundown_start());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_END, rundownModelList.get(position).getRundown_end());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_PLACE, rundownModelList.get(position).getRundown_place());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_LAYOUT, rundownModelList.get(position).getRundown_layout());
+                                        intent.putExtra(ConstantUtils.RUNDOWN.TAG_DESC, rundownModelList.get(position).getRundown_desc());
+                                        intent.putExtra(ConstantUtils.AGENDA.TAG_NAME, agendaName);
+                                        intent.putExtra(ConstantUtils.AGENDA.TAG_DATE, tanggal.getText());
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(getActivity(), "You have to login first", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
 

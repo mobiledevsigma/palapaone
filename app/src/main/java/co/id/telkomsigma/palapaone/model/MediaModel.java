@@ -6,13 +6,15 @@ public class MediaModel {
     private String media_file;
     private String media_date;
     private String media_author;
+    private String media_image;
 
-    public MediaModel(String media_id, String media_title, String media_file, String media_date, String media_author) {
+    public MediaModel(String media_id, String media_title, String media_file, String media_date, String media_author, String media_image) {
         this.media_id = media_id;
         this.media_title = media_title;
         this.media_file = media_file;
         this.media_date = media_date;
         this.media_author = media_author;
+        this.media_image = media_image;
     }
 
     public String getMedia_id() {
@@ -53,5 +55,13 @@ public class MediaModel {
 
     public void setMedia_author(String media_author) {
         this.media_author = media_author;
+    }
+
+    public String getMedia_image() {
+        return media_image;
+    }
+
+    public void setMedia_image(String media_image) {
+        this.media_image = media_image;
     }
 }

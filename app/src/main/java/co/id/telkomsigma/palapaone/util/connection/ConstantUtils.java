@@ -31,6 +31,7 @@ public interface ConstantUtils {
         String AGENDA = SERVER + "api/event/getagenda/";
         String EVENT = SERVER + "api/event/getevent/";
         String RUNDOWN = SERVER + "api/schedule/rundown/";
+        String DETAIL_RUNDOWN = SERVER + "api/schedule/rundowndetail/";
         String SEND_ASKING = SERVER + "api/asking/askingadd/";
         String NOTIFICATION = SERVER + "api/notification/content/";
         String AMOUNT_NOTIF = SERVER + "api/notification/ammount/";
@@ -128,6 +129,7 @@ public interface ConstantUtils {
         String TAG_NAME = "media_center_title";
         String TAG_DATE = "created_date";
         String TAG_EVENT = "event_id";
+        String TAG_IMAGE = "media_center_image";
     }
 
     interface PARTNER {
@@ -233,6 +235,18 @@ public interface ConstantUtils {
         String TAG_DESC = "rundown_desc";
         String TAG_PLACE = "rundown_place";
         String TAG_LAYOUT = "rundown_layout";
+    }
+
+    interface DETAIL_RUNDOWN {
+        String TAG_TITLE = "rundown";
+        String TAG_ID = "rundown_detail_id";
+//        String TAG_ID = "rundown_detail_id";
+//        String TAG_NAME = "rundown_name";
+//        String TAG_START = "rundown_time_start";
+//        String TAG_END = "rundown_time_end";
+//        String TAG_DESC = "rundown_desc";
+//        String TAG_PLACE = "rundown_place";
+//        String TAG_LAYOUT = "rundown_layout";
     }
 
     interface ASKING {

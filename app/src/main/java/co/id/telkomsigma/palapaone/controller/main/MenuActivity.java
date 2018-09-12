@@ -48,9 +48,9 @@ import co.id.telkomsigma.palapaone.util.connection.ConstantUtils;
 
 public class MenuActivity extends AppCompatActivity {
 
+    String[] lisImage;
     private boolean doubleBackToExitPressedOnce = false;
     private CarouselView carouselView;
-    String[] lisImage ;
     private TextView txt_greet, txt_count, txt_name_menu, txt_msg, txt_presence, txt_event, txt_speaker, txt_modul, txt_media, txt_expo, txt_gallery, txt_partner, txt_help;
     private LinearLayout lay_presence, lay_event, lay_speaker, lay_modul, lay_media, lay_expo, lay_gallery, lay_partner, lay_help;
     private DictionaryManager dictionary;

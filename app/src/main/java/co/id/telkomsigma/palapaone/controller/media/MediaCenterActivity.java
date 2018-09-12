@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,7 +107,8 @@ public class MediaCenterActivity extends AppCompatActivity {
                                 String file = object.getString(ConstantUtils.MEDIA.TAG_FILE);
                                 String date = object.getString(ConstantUtils.MEDIA.TAG_DATE);
                                 String author = object.getString(ConstantUtils.MEDIA.TAG_USERID);
-                                model = new MediaModel(id, title, file, date, author);
+                                String image = object.getString(ConstantUtils.MEDIA.TAG_IMAGE);
+                                model = new MediaModel(id, title, file, date, author, image);
                                 listModel.add(model);
                             }
                             adapter = new MediaAdapter(getApplicationContext(), listModel);

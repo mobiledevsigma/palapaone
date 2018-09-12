@@ -140,8 +140,10 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="top|left|center"
-                            android:text="Participant "
-                            android:textSize="16sp" />
+                            android:singleLine="true"
+                            android:text="Participant Name"
+                            android:textSize="16sp"
+                            android:ellipsize="end"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
