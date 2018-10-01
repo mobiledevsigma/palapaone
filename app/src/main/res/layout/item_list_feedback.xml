@@ -20,7 +20,8 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:gravity="left|center"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="#9000"/>
     </LinearLayout>
 
     <LinearLayout

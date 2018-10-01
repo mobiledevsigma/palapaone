@@ -23,7 +23,7 @@ public interface ConstantUtils {
         String ALL_EXPO = SERVER + "api/expo/getallexpo/";
         String EXPO = SERVER + "api/expo/getexpo/";
         String CAT_EXPO = SERVER + "api/expo/getcategory/";
-        String VERSION = SERVER + "api_version/checkVersion";
+        String VERSION = SERVER + "api/profile/check/";
         String LOGIN = SERVER + "api/login/auth";
         String PROFILE_EDIT = SERVER + "api/profile/update";
         String FEEDBACK = SERVER + "api/feedback/content/";
@@ -57,12 +57,10 @@ public interface ConstantUtils {
     }
 
     interface VERSION {
-        String TAG_TITLE = "version";
-        String TAG_ID = "version_id";
-        String TAG_NUMBER = "version_number";
-        String TAG_URL = "version_url";
-        String TAG_NOTE = "version_note";
-        String TAG_DATE = "version_date";
+        String TAG_STATUS= "status";
+        String TAG_TITLE = "data";
+        String TAG_ID = "id";
+        String TAG_NUMBER = "number";
     }
 
     interface LOGIN {

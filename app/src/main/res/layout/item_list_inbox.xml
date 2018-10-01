@@ -68,7 +68,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center|left"
-                    android:text="Cek our new booth" />
+                    android:text="Cek our new booth"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="#9000"
+                    android:layout_marginRight="5dp"/>
 
 
             </LinearLayout>
@@ -84,7 +88,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center|left"
-                    android:text="31 Agustus 2018" />
+                    android:text="31 Agustus 2018"
+                    android:textColor="#9000"/>
 
             </LinearLayout>
 

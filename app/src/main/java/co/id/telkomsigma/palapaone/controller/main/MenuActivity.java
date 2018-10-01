@@ -1,10 +1,13 @@
 package co.id.telkomsigma.palapaone.controller.main;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import co.id.telkomsigma.palapaone.BuildConfig;
 import co.id.telkomsigma.palapaone.R;
 import co.id.telkomsigma.palapaone.controller.event.EventActivity;
 import co.id.telkomsigma.palapaone.controller.expo.ExpoActivity;
@@ -112,6 +116,7 @@ public class MenuActivity extends AppCompatActivity {
 
         getBanner(session.getEventID());
         getCountInbox(session.getEventID());
+        getVersion("android");
 
         txt_name_menu.setText(session.getName());
         txt_msg.setText(listDict.get(ConstantUtils.DICTIONARY.TAG_MSG));
@@ -319,6 +324,65 @@ public class MenuActivity extends AppCompatActivity {
                         try {
                             String count = response.getString("count");
                             txt_count.setText(count);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+    }
+
+    private void getVersion(String flag) {
+        AndroidNetworking.get(ConstantUtils.URL.VERSION + "{flag}")
+                .addPathParameter("flag", flag)
+                .setTag("Version")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString(ConstantUtils.VERSION.TAG_STATUS);
+                            String data = response.getString(ConstantUtils.VERSION.TAG_TITLE);
+                            if (status.equals("1")) {
+                                JSONArray jsonArray = response.getJSONArray(ConstantUtils.VERSION.TAG_TITLE);
+                                for (int a = 0; a < jsonArray.length(); a++) {
+                                    JSONObject object = jsonArray.getJSONObject(a);
+                                    String id = object.getString(ConstantUtils.VERSION.TAG_ID);
+                                    String number = object.getString(ConstantUtils.VERSION.TAG_NUMBER);
+                                    object.getString("name");
+                                    object.getString("tanggal");
+                                    object.getString("url");
+                                    object.getString("url_iphone");
+                                    object.getString("note");
+                                    object.getString("flag");
+
+                                    int angka = Integer.parseInt(number);
+
+                                    if (angka != BuildConfig.VERSION_CODE) {
+                                        System.out.println("version " + number + " " + BuildConfig.VERSION_CODE);
+                                        new AlertDialog.Builder(MenuActivity.this)
+                                                .setMessage("There is a new version, let's check it out")
+                                                .setCancelable(false)
+                                                .setPositiveButton("Go", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
+                                                    }
+                                                })
+                                                .setNegativeButton("Later", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.cancel();
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                }
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

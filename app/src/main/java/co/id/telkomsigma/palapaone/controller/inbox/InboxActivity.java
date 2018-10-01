@@ -102,7 +102,12 @@ public class InboxActivity extends AppCompatActivity {
                             listmenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                                    Intent intent = new Intent(InboxActivity.this, DetailInboxActivity.class);
+                                    intent.putExtra(ConstantUtils.NOTIF.TAG_ID, modelList.get(position).getInboxID());
+                                    intent.putExtra(ConstantUtils.NOTIF.TAG_TITLE, modelList.get(position).getInboxTitle());
+                                    intent.putExtra(ConstantUtils.NOTIF.TAG_TEXT, modelList.get(position).getInboxText());
+                                    intent.putExtra(ConstantUtils.NOTIF.TAG_DATE, modelList.get(position).getCreateDate());
+                                    startActivity(intent);
                                 }
                             });
                             progressBar.setVisibility(View.GONE);

@@ -52,7 +52,8 @@
                     android:layout_weight="1"
                     android:gravity="bottom|left|center"
                     android:text="Meet me at "
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textColor="@color/colorPrimary"/>
             </LinearLayout>
 
             <LinearLayout
@@ -68,7 +69,8 @@
                     android:layout_weight="1"
                     android:gravity="bottom|left|center"
                     android:text="TextView"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textColor="#9000"/>
             </LinearLayout>
 
             <LinearLayout
@@ -84,7 +86,8 @@
                     android:layout_weight="1"
                     android:gravity="left|center"
                     android:text="TextView"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textColor="#9000"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
